@@ -6,61 +6,33 @@
 <title>WingX Operator Intelligence</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-:root{--bg:#02050d;--panel:#07101f;--text:#eef6ff;--muted:#7f8ea8;--cyan:#5ee7ff}
-body{margin:0;background:linear-gradient(180deg,#02050d,#030713);color:var(--text);font-family:Inter,Arial}
-.container{max-width:1400px;margin:auto;padding:24px}
-h2{margin:0 0 10px 0}
-.controls{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
-select{background:#07101f;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;font-weight:600}
-.chart-card{background:var(--panel);padding:16px;border-radius:12px}
-.helper{color:#7f8ea8;font-size:12px;margin-top:8px}
+:root{--bg:#02050d;--panel:#07101f;--panel2:#0a1428;--stroke:rgba(127,220,255,.18);--text:#eef6ff;--muted:#7f8ea8;--cyan:#5ee7ff;--blue:#42b8ff;--violet:#8b93ff;--purple:#b975ff;--gold:#ffd66b;--green:#58f0a5}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 18% 20%,rgba(0,194,255,.16),transparent 28%),radial-gradient(circle at 82% 8%,rgba(154,112,255,.13),transparent 30%),linear-gradient(180deg,#02050d,#030713 55%,#01030a);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow-x:hidden}.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.28) 1px,transparent 1px),radial-gradient(circle,rgba(94,231,255,.14) 1px,transparent 1px);background-size:90px 90px,140px 140px;background-position:0 0,30px 40px;opacity:.38}.shell{position:relative;max-width:1560px;margin:0 auto;padding:18px 22px 30px}.topbar{height:34px;border:1px solid rgba(255,255,255,.09);background:rgba(7,12,24,.86);border-radius:14px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;box-shadow:0 20px 80px rgba(0,0,0,.45);backdrop-filter:blur(14px)}.dots{display:flex;gap:8px}.dot{width:10px;height:10px;border-radius:999px}.red{background:#ff6b6b}.yellow{background:#ffd36b}.green{background:#65df8f}.mission-title{font-size:11px;letter-spacing:.18em;color:#7d8aa3;text-transform:uppercase;font-weight:800}.badge{font-size:11px;letter-spacing:.09em;text-transform:uppercase;border:1px solid rgba(94,231,255,.35);color:#8defff;background:rgba(94,231,255,.09);padding:5px 9px;border-radius:999px}.hero{margin-top:16px;display:grid;grid-template-columns:300px minmax(0,1fr) 320px;gap:16px}.panel{border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(9,20,39,.84),rgba(4,10,22,.88));border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 22px 80px rgba(0,0,0,.3);backdrop-filter:blur(12px)}.left,.right{display:flex;flex-direction:column;gap:12px}.metric-panel,.queue,.drill{padding:15px}.label{font-size:10px;color:#62708b;text-transform:uppercase;letter-spacing:.16em;font-weight:850}.big{font-size:30px;font-weight:900;letter-spacing:-.04em;margin:8px 0 0}.muted{color:var(--muted)}.value-row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-top:12px;font-size:13px}.value-row strong{font-size:15px;color:#dcecff;text-align:right}.cyan{color:var(--cyan)}.gold{color:var(--gold)}.main{position:relative;overflow:hidden;padding:18px}.main::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(94,231,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(94,231,255,.03) 1px,transparent 1px);background-size:42px 42px;transform:perspective(900px) rotateX(58deg) translateY(150px) scale(1.25);transform-origin:bottom;opacity:.75}.main-content{position:relative;z-index:1}.glow-orb{position:absolute;width:280px;height:280px;border-radius:50%;right:5%;top:38%;background:radial-gradient(circle at 34% 35%,rgba(94,231,255,.32),rgba(31,116,181,.12) 42%,transparent 68%);opacity:.55;pointer-events:none}.arc{position:absolute;width:540px;height:220px;right:8%;top:44%;border-top:1px solid rgba(94,231,255,.45);border-radius:50%;transform:rotate(-8deg);opacity:.5;pointer-events:none}.header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}.eyebrow{display:inline-flex;border:1px solid rgba(94,231,255,.25);background:rgba(94,231,255,.08);color:#9df2ff;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.h1{font-size:38px;line-height:1.02;font-weight:950;letter-spacing:-.05em;margin:14px 0 8px}.sub{color:#9aa9c1;font-size:14px;line-height:1.55;max-width:760px}.controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.control{border:1px solid rgba(255,255,255,.12);background:rgba(2,6,16,.72);border-radius:14px;padding:9px 10px}.control span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:#697895;margin-bottom:5px;font-weight:850}select{width:175px;background:#07101f;color:#eef6ff;border:1px solid rgba(94,231,255,.18);border-radius:10px;padding:9px 10px;outline:none;font-weight:700}select:focus{border-color:rgba(94,231,255,.75);box-shadow:0 0 0 3px rgba(94,231,255,.12)}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.kpi{border:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border-radius:15px;padding:14px}.kpi .num{font-size:24px;font-weight:950;letter-spacing:-.04em;margin-top:7px}.kpi .small{font-size:12px;color:#8fa0ba;margin-top:3px}.chart-card{height:430px;padding:14px;border:1px solid rgba(255,255,255,.08);background:rgba(2,6,16,.52);border-radius:18px}.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:12px}.chart-title{font-size:13px;font-weight:900}.legend{display:flex;gap:10px;flex-wrap:wrap}.leg{font-size:11px;color:#9aa9c1}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}#mainChart{height:355px!important}.operator-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.op-card{border:1px solid rgba(255,255,255,.08);background:rgba(7,16,31,.72);border-radius:13px;padding:10px;cursor:pointer;transition:.18s ease}.op-card:hover,.op-card.active{border-color:rgba(94,231,255,.55);background:rgba(94,231,255,.08);transform:translateY(-1px)}.op-card b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.op-card span{font-size:11px;color:#8fa0ba}.mini-bars{height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:8px;display:flex}.mini-bars i{display:block;height:100%}.queue-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:310px;overflow:auto}.queue-item{border:1px solid rgba(255,255,255,.08);background:rgba(10,18,42,.74);border-radius:12px;padding:10px;cursor:pointer}.queue-item:hover,.queue-item.active{border-color:rgba(94,231,255,.5);background:rgba(0,170,220,.12)}.queue-item b{font-size:12px}.queue-item p{margin:4px 0 0;color:#7f8ea8;font-size:11px}.drill-title{font-size:18px;font-weight:950;letter-spacing:-.03em;margin:8px 0 2px}.band-row{margin-top:12px}.band-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;gap:8px}.track{height:9px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.fill{height:100%;border-radius:999px}.insight{border-left:3px solid var(--cyan);padding:10px 12px;background:rgba(94,231,255,.065);border-radius:10px;margin-top:12px;color:#cdefff;font-size:13px;line-height:1.45}.spark canvas{height:54px!important}.footer-note{margin-top:10px;color:#62708b;font-size:11px}.operator-select{width:100%;margin-top:12px}.table-panel{margin-top:16px;padding:14px;overflow:hidden}.table-wrap{overflow:auto;max-height:310px}table{width:100%;border-collapse:collapse;min-width:900px;font-size:12px}th{position:sticky;top:0;background:#07101f;text-align:left;color:#70809d;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:10px;border-bottom:1px solid rgba(255,255,255,.1)}td{padding:10px;border-bottom:1px solid rgba(255,255,255,.055);color:#dce7f8}tr:hover td{background:rgba(94,231,255,.045)}.pill{display:inline-flex;border:1px solid rgba(94,231,255,.28);background:rgba(94,231,255,.08);color:#9df2ff;border-radius:999px;padding:4px 8px;font-size:11px;white-space:nowrap}@media(max-width:1120px){.hero{grid-template-columns:1fr}.left,.right{display:grid;grid-template-columns:repeat(2,1fr)}.operator-strip{grid-template-columns:repeat(2,1fr)}.kpi-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.shell{padding:10px}.left,.right,.kpi-grid{grid-template-columns:1fr}.header{flex-direction:column}.controls{justify-content:flex-start}.chart-card{height:390px}#mainChart{height:305px!important}.h1{font-size:30px}.mission-title{display:none}}
 </style>
 </head>
 <body>
-<div class="container">
-
-<h2>Competitor Flight Distribution</h2>
-
-<div class="controls">
-<select id="metricSelect">
-<option value="under2">Under 2h</option>
-<option value="b23">2-3h</option>
-<option value="b34">3-4h</option>
-<option value="b4">4h+</option>
-<option value="total">Total (stacked)</option>
-</select>
-
-<select id="scopeSelect">
-<option value="10">Top 10</option>
-<option value="25">Top 25</option>
-<option value="50">Top 50</option>
-<option value="all">All</option>
-</select>
-
-<select id="modeSelect">
-<option value="absolute">Absolute</option>
-<option value="percent">Percent Share</option>
-</select>
-
-<select id="compareSelect" multiple size="1" style="min-width:220px"></select>
+<div class="stars"></div>
+<div class="shell">
+  <div class="topbar"><div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><div class="mission-title">WingX / Competitor Intelligence / Mission Band Visualizer</div><div class="badge">Stored Data</div></div>
+  <div class="hero">
+    <aside class="left">
+      <div class="panel metric-panel"><div class="label">Top 10 Competitive Hours</div><div class="big" id="totalHours">--</div><div class="value-row"><span class="muted">Explorer Scope</span><strong id="operatorCount">--</strong></div><div class="value-row"><span class="muted">Excluded</span><strong class="cyan">NetJets / Flexjet</strong></div><div class="value-row"><span class="muted">KPI View</span><strong class="gold">Top 10 only</strong></div></div>
+      <div class="panel metric-panel spark"><div class="label">Top 10 Band Mix</div><div class="insight" id="topInsight">Loading...</div><canvas id="sparkChart"></canvas></div>
+      <div class="panel metric-panel"><div class="label">Current Drilldown</div><select class="operator-select" id="operatorSelect"></select><div class="drill-title" id="selectedName">--</div><div class="muted" id="selectedSub">--</div><div id="bandBreakdown"></div></div>
+    </aside>
+    <main class="panel main"><div class="glow-orb"></div><div class="arc"></div><div class="main-content">
+      <div class="header"><div><div class="eyebrow">Operator Performance Console</div><div class="h1">Where competitor flying is concentrated</div><div class="sub">Front-facing KPIs stay anchored to the top 10. Use scope, metric, and display controls to inspect the operator universe without navigating WingX.</div></div>
+      <div class="controls"><div class="control"><span>Month</span><select id="monthSelect"><option>Current Export</option></select></div><div class="control"><span>Scope</span><select id="scopeSelect"><option value="10">Top 10</option><option value="25">Top 25</option><option value="50">Top 50</option><option value="100">Top 100</option><option value="all">All Competitors</option></select></div><div class="control"><span>Metric</span><select id="metricSelect"><option value="total">Total Hours</option><option value="under2">Under 2h</option><option value="b23">2-3h</option><option value="b34">3-4h</option><option value="b4">4h+</option><option value="longShare">Long-haul Share</option></select></div><div class="control"><span>Display</span><select id="displaySelect"><option value="stacked">Stacked Bands</option><option value="focused">Focused Metric</option><option value="percent">Percent Mix</option></select></div></div></div>
+      <div class="kpi-grid" id="kpis"></div>
+      <section class="chart-card"><div class="chart-head"><div><div class="chart-title" id="chartTitle">Mission band hours by operator</div><div class="muted" style="font-size:12px">Click a bar, card, queue item, table row, or use the operator dropdown.</div></div><div class="legend" id="legend"></div></div><canvas id="mainChart"></canvas></section>
+      <div class="operator-strip" id="operatorStrip"></div>
+      <section class="panel table-panel"><div class="chart-head"><div><div class="chart-title">Ranked operator table</div><div class="muted" style="font-size:12px">Explorer can show all competitors; KPI layer remains top 10.</div></div><span class="pill" id="rankPill">Top 10</span></div><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Operator</th><th>Total</th><th>&lt;2h</th><th>2-3h</th><th>3-4h</th><th>4h+</th><th>Long %</th><th>Dominant</th></tr></thead><tbody id="tableBody"></tbody></table></div></section>
+    </div></main>
+    <aside class="right"><div class="panel queue"><div class="label">Competitor Queue</div><div class="queue-list" id="queueList"></div></div><div class="panel drill"><div class="label">Mission Mix</div><canvas id="donutChart" style="margin-top:8px"></canvas><div class="footer-note">Source: stored WingX operator band export data. Current export has no true month field yet.</div></div></aside>
+  </div>
 </div>
-
-<div class="chart-card">
-<canvas id="mainChart"></canvas>
-</div>
-
-<div class="helper">
-Replace the <b>data</b> array in the code with your full dataset. No uploads, no Excel handling.
-</div>
-
-</div>
-
 <script>
-
-// =====================
-// 🔴 REPLACE THIS WITH YOUR FULL DATASET
-// =====================
-const data = [
+const rawData=[
 {operator:"flyExclusive",under2:6814.1,b23:5924.1,b34:3012.9,b4:1171.7},
 {operator:"Vista America",under2:3750.0,b23:3790.1,b34:1637.8,b4:3514.6},
 {operator:"Wheels Up Private Jets",under2:5397.8,b23:3327.6,b34:1443.7,b4:1130.8},
@@ -101,71 +73,34 @@ const data = [
 {operator:"Avjet Corporation",under2:175.2,b23:179.5,b34:138.8,b4:193.9},
 {operator:"Northern Jet Management Inc",under2:253.7,b23:175.5,b34:120.3,b4:132.3}
 ];
-// =====================
-
-const bands={under2:"#5ee7ff",b23:"#42b8ff",b34:"#8b93ff",b4:"#b975ff"};
-let chart;
-
-function total(o){return (o.under2||0)+(o.b23||0)+(o.b34||0)+(o.b4||0)}
-
-function populateCompare(){
-const sel=document.getElementById("compareSelect");
-sel.innerHTML=data.map(o=>`<option value="${o.operator}">${o.operator}</option>`).join("");
-}
-
-function render(){
-const metric=document.getElementById("metricSelect").value;
-const scope=document.getElementById("scopeSelect").value;
-const mode=document.getElementById("modeSelect").value;
-const selected=[...document.getElementById("compareSelect").selectedOptions].map(o=>o.value);
-
-let sorted=[...data];
-
-if(metric!=="total"){
-sorted.sort((a,b)=>b[metric]-a[metric]);
-} else {
-sorted.sort((a,b)=>total(b)-total(a));
-}
-
-if(scope!=="all") sorted=sorted.slice(0,Number(scope));
-if(selected.length>0) sorted=data.filter(o=>selected.includes(o.operator));
-
-const labels=sorted.map(o=>o.operator);
-let datasets=[];
-
-if(metric==="total"){
-datasets=[
-{label:"<2h",data:sorted.map(o=>mode==="percent"?o.under2/total(o)*100:o.under2),backgroundColor:bands.under2},
-{label:"2-3h",data:sorted.map(o=>mode==="percent"?o.b23/total(o)*100:o.b23),backgroundColor:bands.b23},
-{label:"3-4h",data:sorted.map(o=>mode==="percent"?o.b34/total(o)*100:o.b34),backgroundColor:bands.b34},
-{label:"4h+",data:sorted.map(o=>mode==="percent"?o.b4/total(o)*100:o.b4),backgroundColor:bands.b4}
-];
-} else {
-datasets=[{
-label:metric,
-data:sorted.map(o=>mode==="percent"?o[metric]/total(o)*100:o[metric]),
-backgroundColor:bands[metric]
-}];
-}
-
-if(chart) chart.destroy();
-chart=new Chart(document.getElementById("mainChart"),{
-type:"bar",
-data:{labels,datasets},
-options:{
-responsive:true,
-plugins:{legend:{display:true},tooltip:{callbacks:{label:(c)=>mode==="percent"?c.parsed.y.toFixed(1)+"%":Number(c.parsed.y).toLocaleString()}}},
-scales:{y:{ticks:{callback:(v)=>mode==="percent"?v+"%":Number(v).toLocaleString()}}}
-}
-});
-}
-
-["metricSelect","scopeSelect","modeSelect","compareSelect"].forEach(id=>document.getElementById(id).addEventListener("change",render));
-
-populateCompare();
-render();
-
+const bands=[{key:'under2',label:'<2h',full:'Under 2h',color:'#5ee7ff'},{key:'b23',label:'2-3h',full:'2-3h',color:'#42b8ff'},{key:'b34',label:'3-4h',full:'3-4h',color:'#8b93ff'},{key:'b4',label:'4h+',full:'4h+',color:'#b975ff'}];
+const fmt=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0});
+const fmt1=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:1});
+const pct=n=>((Number(n)||0)*100).toFixed(1)+'%';
+const shortName=n=>n.replace(' Private Jets','').replace(' Aviation Inc',' Aviation').replace(' Charters','');
+const rows=rawData.map(o=>{const total=o.under2+o.b23+o.b34+o.b4;const long=o.b34+o.b4;const dominant=[...bands].sort((a,b)=>o[b.key]-o[a.key])[0];return {...o,total,long,longShare:total?long/total:0,shortShare:total?o.under2/total:0,dominant:dominant.label}}).sort((a,b)=>b.total-a.total);
+const top10=rows.slice(0,10);
+let selected=top10[0].operator, mainChart, donutChart, sparkChart;
+const state={metric:'total',display:'stacked',scope:'10'};
+Chart.defaults.color='#9aa9c1'; Chart.defaults.borderColor='rgba(255,255,255,.07)'; Chart.defaults.font.family='Inter, Arial, sans-serif';
+function metricValue(o){return state.metric==='longShare'?o.longShare*100:o[state.metric];}
+function sortedRows(){return [...rows].sort((a,b)=>metricValue(b)-metricValue(a));}
+function scopedRows(){const s=sortedRows();return state.scope==='all'?s:s.slice(0,Number(state.scope));}
+function kpiTotals(){return {hours:top10.reduce((s,o)=>s+o.total,0),under2:top10.reduce((s,o)=>s+o.under2,0),long:top10.reduce((s,o)=>s+o.long,0)};}
+function update(){const view=scopedRows();const k=kpiTotals();const leader=top10[0];document.getElementById('totalHours').textContent=fmt(k.hours);document.getElementById('operatorCount').textContent=state.scope==='all'?rows.length+' operators':'Top '+state.scope;document.getElementById('kpis').innerHTML=`<div class="kpi"><div class="label">Top 10 Hours</div><div class="num">${fmt(k.hours)}</div><div class="small">Front-facing KPI set</div></div><div class="kpi"><div class="label">Top 10 Leader</div><div class="num" style="font-size:20px">${leader.operator}</div><div class="small">${fmt1(leader.total)} hrs</div></div><div class="kpi"><div class="label">Top 10 Short Haul</div><div class="num">${pct(k.under2/k.hours)}</div><div class="small">Under 2h mission share</div></div><div class="kpi"><div class="label">Top 10 Long Haul</div><div class="num">${pct(k.long/k.hours)}</div><div class="small">3h+ mission share</div></div>`;const longBias=[...top10].sort((a,b)=>b.longShare-a.longShare)[0];document.getElementById('topInsight').textContent=`Top 10 view: ${leader.operator} leads total hours; ${longBias.operator} has the strongest 3h+ concentration.`;renderLegend();renderMainChart(view);renderStrip(top10);renderQueue(view);renderTable(view);renderDrilldown();renderSpark();}
+function renderLegend(){document.getElementById('legend').innerHTML=bands.map(b=>`<span class="leg"><i class="sw" style="background:${b.color}"></i>${b.full}</span>`).join('');}
+function renderMainChart(view){const ctx=document.getElementById('mainChart');if(mainChart)mainChart.destroy();let datasets;if(state.display==='stacked'){datasets=bands.map(b=>({label:b.full,data:view.map(o=>o[b.key]),backgroundColor:b.color,borderRadius:5,stack:'hours'}));}else if(state.display==='percent'){datasets=bands.map(b=>({label:b.full,data:view.map(o=>o.total?o[b.key]/o.total*100:0),backgroundColor:b.color,borderRadius:5,stack:'mix'}));}else{const b=bands.find(x=>x.key===state.metric)||{full:document.querySelector('#metricSelect option:checked').textContent,color:'#5ee7ff'};datasets=[{label:b.full,data:view.map(o=>metricValue(o)),backgroundColor:b.color,borderRadius:8}];}document.getElementById('chartTitle').textContent=state.display==='percent'?'Percent mission mix by operator':state.display==='focused'?'Focused metric by operator':'Mission band hours by operator';mainChart=new Chart(ctx,{type:'bar',data:{labels:view.map(o=>shortName(o.operator)),datasets},options:{responsive:true,maintainAspectRatio:false,animation:{duration:550,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{backgroundColor:'#07101f',borderColor:'rgba(94,231,255,.35)',borderWidth:1,padding:12,callbacks:{label:c=>`${c.dataset.label}: ${state.display==='percent'?c.parsed.y.toFixed(1)+'%':fmt1(c.parsed.y)+' hrs'}`}}},scales:{x:{stacked:state.display!=='focused',grid:{color:'rgba(255,255,255,.035)'},ticks:{color:'#dce7f8',maxRotation:45,minRotation:25,autoSkip:view.length>30}},y:{stacked:state.display!=='focused',beginAtZero:true,grid:{color:'rgba(255,255,255,.055)'},ticks:{callback:v=>state.display==='percent'?v+'%':Number(v).toLocaleString()}}},onClick:(evt,els)=>{if(els.length) selectOperator(view[els[0].index].operator);}}});}
+function renderStrip(view){document.getElementById('operatorStrip').innerHTML=view.slice(0,10).map(o=>`<div class="op-card ${o.operator===selected?'active':''}" data-op="${encodeURIComponent(o.operator)}"><b>${shortName(o.operator)}</b><span>${fmt1(o.total)} hrs · ${pct(o.longShare)} long</span><div class="mini-bars">${bands.map(b=>`<i style="width:${o.total?o[b.key]/o.total*100:0}%;background:${b.color}"></i>`).join('')}</div></div>`).join('');document.querySelectorAll('.op-card').forEach(el=>el.onclick=()=>selectOperator(decodeURIComponent(el.dataset.op)));}
+function renderQueue(view){document.getElementById('queueList').innerHTML=view.map((o,i)=>`<div class="queue-item ${o.operator===selected?'active':''}" data-op="${encodeURIComponent(o.operator)}"><b>${String(i+1).padStart(2,'0')} · ${o.operator}</b><p>${fmt1(o.total)} hrs · dominant ${o.dominant} · ${pct(o.shortShare)} short</p></div>`).join('');document.querySelectorAll('.queue-item').forEach(el=>el.onclick=()=>selectOperator(decodeURIComponent(el.dataset.op)));}
+function renderTable(view){document.getElementById('rankPill').textContent=state.scope==='all'?`All ${rows.length}`:`Top ${state.scope}`;document.getElementById('tableBody').innerHTML=view.map((o,i)=>`<tr data-op="${encodeURIComponent(o.operator)}"><td>#${i+1}</td><td><b>${o.operator}</b></td><td class="cyan">${fmt1(o.total)}</td><td>${fmt1(o.under2)}</td><td>${fmt1(o.b23)}</td><td>${fmt1(o.b34)}</td><td>${fmt1(o.b4)}</td><td>${pct(o.longShare)}</td><td><span class="pill">${o.dominant}</span></td></tr>`).join('');document.querySelectorAll('tbody tr').forEach(el=>el.onclick=()=>selectOperator(decodeURIComponent(el.dataset.op)));}
+function renderDrilldown(){const o=rows.find(x=>x.operator===selected)||top10[0];document.getElementById('selectedName').textContent=o.operator;document.getElementById('selectedSub').textContent=`${fmt1(o.total)} total hours · ${pct(o.shortShare)} under 2h · ${pct(o.longShare)} 3h+`;document.getElementById('bandBreakdown').innerHTML=bands.map(b=>`<div class="band-row"><div class="band-top"><span>${b.full}</span><strong>${fmt1(o[b.key])} hrs · ${pct(o.total?o[b.key]/o.total:0)}</strong></div><div class="track"><div class="fill" style="width:${o.total?o[b.key]/o.total*100:0}%;background:${b.color}"></div></div></div>`).join('');if(donutChart)donutChart.destroy();donutChart=new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:bands.map(b=>b.full),datasets:[{data:bands.map(b=>o[b.key]),backgroundColor:bands.map(b=>b.color),borderWidth:0,hoverOffset:8}]},options:{cutout:'68%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#dce7f8'}},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt1(c.parsed)} hrs`}}}}});const sel=document.getElementById('operatorSelect');if(sel.value!==o.operator) sel.value=o.operator;}
+function renderSpark(){const totals=bands.map(b=>top10.reduce((s,o)=>s+o[b.key],0));if(sparkChart)sparkChart.destroy();sparkChart=new Chart(document.getElementById('sparkChart'),{type:'line',data:{labels:bands.map(b=>b.label),datasets:[{data:totals,borderColor:'#5ee7ff',backgroundColor:'rgba(94,231,255,.12)',fill:true,tension:.35,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});}
+function populateOperatorSelect(){const sel=document.getElementById('operatorSelect');sel.innerHTML=rows.map(o=>`<option value="${o.operator}">${o.operator} — ${fmt1(o.total)} hrs</option>`).join('');sel.value=selected;sel.addEventListener('change',e=>selectOperator(e.target.value));}
+function selectOperator(name){selected=name;renderDrilldown();renderStrip(top10);renderQueue(scopedRows());renderTable(scopedRows());}
+document.getElementById('scopeSelect').addEventListener('change',e=>{state.scope=e.target.value;update();});
+document.getElementById('metricSelect').addEventListener('change',e=>{state.metric=e.target.value;if(state.metric==='total'){state.display='stacked';document.getElementById('displaySelect').value='stacked';}update();});
+document.getElementById('displaySelect').addEventListener('change',e=>{state.display=e.target.value;update();});
+populateOperatorSelect();update();
 </script>
-
 </body>
 </html>
