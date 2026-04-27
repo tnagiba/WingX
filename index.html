@@ -1,106 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WingX Operator Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body { margin:0; font-family: Arial; background:#070A12; color:white; }
-    .container { max-width:1200px; margin:auto; padding:20px; }
-    .card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; margin-bottom:20px; }
-    h1 { font-size:32px; margin-bottom:10px; }
-    .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-    .kpi { background:rgba(255,255,255,0.06); padding:16px; border-radius:12px; }
-    select { background:#020617; color:white; padding:8px; border-radius:8px; border:1px solid #333; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WingX Operator Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e17;
+  --surface: #111827;
+  --surface2: #1a2332;
+  --border: rgba(148,163,184,.12);
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --band1: #38bdf8;
+  --band2: #6366f1;
+  --band3: #a78bfa;
+  --band4: #f472b6;
+  --green: #34d399;
+  --gold: #fbbf24;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app { max-width: 1440px; margin: 0 auto; padding: 20px 24px 40px; }
+
+/* Top bar */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
+}
+.topbar h1 {
+  font-size: 20px; font-weight: 900; letter-spacing: -.03em;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topbar .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--text3); letter-spacing: .04em;
+  border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px;
+}
+
+/* Controls strip */
+.controls {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center;
+}
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text3);
+}
+.control-group select {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 12px; font-family: inherit; font-size: 13px;
+  font-weight: 500; outline: none; cursor: pointer; min-width: 150px;
+}
+.control-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56,189,248,.15); }
+
+/* KPI row */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+.kpi {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+}
+.kpi .kpi-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.kpi .kpi-val {
+  font-size: 26px; font-weight: 900; letter-spacing: -.04em; margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.kpi .kpi-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+/* Main grid */
+.main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+
+/* Chart area */
+.chart-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; overflow: hidden;
+}
+.chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.chart-title { font-size: 15px; font-weight: 700; }
+.chart-subtitle { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); cursor: pointer; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* Horizontal bar chart */
+.hbar-container { display: flex; flex-direction: column; gap: 4px; }
+.hbar-row {
+  display: grid; grid-template-columns: 160px 1fr 80px; gap: 12px;
+  align-items: center; padding: 6px 8px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.hbar-row:hover { background: rgba(56,189,248,.06); }
+.hbar-row.active { background: rgba(56,189,248,.1); border-left: 3px solid var(--accent); }
+.hbar-name {
+  font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hbar-rank { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text3); margin-right: 6px; display: inline-block; width: 22px; }
+.hbar-track { height: 28px; display: flex; border-radius: 4px; overflow: hidden; background: rgba(255,255,255,.03); position: relative; }
+.hbar-seg { height: 100%; transition: width .4s ease; position: relative; }
+.hbar-seg:first-child { border-radius: 4px 0 0 4px; }
+.hbar-seg:last-child { border-radius: 0 4px 4px 0; }
+.hbar-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  text-align: right; color: var(--text2);
+}
+
+/* Focused single-band view */
+.fbar-track { height: 28px; border-radius: 4px; overflow: hidden; background: rgba(255,255,255,.03); }
+.fbar-fill { height: 100%; border-radius: 4px; transition: width .4s ease; }
+
+/* Right panel */
+.side-panel { display: flex; flex-direction: column; gap: 12px; }
+.detail-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+}
+.detail-card .dc-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-bottom: 12px; }
+.detail-card .dc-name { font-size: 18px; font-weight: 900; letter-spacing: -.02em; }
+.detail-card .dc-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* Band breakdown in detail */
+.band-item { margin-top: 10px; }
+.band-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.band-meta span:first-child { color: var(--text2); }
+.band-meta span:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.band-track { height: 6px; background: rgba(255,255,255,.06); border-radius: 99px; overflow: hidden; }
+.band-fill { height: 100%; border-radius: 99px; transition: width .4s ease; }
+
+/* Donut area */
+.donut-wrap { position: relative; width: 180px; height: 180px; margin: 8px auto 0; }
+.donut-wrap canvas { width: 100% !important; height: 100% !important; }
+.donut-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  text-align: center;
+}
+.donut-center .dc-big { font-size: 20px; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
+.donut-center .dc-sm { font-size: 10px; color: var(--text3); text-transform: uppercase; }
+
+/* Table */
+.table-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px; margin-top: 16px;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 800px; }
+th {
+  text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text3); font-weight: 700; padding: 10px 8px;
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface);
+}
+td {
+  padding: 9px 8px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-family: 'JetBrains Mono', monospace; font-weight: 400;
+}
+td:first-child { color: var(--text3); }
+td:nth-child(2) { font-family: 'DM Sans', sans-serif; font-weight: 600; }
+tr:hover td { background: rgba(56,189,248,.04); }
+tr.active-row td { background: rgba(56,189,248,.08); }
+.pill {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 99px; border: 1px solid;
+}
+.pill-1 { color: var(--band1); border-color: rgba(56,189,248,.3); background: rgba(56,189,248,.08); }
+.pill-2 { color: var(--band2); border-color: rgba(99,102,241,.3); background: rgba(99,102,241,.08); }
+.pill-3 { color: var(--band3); border-color: rgba(167,139,250,.3); background: rgba(167,139,250,.08); }
+.pill-4 { color: var(--band4); border-color: rgba(244,114,182,.3); background: rgba(244,114,182,.08); }
+
+.scroll-area { max-height: 600px; overflow-y: auto; }
+.scroll-area::-webkit-scrollbar { width: 4px; }
+.scroll-area::-webkit-scrollbar-track { background: transparent; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+@media(max-width:1100px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media(max-width:640px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .hbar-row { grid-template-columns: 120px 1fr 60px; }
+}
+</style>
 </head>
 <body>
-<div class="container">
-  <h1>Where competitor flying is concentrated</h1>
-  <p style="color:#94a3b8">Top 10 operators · Hourly band breakdown</p>
-
-  <div class="kpis" id="kpis"></div>
-
-  <div class="card">
-    <canvas id="chart"></canvas>
+<div class="app">
+  <div class="topbar">
+    <h1>WingX Operator Intelligence</h1>
+    <span class="tag">Branded Charter &middot; US Domestic &middot; Excl. NetJets/Flexjet</span>
   </div>
 
-  <div class="card">
-    <label>Operator Drilldown:</label>
-    <select id="operatorSelect"></select>
-    <canvas id="pie"></canvas>
+  <div class="controls" id="controls">
+    <div class="control-group">
+      <label>Scope</label>
+      <select id="scopeSelect">
+        <option value="10">Top 10</option>
+        <option value="25" selected>Top 25</option>
+        <option value="50">Top 50</option>
+        <option value="all">All Operators</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Hour Band</label>
+      <select id="bandSelect">
+        <option value="all">All Bands</option>
+        <option value="under2">Under 2h</option>
+        <option value="b23">2–3h</option>
+        <option value="b34">3–4h</option>
+        <option value="b4">4h+</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Sort By</label>
+      <select id="sortSelect">
+        <option value="total">Total Hours</option>
+        <option value="under2">Under 2h Hours</option>
+        <option value="b23">2–3h Hours</option>
+        <option value="b34">3–4h Hours</option>
+        <option value="b4">4h+ Hours</option>
+        <option value="longShare">Long-haul %</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="kpi-row" id="kpis"></div>
+
+  <div class="main-grid">
+    <div>
+      <div class="chart-panel">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title" id="chartTitle">Hours by Operator</div>
+            <div class="chart-subtitle" id="chartSub">Click any row to inspect</div>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <div class="scroll-area" id="chartArea"></div>
+      </div>
+
+      <div class="table-panel">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Operator Rankings</div>
+            <div class="chart-subtitle" id="tableSub">Sorted by total hours</div>
+          </div>
+        </div>
+        <div class="table-wrap" style="max-height:400px;overflow:auto">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Operator</th><th>Total</th><th>&lt;2h</th><th>2-3h</th><th>3-4h</th><th>4h+</th><th>Long %</th><th>Dominant</th></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="detail-card">
+        <div class="dc-label">Selected Operator</div>
+        <div class="dc-name" id="detailName">—</div>
+        <div class="dc-sub" id="detailSub">—</div>
+        <div id="bandBreakdown"></div>
+      </div>
+      <div class="detail-card">
+        <div class="dc-label">Mission Mix</div>
+        <div class="donut-wrap">
+          <canvas id="donutChart"></canvas>
+          <div class="donut-center">
+            <div class="dc-big" id="donutVal">—</div>
+            <div class="dc-sm">total hrs</div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="dc-label">Band Comparison</div>
+        <div id="sparkArea" style="height:160px"><canvas id="sparkChart"></canvas></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const data = [
-  { operator:"flyExclusive", under2:6814, b23:5924, b34:3013, b4:1172 },
-  { operator:"Vista America", under2:3750, b23:3790, b34:1638, b4:3515 },
-  { operator:"Wheels Up", under2:5398, b23:3328, b34:1444, b4:1131 },
-  { operator:"Nicholas Air", under2:2996, b23:1253, b34:398, b4:154 },
-  { operator:"Thrive", under2:1222, b23:702, b34:655, b4:1144 },
-  { operator:"ATI Jet", under2:1755, b23:1383, b34:442, b4:126 },
-  { operator:"Sky Quest", under2:778, b23:1038, b34:87, b4:94 },
-  { operator:"Silverhawk", under2:848, b23:726, b34:351, b4:26 },
-  { operator:"Kalitta", under2:913, b23:589, b34:260, b4:41 },
-  { operator:"Pittsburgh Jet", under2:842, b23:712, b34:91, b4:66 }
+const rawData=[{"operator":"flyExclusive","under2":6814.1,"b23":5924.1,"b34":3012.9,"b4":1171.7,"total":16922.8,"deps":9752,"tails":92},{"operator":"Vista America","under2":3750.0,"b23":3790.1,"b34":1637.8,"b4":3514.6,"total":12692.5,"deps":6451,"tails":69},{"operator":"Wheels Up Private Jets","under2":5397.8,"b23":3327.6,"b34":1443.7,"b4":1130.8,"total":11299.9,"deps":6948,"tails":88},{"operator":"Nicholas Air","under2":2995.8,"b23":1253.0,"b34":398.0,"b4":154.3,"total":4801.1,"deps":3462,"tails":29},{"operator":"Thrive Aviation","under2":1222.4,"b23":702.2,"b34":655.4,"b4":1143.7,"total":3723.7,"deps":1928,"tails":31},{"operator":"ATI Jet Inc","under2":1755.4,"b23":1382.5,"b34":441.8,"b4":125.7,"total":3705.4,"deps":2320,"tails":26},{"operator":"Sky Quest","under2":777.9,"b23":1037.7,"b34":86.6,"b4":93.8,"total":1996.0,"deps":1308,"tails":23},{"operator":"Silverhawk Aviation Inc","under2":848.4,"b23":725.9,"b34":350.8,"b4":25.6,"total":1950.7,"deps":1311,"tails":18},{"operator":"Kalitta Charters","under2":913.3,"b23":589.2,"b34":259.9,"b4":41.1,"total":1803.5,"deps":1201,"tails":26},{"operator":"Pittsburgh Jet Center","under2":841.8,"b23":712.3,"b34":91.0,"b4":65.7,"total":1710.8,"deps":1247,"tails":14},{"operator":"Cirrus Aviation","under2":1143.9,"b23":296.9,"b34":116.8,"b4":135.4,"total":1693.0,"deps":1416,"tails":19},{"operator":"Worldwide Jet Charter","under2":275.9,"b23":240.8,"b34":198.2,"b4":863.8,"total":1578.7,"deps":635,"tails":10},{"operator":"AB Jets","under2":722.1,"b23":407.1,"b34":224.0,"b4":185.3,"total":1538.5,"deps":939,"tails":10},{"operator":"Ventura Air Services","under2":606.6,"b23":525.5,"b34":176.8,"b4":216.3,"total":1525.2,"deps":924,"tails":14},{"operator":"Talon Air","under2":377.2,"b23":586.0,"b34":212.9,"b4":340.4,"total":1516.5,"deps":786,"tails":21},{"operator":"Latitude 33 Aviation","under2":706.8,"b23":393.7,"b34":216.9,"b4":178.7,"total":1496.1,"deps":978,"tails":23},{"operator":"Jet Access Aviation","under2":525.0,"b23":520.6,"b34":184.6,"b4":132.3,"total":1362.5,"deps":833,"tails":19},{"operator":"Pacific Coast Jet","under2":758.1,"b23":306.0,"b34":134.6,"b4":81.7,"total":1280.4,"deps":890,"tails":20},{"operator":"AirNet II","under2":684.9,"b23":390.8,"b34":145.3,"b4":17.9,"total":1238.9,"deps":789,"tails":14},{"operator":"M & N Aviation","under2":585.9,"b23":297.7,"b34":164.9,"b4":169.9,"total":1218.4,"deps":796,"tails":13},{"operator":"True Aviation","under2":281.6,"b23":296.8,"b34":243.1,"b4":361.4,"total":1182.9,"deps":554,"tails":7},{"operator":"Clay Lacy Aviation Inc","under2":308.3,"b23":329.2,"b34":102.5,"b4":383.4,"total":1123.4,"deps":573,"tails":27},{"operator":"Gold Aviation Services","under2":573.3,"b23":344.2,"b34":162.0,"b4":29.8,"total":1109.3,"deps":800,"tails":10},{"operator":"Exec 1 Aviation","under2":626.5,"b23":411.3,"b34":22.1,"b4":4.2,"total":1064.1,"deps":732,"tails":9},{"operator":"Spring City Aviation","under2":279.6,"b23":475.4,"b34":258.8,"b4":35.6,"total":1049.4,"deps":624,"tails":9},{"operator":"Club Jet","under2":454.8,"b23":333.6,"b34":140.1,"b4":109.7,"total":1038.2,"deps":634,"tails":13},{"operator":"Paradigm Jet Management","under2":315.6,"b23":411.2,"b34":187.3,"b4":65.4,"total":979.5,"deps":569,"tails":21},{"operator":"Aircraft Services Group Inc","under2":375.3,"b23":341.0,"b34":87.3,"b4":97.5,"total":901.1,"deps":567,"tails":11},{"operator":"Secure Air Charter","under2":493.4,"b23":176.0,"b34":77.6,"b4":112.4,"total":859.4,"deps":559,"tails":16},{"operator":"Jet Edge","under2":374.7,"b23":226.1,"b34":124.2,"b4":130.8,"total":855.8,"deps":526,"tails":7},{"operator":"Hop-a-Jet Inc","under2":252.7,"b23":409.5,"b34":105.6,"b4":77.6,"total":845.4,"deps":548,"tails":8},{"operator":"Encore Jet Management LLC","under2":528.2,"b23":258.2,"b34":47.9,"b4":4.1,"total":838.4,"deps":711,"tails":5},{"operator":"Skyward Aviation","under2":554.2,"b23":216.3,"b34":44.8,"b4":4.7,"total":820.0,"deps":780,"tails":13},{"operator":"Chrysler Aviation Inc","under2":482.2,"b23":94.0,"b34":122.8,"b4":63.3,"total":762.3,"deps":617,"tails":6},{"operator":"Randolph Aviation LLC","under2":269.6,"b23":351.2,"b34":98.7,"b4":27.8,"total":747.3,"deps":476,"tails":5},{"operator":"Prestige Air Group","under2":623.6,"b23":108.5,"b34":3.1,"b4":0,"total":735.2,"deps":665,"tails":6},{"operator":"Flite Access","under2":403.6,"b23":212.9,"b34":83.7,"b4":17.4,"total":717.6,"deps":515,"tails":7},{"operator":"Aitheras Aviation Group LLC","under2":376.0,"b23":233.1,"b34":66.1,"b4":28.4,"total":703.6,"deps":525,"tails":8},{"operator":"Executive Aviation Corporation","under2":201.3,"b23":350.8,"b34":86.4,"b4":54.5,"total":693.0,"deps":425,"tails":12},{"operator":"Fair Wind Air Charter","under2":196.9,"b23":282.5,"b34":100.8,"b4":92.7,"total":672.9,"deps":375,"tails":9},{"operator":"Capital City Jet Center","under2":350.1,"b23":231.5,"b34":77.1,"b4":4.5,"total":663.2,"deps":449,"tails":4},{"operator":"Mt. Margaret LLC","under2":373.6,"b23":239.5,"b34":29.4,"b4":18.9,"total":661.4,"deps":537,"tails":5},{"operator":"Journey Aviation","under2":104.5,"b23":258.2,"b34":99.3,"b4":197.2,"total":659.2,"deps":305,"tails":11},{"operator":"FlyUSA Inc","under2":267.7,"b23":252.7,"b34":108.2,"b4":23.4,"total":652.0,"deps":432,"tails":9},{"operator":"DuPage Aerospace Corp","under2":172.4,"b23":323.7,"b34":99.2,"b4":26.9,"total":622.2,"deps":361,"tails":5},{"operator":"Flightstar Corp","under2":293.4,"b23":228.8,"b34":81.0,"b4":18.2,"total":621.4,"deps":415,"tails":8},{"operator":"Aero Charter Inc","under2":399.8,"b23":162.7,"b34":41.0,"b4":8.1,"total":611.6,"deps":479,"tails":10},{"operator":"Solutions Air Charter","under2":254.5,"b23":279.3,"b34":50.3,"b4":4.2,"total":588.3,"deps":383,"tails":5},{"operator":"OzAir Charter","under2":264.2,"b23":230.9,"b34":71.3,"b4":0.0,"total":566.4,"deps":353,"tails":6},{"operator":"Pegasus Elite Aviation","under2":124.9,"b23":97.1,"b34":73.4,"b4":268.0,"total":563.4,"deps":257,"tails":6},{"operator":"Pentastar Aviation","under2":184.6,"b23":286.1,"b34":44.0,"b4":37.2,"total":551.9,"deps":342,"tails":9},{"operator":"Craft Charter","under2":146.3,"b23":155.7,"b34":78.1,"b4":171.1,"total":551.2,"deps":297,"tails":4},{"operator":"Elite Air","under2":196.8,"b23":189.7,"b34":62.8,"b4":97.2,"total":546.5,"deps":329,"tails":11},{"operator":"PrismJet LLC","under2":200.0,"b23":158.3,"b34":73.3,"b4":90.1,"total":521.7,"deps":287,"tails":5},{"operator":"Jet Air Inc","under2":182.9,"b23":233.6,"b34":103.9,"b4":0.0,"total":520.4,"deps":365,"tails":5},{"operator":"American Air Charter Inc","under2":236.6,"b23":192.0,"b34":77.4,"b4":14.0,"total":520.0,"deps":351,"tails":10},{"operator":"Prime Jet","under2":116.9,"b23":52.4,"b34":57.0,"b4":278.8,"total":505.1,"deps":213,"tails":3},{"operator":"Fly Dreams LLC","under2":186.0,"b23":217.3,"b34":76.3,"b4":14.2,"total":493.8,"deps":272,"tails":4},{"operator":"Premier Air Charter LLC","under2":143.2,"b23":84.8,"b34":72.4,"b4":192.2,"total":492.6,"deps":267,"tails":5},{"operator":"First AV Group LLC","under2":179.3,"b23":173.9,"b34":107.7,"b4":12.2,"total":473.1,"deps":344,"tails":7},{"operator":"Houston JetDirect","under2":168.4,"b23":208.3,"b34":82.6,"b4":13.6,"total":472.9,"deps":295,"tails":9},{"operator":"Oklahoma Aviation","under2":275.6,"b23":152.9,"b34":41.9,"b4":0.0,"total":470.4,"deps":316,"tails":8},{"operator":"Erin Air Inc","under2":209.9,"b23":199.3,"b34":13.7,"b4":41.2,"total":464.1,"deps":284,"tails":5},{"operator":"Business Jet Services","under2":183.0,"b23":222.5,"b34":49.5,"b4":4.2,"total":459.2,"deps":281,"tails":10},{"operator":"Mach One Air Charters","under2":261.1,"b23":121.7,"b34":40.0,"b4":19.3,"total":442.1,"deps":338,"tails":6},{"operator":"Dominion Aviation","under2":269.4,"b23":97.7,"b34":53.6,"b4":18.1,"total":438.8,"deps":330,"tails":8},{"operator":"Aero Air Charter","under2":340.3,"b23":55.7,"b34":30.5,"b4":4.2,"total":430.7,"deps":346,"tails":3},{"operator":"Koury Aviation","under2":312.2,"b23":62.5,"b34":29.5,"b4":9.2,"total":413.4,"deps":353,"tails":5},{"operator":"Hughes Flying Service","under2":199.9,"b23":170.8,"b34":36.4,"b4":4.1,"total":411.2,"deps":278,"tails":3},{"operator":"Wisconsin Aviation","under2":150.1,"b23":157.9,"b34":90.2,"b4":8.1,"total":406.3,"deps":259,"tails":7},{"operator":"Lyon Aviation","under2":111.6,"b23":97.8,"b34":67.2,"b4":128.3,"total":404.9,"deps":235,"tails":4},{"operator":"DCT Air","under2":216.4,"b23":146.5,"b34":41.4,"b4":0,"total":404.3,"deps":267,"tails":2},{"operator":"Venture Aviation","under2":278.6,"b23":83.1,"b34":33.0,"b4":4.2,"total":398.9,"deps":360,"tails":7},{"operator":"Aviation Charter","under2":215.8,"b23":127.4,"b34":31.9,"b4":0,"total":375.1,"deps":317,"tails":3},{"operator":"Jet Services Inc","under2":250.8,"b23":99.5,"b34":10.5,"b4":13.2,"total":374.0,"deps":277,"tails":6},{"operator":"Diamond Aviation LLC","under2":273.6,"b23":72.3,"b34":17.8,"b4":4.3,"total":368.0,"deps":368,"tails":4},{"operator":"Starjet Inc","under2":133.7,"b23":48.2,"b34":46.0,"b4":136.9,"total":364.8,"deps":218,"tails":6},{"operator":"Bun Air Charter","under2":172.9,"b23":142.1,"b34":33.0,"b4":13.3,"total":361.3,"deps":285,"tails":3},{"operator":"Davinci Jets LLC","under2":248.1,"b23":54.5,"b34":47.5,"b4":9.2,"total":359.3,"deps":267,"tails":8},{"operator":"Choice Aviation LLC","under2":208.3,"b23":117.5,"b34":28.5,"b4":0.0,"total":354.3,"deps":282,"tails":4},{"operator":"Atlantic Air Charter","under2":165.1,"b23":144.1,"b34":39.4,"b4":4.6,"total":353.2,"deps":244,"tails":3},{"operator":"Zanesville Aviation","under2":259.1,"b23":66.7,"b34":12.4,"b4":0.0,"total":338.2,"deps":370,"tails":6},{"operator":"Meregrass Inc","under2":130.9,"b23":108.4,"b34":44.6,"b4":49.3,"total":333.2,"deps":197,"tails":2},{"operator":"Skysouth Aviation Inc","under2":234.0,"b23":74.5,"b34":13.7,"b4":0.0,"total":322.2,"deps":288,"tails":2},{"operator":"Trego-Dugan Aviation","under2":147.8,"b23":110.9,"b34":59.3,"b4":0,"total":318.0,"deps":210,"tails":5},{"operator":"Privateflite Aviation LLC","under2":177.6,"b23":133.6,"b34":6.7,"b4":0.0,"total":317.9,"deps":222,"tails":6},{"operator":"Lyddon Aero Center","under2":239.2,"b23":71.2,"b34":3.0,"b4":4.1,"total":317.5,"deps":243,"tails":4},{"operator":"Jet ICU","under2":127.6,"b23":87.2,"b34":64.3,"b4":26.8,"total":305.9,"deps":219,"tails":6},{"operator":"CTP Aviation","under2":153.6,"b23":39.0,"b34":27.1,"b4":84.9,"total":304.6,"deps":202,"tails":5},{"operator":"Jet America Inc","under2":186.9,"b23":103.3,"b34":12.5,"b4":0,"total":302.7,"deps":233,"tails":5},{"operator":"Premier Jets","under2":59.6,"b23":62.2,"b34":24.2,"b4":155.8,"total":301.8,"deps":115,"tails":3},{"operator":"MidAmerica Jet","under2":201.1,"b23":61.5,"b34":33.7,"b4":4.6,"total":300.9,"deps":228,"tails":6},{"operator":"Corporate Aircraft Management Inc","under2":128.3,"b23":126.0,"b34":37.7,"b4":8.4,"total":300.4,"deps":195,"tails":2},{"operator":"Integrated Flight Resources Inc","under2":102.6,"b23":97.4,"b34":43.5,"b4":53.1,"total":296.6,"deps":182,"tails":6},{"operator":"Trans-Exec Air Service Inc","under2":105.1,"b23":16.2,"b34":13.8,"b4":160.1,"total":295.2,"deps":145,"tails":4},{"operator":"A-OK Jets","under2":82.1,"b23":129.0,"b34":35.2,"b4":48.6,"total":294.9,"deps":176,"tails":8},{"operator":"Cutter Flight Management","under2":125.0,"b23":112.1,"b34":27.3,"b4":23.6,"total":288.0,"deps":172,"tails":7},{"operator":"Craig Air Center-MyJet","under2":119.8,"b23":127.8,"b34":33.2,"b4":5.7,"total":286.5,"deps":183,"tails":2},{"operator":"Modesto Jet Center","under2":173.8,"b23":60.2,"b34":45.7,"b4":4.2,"total":283.9,"deps":214,"tails":6},{"operator":"Buffalo Bayou Air LLC","under2":153.0,"b23":99.5,"b34":28.6,"b4":0,"total":281.1,"deps":197,"tails":2}];
+
+const BANDS = [
+  { key: 'under2', label: '<2h', full: 'Under 2h', color: '#38bdf8', pillClass: 'pill-1' },
+  { key: 'b23', label: '2-3h', full: '2–3h', color: '#6366f1', pillClass: 'pill-2' },
+  { key: 'b34', label: '3-4h', full: '3–4h', color: '#a78bfa', pillClass: 'pill-3' },
+  { key: 'b4', label: '4h+', full: '4h+', color: '#f472b6', pillClass: 'pill-4' },
 ];
 
-function total(o){ return o.under2+o.b23+o.b34+o.b4 }
+const fmt = n => Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0});
+const fmt1 = n => Number(n||0).toLocaleString('en-US',{maximumFractionDigits:1});
+const pct = n => ((n||0)*100).toFixed(1)+'%';
 
-const sorted = data.map(o=>({...o,total:total(o)})).sort((a,b)=>b.total-a.total);
-
-// KPIs
-const totalHours = sorted.reduce((s,o)=>s+o.total,0);
-const kpisHTML = `
-  <div class="kpi"><b>Total Hours</b><br>${Math.round(totalHours)}</div>
-  <div class="kpi"><b>Leader</b><br>${sorted[0].operator}</div>
-  <div class="kpi"><b>Short Haul %</b><br>${Math.round(sorted.reduce((s,o)=>s+o.under2,0)/totalHours*100)}%</div>
-  <div class="kpi"><b>Long Haul %</b><br>${Math.round(sorted.reduce((s,o)=>s+o.b34+o.b4,0)/totalHours*100)}%</div>
-`;
-document.getElementById('kpis').innerHTML = kpisHTML;
-
-// Bar chart
-new Chart(document.getElementById('chart'),{
-  type:'bar',
-  data:{
-    labels:sorted.map(o=>o.operator),
-    datasets:[
-      {label:'<2h', data:sorted.map(o=>o.under2), backgroundColor:'#22d3ee'},
-      {label:'2-3h', data:sorted.map(o=>o.b23), backgroundColor:'#38bdf8'},
-      {label:'3-4h', data:sorted.map(o=>o.b34), backgroundColor:'#818cf8'},
-      {label:'4h+', data:sorted.map(o=>o.b4), backgroundColor:'#c084fc'}
-    ]
-  },
-  options:{responsive:true, plugins:{legend:{labels:{color:'white'}}}, scales:{x:{ticks:{color:'white'}},y:{ticks:{color:'white'}}}}
+// Enrich rows
+const rows = rawData.map(o => {
+  const long = o.b34 + o.b4;
+  const dominant = [...BANDS].sort((a,b) => o[b.key] - o[a.key])[0];
+  return { ...o, long, longShare: o.total ? long/o.total : 0, shortShare: o.total ? o.under2/o.total : 0, dominant };
 });
 
-// Dropdown
-const select = document.getElementById('operatorSelect');
-sorted.forEach(o=>{
-  const opt = document.createElement('option');
-  opt.value=o.operator;
-  opt.text=o.operator;
-  select.appendChild(opt);
-});
+let state = { scope: '25', band: 'all', sort: 'total', selected: rows[0]?.operator };
+let donutChart, sparkChart;
 
-let pie;
-function renderPie(op){
-  const o = sorted.find(x=>x.operator===op);
-  if(pie) pie.destroy();
-  pie = new Chart(document.getElementById('pie'),{
-    type:'pie',
-    data:{
-      labels:['<2h','2-3h','3-4h','4h+'],
-      datasets:[{data:[o.under2,o.b23,o.b34,o.b4], backgroundColor:['#22d3ee','#38bdf8','#818cf8','#c084fc']}]
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = 'rgba(255,255,255,.06)';
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+
+function sortVal(o) {
+  if (state.sort === 'longShare') return o.longShare;
+  if (state.sort === 'total') return o.total;
+  return o[state.sort] || 0;
+}
+
+function getView() {
+  const sorted = [...rows].sort((a,b) => sortVal(b) - sortVal(a));
+  return state.scope === 'all' ? sorted : sorted.slice(0, Number(state.scope));
+}
+
+function getTop10() {
+  return [...rows].sort((a,b) => b.total - a.total).slice(0, 10);
+}
+
+function update() {
+  const view = getView();
+  const top10 = getTop10();
+  const isFocused = state.band !== 'all';
+  const focusBand = BANDS.find(b => b.key === state.band);
+
+  // KPIs - always top 10
+  const t10hours = top10.reduce((s,o) => s + o.total, 0);
+  const t10short = top10.reduce((s,o) => s + o.under2, 0);
+  const t10long = top10.reduce((s,o) => s + o.long, 0);
+  const leader = top10[0];
+
+  let focusKpi = '';
+  if (isFocused) {
+    const t10band = top10.reduce((s,o) => s + o[state.band], 0);
+    focusKpi = `<div class="kpi"><div class="kpi-label">${focusBand.full} (Top 10)</div><div class="kpi-val" style="color:${focusBand.color}">${fmt(t10band)}</div><div class="kpi-sub">hrs in band</div></div>`;
+  }
+
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">Top 10 Total Hours</div><div class="kpi-val">${fmt(t10hours)}</div><div class="kpi-sub">across all bands</div></div>
+    <div class="kpi"><div class="kpi-label">Leader</div><div class="kpi-val" style="font-size:17px">${leader.operator}</div><div class="kpi-sub">${fmt1(leader.total)} hrs</div></div>
+    <div class="kpi"><div class="kpi-label">Short-haul Share</div><div class="kpi-val">${pct(t10short/t10hours)}</div><div class="kpi-sub">under 2h (top 10)</div></div>
+    <div class="kpi"><div class="kpi-label">Long-haul Share</div><div class="kpi-val">${pct(t10long/t10hours)}</div><div class="kpi-sub">3h+ missions (top 10)</div></div>
+    ${focusKpi}
+  `;
+
+  // Legend
+  if (isFocused) {
+    document.getElementById('legend').innerHTML = `<div class="legend-item"><div class="legend-dot" style="background:${focusBand.color}"></div>${focusBand.full}</div>`;
+  } else {
+    document.getElementById('legend').innerHTML = BANDS.map(b =>
+      `<div class="legend-item"><div class="legend-dot" style="background:${b.color}"></div>${b.full}</div>`
+    ).join('');
+  }
+
+  // Chart title
+  const sortLabel = state.sort === 'total' ? '' : state.sort === 'longShare' ? ' · sorted by long-haul %' : ` · sorted by ${(BANDS.find(b=>b.key===state.sort)||{full:''}).full}`;
+  document.getElementById('chartTitle').textContent = isFocused
+    ? `${focusBand.full} Hours by Operator`
+    : 'Mission Band Breakdown';
+  document.getElementById('chartSub').textContent = `${state.scope === 'all' ? 'All' : 'Top '+state.scope} operators${sortLabel}`;
+
+  // Max for scaling
+  const maxTotal = Math.max(...view.map(o => isFocused ? o[state.band] : o.total));
+
+  // Render horizontal bars
+  const area = document.getElementById('chartArea');
+  if (isFocused) {
+    // Clean single-band view
+    area.innerHTML = view.map((o, i) => {
+      const val = o[state.band];
+      const w = maxTotal ? (val / maxTotal * 100) : 0;
+      return `<div class="hbar-row ${o.operator===state.selected?'active':''}" data-op="${encodeURIComponent(o.operator)}">
+        <div class="hbar-name"><span class="hbar-rank">${i+1}</span>${o.operator}</div>
+        <div class="fbar-track"><div class="fbar-fill" style="width:${w}%;background:${focusBand.color};opacity:.85"></div></div>
+        <div class="hbar-val">${fmt1(val)}</div>
+      </div>`;
+    }).join('');
+  } else {
+    // Stacked horizontal bars - cleaner segmented look
+    area.innerHTML = view.map((o, i) => {
+      return `<div class="hbar-row ${o.operator===state.selected?'active':''}" data-op="${encodeURIComponent(o.operator)}">
+        <div class="hbar-name"><span class="hbar-rank">${i+1}</span>${o.operator}</div>
+        <div class="hbar-track">${BANDS.map(b => {
+          const w = maxTotal ? (o[b.key] / maxTotal * 100) : 0;
+          return `<div class="hbar-seg" style="width:${w}%;background:${b.color};opacity:.8" title="${b.full}: ${fmt1(o[b.key])} hrs"></div>`;
+        }).join('')}</div>
+        <div class="hbar-val">${fmt1(o.total)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Click handlers
+  area.querySelectorAll('.hbar-row').forEach(el => {
+    el.onclick = () => selectOp(decodeURIComponent(el.dataset.op));
+  });
+
+  // Table
+  document.getElementById('tableSub').textContent = `${view.length} operators · sorted by ${state.sort === 'longShare' ? 'long-haul %' : (BANDS.find(b=>b.key===state.sort)||{full:'total hours'}).full}`;
+  document.getElementById('tableBody').innerHTML = view.map((o, i) =>
+    `<tr class="${o.operator===state.selected?'active-row':''}" data-op="${encodeURIComponent(o.operator)}" style="cursor:pointer">
+      <td>${i+1}</td>
+      <td>${o.operator}</td>
+      <td style="color:var(--accent)">${fmt1(o.total)}</td>
+      <td>${fmt1(o.under2)}</td>
+      <td>${fmt1(o.b23)}</td>
+      <td>${fmt1(o.b34)}</td>
+      <td>${fmt1(o.b4)}</td>
+      <td>${pct(o.longShare)}</td>
+      <td><span class="pill ${o.dominant.pillClass}">${o.dominant.label}</span></td>
+    </tr>`
+  ).join('');
+
+  document.querySelectorAll('#tableBody tr').forEach(el => {
+    el.onclick = () => selectOp(decodeURIComponent(el.dataset.op));
+  });
+
+  renderDetail();
+  renderSpark(view);
+}
+
+function renderDetail() {
+  const o = rows.find(x => x.operator === state.selected) || rows[0];
+  document.getElementById('detailName').textContent = o.operator;
+  document.getElementById('detailSub').textContent = `${fmt1(o.total)} hrs · ${o.deps||'—'} departures · ${o.tails||'—'} tails`;
+  document.getElementById('donutVal').textContent = fmt(o.total);
+
+  document.getElementById('bandBreakdown').innerHTML = BANDS.map(b => {
+    const share = o.total ? o[b.key]/o.total : 0;
+    return `<div class="band-item">
+      <div class="band-meta"><span>${b.full}</span><span style="color:${b.color}">${fmt1(o[b.key])} hrs · ${pct(share)}</span></div>
+      <div class="band-track"><div class="band-fill" style="width:${share*100}%;background:${b.color}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Donut
+  if (donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('donutChart'), {
+    type: 'doughnut',
+    data: {
+      labels: BANDS.map(b => b.full),
+      datasets: [{
+        data: BANDS.map(b => o[b.key]),
+        backgroundColor: BANDS.map(b => b.color),
+        borderWidth: 0, hoverOffset: 6,
+      }]
+    },
+    options: {
+      cutout: '72%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#111827', borderColor: 'rgba(56,189,248,.3)', borderWidth: 1,
+          callbacks: { label: c => `${c.label}: ${fmt1(c.parsed)} hrs` }
+        }
+      }
     }
   });
 }
 
-select.addEventListener('change',e=>renderPie(e.target.value));
-renderPie(sorted[0].operator);
+function renderSpark(view) {
+  const top = view.slice(0, 10);
+  const datasets = BANDS.map(b => ({
+    label: b.full,
+    data: top.map(o => o[b.key]),
+    backgroundColor: b.color + '99',
+    borderColor: b.color,
+    borderWidth: 1.5,
+    borderRadius: 3,
+  }));
+  if (sparkChart) sparkChart.destroy();
+  sparkChart = new Chart(document.getElementById('sparkChart'), {
+    type: 'bar',
+    data: { labels: top.map(o => o.operator.split(' ')[0].slice(0,8)), datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { enabled: true } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 } } },
+        y: { stacked: true, display: false }
+      }
+    }
+  });
+}
 
+function selectOp(name) {
+  state.selected = name;
+  // Update active states without full re-render
+  document.querySelectorAll('.hbar-row').forEach(el => {
+    el.classList.toggle('active', decodeURIComponent(el.dataset.op) === name);
+  });
+  document.querySelectorAll('#tableBody tr').forEach(el => {
+    el.classList.toggle('active-row', decodeURIComponent(el.dataset.op) === name);
+  });
+  renderDetail();
+}
+
+// Wire controls
+document.getElementById('scopeSelect').addEventListener('change', e => { state.scope = e.target.value; update(); });
+document.getElementById('bandSelect').addEventListener('change', e => {
+  state.band = e.target.value;
+  // Auto-sort by the selected band if focused
+  if (state.band !== 'all') {
+    state.sort = state.band;
+    document.getElementById('sortSelect').value = state.band;
+  } else {
+    state.sort = 'total';
+    document.getElementById('sortSelect').value = 'total';
+  }
+  update();
+});
+document.getElementById('sortSelect').addEventListener('change', e => { state.sort = e.target.value; update(); });
+
+update();
 </script>
 </body>
 </html>
