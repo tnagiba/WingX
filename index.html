@@ -65,7 +65,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .donut-center .dc-sm{font-size:10px;color:var(--text3);text-transform:uppercase}
 .table-panel{margin-top:16px}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:980px}
+table{width:100%;border-collapse:collapse;min-width:1120px}
 th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:700;padding:10px 8px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 td{padding:9px 8px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}
 td:nth-child(3){font-family:'DM Sans',sans-serif;font-weight:600}
@@ -87,8 +87,8 @@ tr.active-row td{background:rgba(56,189,248,.08)}
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-track{background:transparent}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
-.wide-panel,.definitions-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:16px}.definition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.definition{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.definition span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.definition p{font-size:12px;color:var(--text2);line-height:1.35;margin-top:5px}@media(max-width:1100px){.main-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}.expanded-grid,.definition-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:640px){.kpi-row{grid-template-columns:1fr 1fr}.hbar-row{grid-template-columns:120px 1fr 60px}.expanded-grid,.definition-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:1100px){.main-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}.expanded-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.kpi-row{grid-template-columns:1fr 1fr}.hbar-row{grid-template-columns:120px 1fr 60px}.expanded-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -120,7 +120,7 @@ tr.active-row td{background:rgba(56,189,248,.08)}
         <div class="chart-header"><div><div class="chart-title">Operator Rankings</div><div class="chart-subtitle" id="tableSub">Sorted by selected view</div></div></div>
         <div class="table-wrap" style="max-height:440px;overflow:auto">
           <table>
-            <thead><tr><th></th><th>#</th><th>Operator</th><th>Total</th><th>&lt;2h</th><th>2-3h</th><th>3-4h</th><th>4h+</th><th>Deps</th><th>Market %</th><th>Dominant</th></tr></thead>
+            <thead><tr><th></th><th>#</th><th>Operator</th><th>Total</th><th>&lt;2h</th><th>2-3h</th><th>3-4h</th><th>4h+</th><th>Deps</th><th>Fleet</th><th>Hrs/Aircraft</th><th>Market %</th><th>Dominant</th></tr></thead>
             <tbody id="tableBody"></tbody>
           </table>
         </div>
@@ -147,25 +147,6 @@ tr.active-row td{background:rgba(56,189,248,.08)}
       </div>
     </div>
   </div>
-  <div class="wide-panel">
-    <div class="chart-header"><div><div class="chart-title" id="trendTitle">Top 5 Operator Trend</div><div class="chart-subtitle" id="trendSub">Monthly hours for the current hour-band filter.</div></div></div>
-    <div style="height:300px"><canvas id="trendChart"></canvas></div>
-  </div>
-
-  <div class="definitions-panel">
-    <div class="chart-header"><div><div class="chart-title">KPI Definitions</div><div class="chart-subtitle">Plain-English definitions for the KPI cards.</div></div></div>
-    <div class="definition-grid">
-      <div class="definition"><span>Market Hours</span><p>Total hours inside the current period, scope, and selected hour-band filter.</p></div>
-      <div class="definition"><span>Largest Band</span><p>When All Bands is selected, this is the hour band with the biggest share of total market hours. Example: 44.2% means that band is 44.2% of the filtered market.</p></div>
-      <div class="definition"><span>Leader Share</span><p>The leading operator's share of the filtered market hours.</p></div>
-      <div class="definition"><span>Market Share</span><p>In operator view, this is the selected operator's share of the filtered market hours.</p></div>
-      <div class="definition"><span>Operator Mix</span><p>In operator view, this is how much of that operator's own activity sits in the selected band, or 3h+ when All Bands is selected.</p></div>
-      <div class="definition"><span>Period Change</span><p>Compares the current period against the prior month or prior quarter using the same selected band and scope.</p></div>
-      <div class="definition"><span>Dominant</span><p>The hour band where that operator has the most hours.</p></div>
-      <div class="definition"><span>Market %</span><p>In the table, this is each operator's share of the currently filtered market.</p></div>
-      <div class="definition"><span>Top 5 Trend</span><p>Shows the top five operators from the current view tracked across available months.</p></div>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -175,6 +156,8 @@ const rawData = RAW_ROWS.map(r => ({
   deps:r[7], fuel:r[8], tails:r[9], airports:r[10], activeOperators:r[11], tonnage:r[12],
   avgSector:r[13], avgHoursTail:r[14], depYoY:r[15], hoursYoY:r[16], fuelYoY:r[17], tailsYoY:r[18]
 }));
+
+const JETNET_OPERATORS = {"ATI Jet Inc":{"jetnet":"ATI Jet, Inc.","country":"United States","compId":"6206","operating":26,"leased":0,"fleet":26},"Air 7":{"jetnet":"Air 7, LLC","country":"United States","compId":"339237","operating":14,"leased":1,"fleet":15},"Air X Charter":{"jetnet":"Air X Charter, Ltd.","country":"Malta","compId":"337562","operating":19,"leased":12,"fleet":31},"Citation X Parts LLC":{"jetnet":"Citation X Parts, LLC","country":"United States","compId":"502381","operating":14,"leased":0,"fleet":14},"Clay Lacy Aviation Inc":{"jetnet":"Clay Lacy Aviation, Inc.","country":"United States","compId":"3829","operating":33,"leased":2,"fleet":35},"Club Jet":{"jetnet":"Club Jet","country":"United States","compId":"265334","operating":18,"leased":1,"fleet":19},"Corporate Air LLC":{"jetnet":"Corporate Air, Inc.","country":"United States","compId":"4464","operating":32,"leased":30,"fleet":62},"Davinci Jets LLC":{"jetnet":"Davinci Jets, LLC","country":"United States","compId":"237909","operating":15,"leased":0,"fleet":15},"Elite Air":{"jetnet":"Elite Air, Inc.","country":"United States","compId":"134025","operating":19,"leased":1,"fleet":20},"FlyUSA Inc":{"jetnet":"FlyUSA, Inc.","country":"United States","compId":"466469","operating":21,"leased":0,"fleet":21},"Jet Access Aviation":{"jetnet":"Jet Access","country":"United States","compId":"367663","operating":13,"leased":0,"fleet":13},"Journey Aviation":{"jetnet":"Journey Aviation, LLC","country":"United States","compId":"348031","operating":13,"leased":3,"fleet":16},"Kalitta Charters":{"jetnet":"Kalitta Charters, LLC","country":"United States","compId":"14167","operating":44,"leased":0,"fleet":44},"Latitude 33 Aviation":{"jetnet":"Latitude 33 Aviation, LLC","country":"United States","compId":"313796","operating":27,"leased":0,"fleet":27},"Nicholas Air":{"jetnet":"Nicholas Services, LLC","country":"United States","compId":"317024","operating":29,"leased":0,"fleet":29},"Paradigm Jet Management":{"jetnet":"Paradigm Jet Management, Inc.","country":"United States","compId":"13666","operating":16,"leased":2,"fleet":18},"Pegasus Elite Aviation":{"jetnet":"Pegasus Elite Aviation, Inc.","country":"United States","compId":"312159","operating":16,"leased":10,"fleet":26},"Pentastar Aviation":{"jetnet":"Pentastar Aviation","country":"United States","compId":"14007","operating":22,"leased":1,"fleet":23},"Planet Nine Private Air":{"jetnet":"Planet Nine Private Air, LLC","country":"United States","compId":"416617","operating":14,"leased":2,"fleet":16},"Secure Air Charter":{"jetnet":"Secure Air Charter, LLC","country":"United States","compId":"167002","operating":14,"leased":0,"fleet":14},"Silverhawk Aviation Inc":{"jetnet":"Silverhawk Aviation, Inc.","country":"United States","compId":"242917","operating":16,"leased":1,"fleet":17},"Sky Quest":{"jetnet":"Sky Quest, LLC","country":"United States","compId":"154060","operating":17,"leased":0,"fleet":17},"Talon Air":{"jetnet":"Talon Air, LLC","country":"United States","compId":"149587","operating":27,"leased":0,"fleet":27},"Thrive Aviation":{"jetnet":"Thrive Aviation","country":"United States","compId":"52","operating":21,"leased":2,"fleet":23},"Ventura Air Services":{"jetnet":"Ventura Air Services, Inc.","country":"United States","compId":"186897","operating":14,"leased":1,"fleet":15},"Vista America":{"jetnet":"VistaJet Limited","country":"Malta","compId":"326496","operating":102,"leased":4,"fleet":106},"Wheels Up LLC":{"jetnet":"Wheels Up","country":"United States","compId":"340411","operating":14,"leased":1,"fleet":15},"Wheels Up Private Jets":{"jetnet":"Wheels Up Private Jets, LLC","country":"United States","compId":"22994","operating":74,"leased":8,"fleet":82},"flyExclusive":{"jetnet":"Exclusive Jets, LLC","country":"United States","compId":"373567","operating":71,"leased":15,"fleet":86}};
 
 const BANDS=[
   {key:'under2',label:'<2h',full:'Under 2h',color:'#38bdf8',pillClass:'pill-1'},
@@ -187,6 +170,7 @@ const fmt=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0});
 const fmt1=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:1});
 const pct=n=>((Number(n)||0)*100).toFixed(1)+'%';
 const signedPct=n=>{const v=(Number(n)||0)*100;return (v>0?'+':'')+v.toFixed(1)+'%'};
+const na=v=>v||v===0?v:'—';
 const monthLabel=m=>{const [y,mo]=m.split('-');return new Date(Number(y),Number(mo)-1,1).toLocaleDateString('en-US',{month:'short',year:'numeric'})};
 const quarterOf=m=>{const [y,mo]=m.split('-').map(Number);return `${y} Q${Math.ceil(mo/3)}`};
 
@@ -194,8 +178,6 @@ let state={mode:'monthly',period:null,scope:'25',band:'all',selected:'all'};
 let expanded=new Set();
 let donutChart=null;
 let sparkChart=null;
-let trendChart=null;
-const TREND_COLORS=['#38bdf8','#6366f1','#a78bfa','#f472b6','#fbbf24'];
 
 Chart.defaults.color='#94a3b8';
 Chart.defaults.borderColor='rgba(255,255,255,.06)';
@@ -206,7 +188,13 @@ function enrich(rows){
     const total=o.total??(o.under2+o.b23+o.b34+o.b4);
     const long=(o.b34||0)+(o.b4||0);
     const dominant=[...BANDS].sort((a,b)=>(o[b.key]||0)-(o[a.key]||0))[0];
-    return {...o,total,long,longShare:total?long/total:0,shortShare:total?o.under2/total:0,dominant};
+    const jetnet=JETNET_OPERATORS[o.operator]||null;
+    const operatingAircraft=jetnet?jetnet.operating:0;
+    const leasedAircraft=jetnet?jetnet.leased:0;
+    const totalJetnetFleet=jetnet?jetnet.fleet:0;
+    const hoursPerAircraft=operatingAircraft?total/operatingAircraft:0;
+    const depsPerAircraft=operatingAircraft?(o.deps||0)/operatingAircraft:0;
+    return {...o,total,long,longShare:total?long/total:0,shortShare:total?o.under2/total:0,dominant,jetnet,operatingAircraft,leasedAircraft,totalJetnetFleet,hoursPerAircraft,depsPerAircraft};
   });
 }
 
@@ -305,7 +293,9 @@ function periodText(){return state.mode==='historical'?'All Historical':state.mo
 
 function marketObject(rows){
   const total=sumRows(rows,'total');
-  const o={operator:'All Operators',under2:sumRows(rows,'under2'),b23:sumRows(rows,'b23'),b34:sumRows(rows,'b34'),b4:sumRows(rows,'b4'),total,deps:rows.reduce((s,r)=>s+(r.deps||0),0),fuel:rows.reduce((s,r)=>s+(r.fuel||0),0),tails:Math.max(...rows.map(r=>r.tails||0),0),airports:Math.max(...rows.map(r=>r.airports||0),0),avgSector:0,avgHoursTail:0};
+  const operatingAircraft=rows.reduce((s,r)=>s+(r.operatingAircraft||0),0);
+  const leasedAircraft=rows.reduce((s,r)=>s+(r.leasedAircraft||0),0);
+  const o={operator:'All Operators',under2:sumRows(rows,'under2'),b23:sumRows(rows,'b23'),b34:sumRows(rows,'b34'),b4:sumRows(rows,'b4'),total,deps:rows.reduce((s,r)=>s+(r.deps||0),0),fuel:rows.reduce((s,r)=>s+(r.fuel||0),0),tails:Math.max(...rows.map(r=>r.tails||0),0),airports:Math.max(...rows.map(r=>r.airports||0),0),avgSector:0,avgHoursTail:0,operatingAircraft,leasedAircraft,totalJetnetFleet:operatingAircraft+leasedAircraft,hoursPerAircraft:operatingAircraft?total/operatingAircraft:0,depsPerAircraft:operatingAircraft?rows.reduce((s,r)=>s+(r.deps||0),0)/operatingAircraft:0};
   o.long=o.b34+o.b4;
   o.longShare=total?o.long/total:0;
   o.shortShare=total?o.under2/total:0;
@@ -314,7 +304,7 @@ function marketObject(rows){
 
 function populateOperators(rows){
   const sel=document.getElementById('operatorSelect');
-  const names=[...new Set(rows.map(o=>o.operator))].sort((a,b)=>a.localeCompare(b));
+  const names=sortedRows(rows).map(o=>o.operator);
   sel.innerHTML='<option value="all">All Operators</option>'+names.map(n=>`<option value="${n}">${n}</option>`).join('');
   if(state.selected!=='all'&&!names.includes(state.selected)) state.selected='all';
   sel.value=state.selected;
@@ -364,7 +354,7 @@ function update(){
       <div class="kpi"><div class="kpi-label">Operator Hours</div><div class="kpi-val">${fmt(opMetric)}</div><div class="kpi-sub">${isFocused?band.full:'all bands'} · ${selectedOp.operator}</div></div>
       <div class="kpi"><div class="kpi-label">Market Share</div><div class="kpi-val">${pct(marketShare)}</div><div class="kpi-sub">of filtered market hours</div></div>
       <div class="kpi"><div class="kpi-label">Rank</div><div class="kpi-val">#${rank}</div><div class="kpi-sub">within current filters</div></div>
-      <div class="kpi"><div class="kpi-label">Operator Mix</div><div class="kpi-val">${pct(opBandShare)}</div><div class="kpi-sub">${isFocused?band.full:'3h+'} of operator hours</div></div>
+      <div class="kpi"><div class="kpi-label">Hours / Aircraft</div><div class="kpi-val">${selectedOp.hoursPerAircraft?fmt1(selectedOp.hoursPerAircraft):'—'}</div><div class="kpi-sub">${selectedOp.operatingAircraft?fmt(selectedOp.operatingAircraft)+' operating aircraft':'no JetNET match'}</div></div>
       <div class="kpi"><div class="kpi-label">Period Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub}</div></div>`;
   }else{
     const bandShares=BANDS.map(b=>({...b,hours:sumRows(view,b.key),share:marketTotal?sumRows(view,b.key)/marketTotal:0}));
@@ -374,7 +364,7 @@ function update(){
 
     document.getElementById('kpis').innerHTML=`
       <div class="kpi"><div class="kpi-label">Market Hours</div><div class="kpi-val">${fmt(metricTotal)}</div><div class="kpi-sub">${isFocused?band.full:'all bands'} · ${state.scope==='all'?'all operators':'top '+state.scope}</div></div>
-      ${isFocused?`<div class="kpi"><div class="kpi-label">Selected Band Share</div><div class="kpi-val" style="color:${band.color}">${pct(metricTotal/marketTotal)}</div><div class="kpi-sub">${band.full} of filtered market</div></div>`:`<div class="kpi"><div class="kpi-label">Largest Band</div><div class="kpi-val" style="color:${largest.color}">${pct(largest.share)}</div><div class="kpi-sub">${largest.full} · ${fmt(largest.hours)} hrs</div></div>`}
+      <div class="kpi"><div class="kpi-label">Largest Band</div><div class="kpi-val" style="color:${largest.color}">${pct(largest.share)}</div><div class="kpi-sub">${largest.full} · ${fmt(largest.hours)} hrs</div></div>
       <div class="kpi"><div class="kpi-label">Leader</div><div class="kpi-val" style="font-size:17px">${leader.operator}</div><div class="kpi-sub">${fmt1(rankValue(leader))} hrs in view</div></div>
       <div class="kpi"><div class="kpi-label">Leader Share</div><div class="kpi-val">${pct(leaderShare)}</div><div class="kpi-sub">of filtered market hours</div></div>
       <div class="kpi"><div class="kpi-label">Period Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub}</div></div>`;
@@ -391,7 +381,6 @@ function update(){
   renderTable(view,metricTotal);
   renderDetail(source,view);
   renderSpark(view);
-  renderTrend(source);
 }
 
 function renderBars(view,isFocused,band){
@@ -412,9 +401,14 @@ function renderBars(view,isFocused,band){
 
 function rawMetricCells(o){
   return `<div class="expanded-grid">
+    <div class="expanded-cell"><span>JetNET Match</span><b>${o.jetnet?o.jetnet.jetnet:'—'}</b></div>
+    <div class="expanded-cell"><span>Operating A/C</span><b>${o.operatingAircraft?fmt(o.operatingAircraft):'—'}</b></div>
+    <div class="expanded-cell"><span>Leased A/C</span><b>${o.leasedAircraft?fmt(o.leasedAircraft):'—'}</b></div>
+    <div class="expanded-cell"><span>Hours / A/C</span><b>${o.hoursPerAircraft?fmt1(o.hoursPerAircraft):'—'}</b></div>
+    <div class="expanded-cell"><span>Deps / A/C</span><b>${o.depsPerAircraft?fmt1(o.depsPerAircraft):'—'}</b></div>
     <div class="expanded-cell"><span>Departures</span><b>${fmt(o.deps)}</b></div>
     <div class="expanded-cell"><span>Fuel USG</span><b>${fmt(o.fuel)}</b></div>
-    <div class="expanded-cell"><span>Tails</span><b>${fmt(o.tails)}</b></div>
+    <div class="expanded-cell"><span>WingX Tails</span><b>${fmt(o.tails)}</b></div>
     <div class="expanded-cell"><span>Airports</span><b>${fmt(o.airports)}</b></div>
     <div class="expanded-cell"><span>Active Operators</span><b>${fmt(o.activeOperators)}</b></div>
     <div class="expanded-cell"><span>Avg Sector</span><b>${fmt(o.avgSector)} nm</b></div>
@@ -437,8 +431,8 @@ function renderTable(view,metricTotal){
       <td><button class="expand-btn" data-op="${key}">${expanded.has(o.operator)?'−':'+'}</button></td>
       <td>${i+1}</td><td>${o.operator}</td><td style="color:var(--accent)">${fmt1(o.total)}</td>
       <td>${fmt1(o.under2)}</td><td>${fmt1(o.b23)}</td><td>${fmt1(o.b34)}</td><td>${fmt1(o.b4)}</td>
-      <td>${fmt(o.deps)}</td><td>${pct(share)}</td><td><span class="pill ${o.dominant.pillClass}">${o.dominant.label}</span></td></tr>`;
-    if(expanded.has(o.operator)) html+=`<tr class="expand-row"><td colspan="11">${rawMetricCells(o)}</td></tr>`;
+      <td>${fmt(o.deps)}</td><td>${o.operatingAircraft?fmt(o.operatingAircraft):'—'}</td><td>${o.hoursPerAircraft?fmt1(o.hoursPerAircraft):'—'}</td><td>${pct(share)}</td><td><span class="pill ${o.dominant.pillClass}">${o.dominant.label}</span></td></tr>`;
+    if(expanded.has(o.operator)) html+=`<tr class="expand-row"><td colspan="13">${rawMetricCells(o)}</td></tr>`;
   });
   document.getElementById('tableBody').innerHTML=html;
 
@@ -467,12 +461,12 @@ function renderDetail(source,view){
   document.getElementById('detailSub').textContent=isMarket?`${periodText()} · ${view.length} operators in current scope`:`${fmt1(selected.total)} hrs · ${fmt(selected.deps)} departures · ${fmt(selected.tails)} tails`;
 
   document.getElementById('operatorStats').innerHTML=`
+    <div class="mini"><span>Operating A/C</span><b>${selected.operatingAircraft?fmt(selected.operatingAircraft):'—'}</b></div>
+    <div class="mini"><span>Hours / A/C</span><b>${selected.hoursPerAircraft?fmt1(selected.hoursPerAircraft):'—'}</b></div>
+    <div class="mini"><span>Deps / A/C</span><b>${selected.depsPerAircraft?fmt1(selected.depsPerAircraft):'—'}</b></div>
+    <div class="mini"><span>Leased A/C</span><b>${selected.leasedAircraft?fmt(selected.leasedAircraft):'—'}</b></div>
     <div class="mini"><span>Fuel USG</span><b>${fmt(selected.fuel)}</b></div>
-    <div class="mini"><span>Departures</span><b>${fmt(selected.deps)}</b></div>
-    <div class="mini"><span>Tails</span><b>${fmt(selected.tails)}</b></div>
-    <div class="mini"><span>Airports</span><b>${fmt(selected.airports)}</b></div>
-    <div class="mini"><span>Avg Sector</span><b>${selected.avgSector?fmt(selected.avgSector)+' nm':'—'}</b></div>
-    <div class="mini"><span>Avg Hrs/Tail</span><b>${selected.avgHoursTail?fmt1(selected.avgHoursTail):'—'}</b></div>`;
+    <div class="mini"><span>Departures</span><b>${fmt(selected.deps)}</b></div>`;
 
   document.getElementById('donutVal').textContent=fmt(selected.total);
 
@@ -501,28 +495,6 @@ function renderSpark(view){
     type:'bar',
     data:{labels:top.map(o=>o.operator.split(' ')[0].slice(0,8)),datasets:BANDS.map(b=>({label:b.full,data:top.map(o=>o[b.key]),backgroundColor:b.color+'99',borderColor:b.color,borderWidth:1.5,borderRadius:3}))},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:true}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:9}}},y:{stacked:true,display:false}}}
-  });
-}
-
-function renderTrend(source){
-  const topFive=sortedRows(source).slice(0,5);
-  const labels=months.map(monthLabel);
-  const datasets=topFive.map((op,i)=>({
-    label:op.operator,
-    data:months.map(m=>{
-      const r=enrich(rawData.filter(x=>x.month===m)).find(x=>x.operator===op.operator);
-      return r ? (state.band==='all' ? r.total : (r[state.band]||0)) : 0;
-    }),
-    backgroundColor:TREND_COLORS[i%TREND_COLORS.length],
-    borderRadius:5
-  }));
-  const bandLabel=state.band==='all'?'total hours':BANDS.find(b=>b.key===state.band).full;
-  document.getElementById('trendSub').textContent='Top five operators in current view · '+bandLabel;
-  if(trendChart) trendChart.destroy();
-  trendChart=new Chart(document.getElementById('trendChart'),{
-    type:'bar',
-    data:{labels,datasets},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#94a3b8'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>c.dataset.label+': '+fmt1(c.parsed.y)+' hrs'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()}}}}
   });
 }
 
