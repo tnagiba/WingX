@@ -3,104 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WingX Operator Dashboard</title>
+  <title>WingX Operator Intelligence</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { margin:0; font-family: Arial; background:#070A12; color:white; }
-    .container { max-width:1200px; margin:auto; padding:20px; }
-    .card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; margin-bottom:20px; }
-    h1 { font-size:32px; margin-bottom:10px; }
-    .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-    .kpi { background:rgba(255,255,255,0.06); padding:16px; border-radius:12px; }
-    select { background:#020617; color:white; padding:8px; border-radius:8px; border:1px solid #333; }
+    :root{
+      --bg:#02050d; --panel:#07101f; --panel2:#0a1428; --stroke:rgba(127,220,255,.18);
+      --text:#eef6ff; --muted:#7f8ea8; --cyan:#5ee7ff; --cyan2:#19c7e8; --blue:#42a5ff; --violet:#9b7cff; --gold:#ffd66b;
+      --danger:#ff6b8a; --green:#58f0a5;
+    }
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 18% 20%,rgba(0,194,255,.16),transparent 28%),radial-gradient(circle at 82% 8%,rgba(154,112,255,.13),transparent 30%),linear-gradient(180deg,#02050d,#030713 55%,#01030a);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow-x:hidden}.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.32) 1px,transparent 1px),radial-gradient(circle,rgba(94,231,255,.18) 1px,transparent 1px);background-size:90px 90px,140px 140px;background-position:0 0,30px 40px;opacity:.42}.shell{position:relative;max-width:1540px;margin:0 auto;padding:18px 22px 26px}.topbar{height:34px;border:1px solid rgba(255,255,255,.09);background:rgba(7,12,24,.86);border-radius:14px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;box-shadow:0 20px 80px rgba(0,0,0,.45);backdrop-filter:blur(14px)}.dots{display:flex;gap:8px}.dot{width:10px;height:10px;border-radius:999px}.red{background:#ff6b6b}.yellow{background:#ffd36b}.green{background:#65df8f}.mission-title{font-size:11px;letter-spacing:.18em;color:#7d8aa3;text-transform:uppercase;font-weight:700}.badge{font-size:11px;letter-spacing:.09em;text-transform:uppercase;border:1px solid rgba(94,231,255,.35);color:#8defff;background:rgba(94,231,255,.09);padding:5px 9px;border-radius:999px}.hero{margin-top:16px;display:grid;grid-template-columns:300px minmax(0,1fr) 310px;gap:16px;min-height:720px}.panel{border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(9,20,39,.83),rgba(4,10,22,.86));border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 22px 80px rgba(0,0,0,.3);backdrop-filter:blur(12px)}.left,.right{display:flex;flex-direction:column;gap:12px}.metric-panel{padding:16px}.label{font-size:10px;color:#62708b;text-transform:uppercase;letter-spacing:.16em;font-weight:800}.big{font-size:30px;font-weight:850;letter-spacing:-.03em;margin:8px 0 0}.muted{color:var(--muted)}.value-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:13px;font-size:13px}.value-row strong{font-size:16px;color:#dcecff}.cyan{color:var(--cyan)}.gold{color:var(--gold)}.main{position:relative;overflow:hidden;padding:18px}.main::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(94,231,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(94,231,255,.03) 1px,transparent 1px);background-size:42px 42px;transform:perspective(900px) rotateX(58deg) translateY(150px) scale(1.25);transform-origin:bottom;opacity:.75}.main-content{position:relative;z-index:1}.header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(94,231,255,.25);background:rgba(94,231,255,.08);color:#9df2ff;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.h1{font-size:38px;line-height:1.02;font-weight:900;letter-spacing:-.05em;margin:14px 0 8px}.sub{color:#9aa9c1;font-size:14px;line-height:1.55;max-width:700px}.controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.control{border:1px solid rgba(255,255,255,.12);background:rgba(2,6,16,.72);border-radius:14px;padding:9px 10px}.control span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:#697895;margin-bottom:5px;font-weight:800}select{width:170px;background:#07101f;color:#eef6ff;border:1px solid rgba(94,231,255,.18);border-radius:10px;padding:9px 10px;outline:none;font-weight:650}select:focus{border-color:rgba(94,231,255,.75);box-shadow:0 0 0 3px rgba(94,231,255,.12)}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.kpi{border:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border-radius:15px;padding:14px}.kpi .num{font-size:24px;font-weight:900;letter-spacing:-.04em;margin-top:7px}.kpi .small{font-size:12px;color:#8fa0ba;margin-top:3px}.chart-card{height:410px;padding:14px;border:1px solid rgba(255,255,255,.08);background:rgba(2,6,16,.52);border-radius:18px}.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.chart-title{font-size:13px;font-weight:800}.legend{display:flex;gap:10px;flex-wrap:wrap}.leg{font-size:11px;color:#9aa9c1}.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.operator-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}.op-card{border:1px solid rgba(255,255,255,.08);background:rgba(7,16,31,.72);border-radius:13px;padding:10px;cursor:pointer;transition:.18s ease}.op-card:hover,.op-card.active{border-color:rgba(94,231,255,.55);background:rgba(94,231,255,.08);transform:translateY(-1px)}.op-card b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.op-card span{font-size:11px;color:#8fa0ba}.mini-bars{height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:8px;display:flex}.mini-bars i{display:block;height:100%}.queue{padding:12px}.queue-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:258px;overflow:auto}.queue-item{border:1px solid rgba(255,255,255,.08);background:rgba(10,18,42,.74);border-radius:12px;padding:10px;cursor:pointer}.queue-item:hover,.queue-item.active{border-color:rgba(94,231,255,.5);background:rgba(0,170,220,.12)}.queue-item b{font-size:12px}.queue-item p{margin:4px 0 0;color:#7f8ea8;font-size:11px}.drill{padding:14px}.drill-title{font-size:18px;font-weight:900;letter-spacing:-.03em;margin:8px 0 2px}.band-row{margin-top:12px}.band-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.track{height:9px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.fill{height:100%;border-radius:999px}.table-panel{margin-top:16px;padding:14px;overflow:hidden}.table-wrap{overflow:auto;max-height:260px}table{width:100%;border-collapse:collapse;min-width:850px;font-size:12px}th{position:sticky;top:0;background:#07101f;text-align:left;color:#70809d;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:10px;border-bottom:1px solid rgba(255,255,255,.1)}td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.055);color:#dce7f8}tr:hover td{background:rgba(94,231,255,.045)}.pill{display:inline-flex;border:1px solid rgba(94,231,255,.28);background:rgba(94,231,255,.08);color:#9df2ff;border-radius:999px;padding:4px 8px;font-size:11px}.insight{border-left:3px solid var(--cyan);padding:10px 12px;background:rgba(94,231,255,.065);border-radius:10px;margin-top:12px;color:#cdefff;font-size:13px;line-height:1.45}.spark canvas{height:54px!important}.footer-note{margin-top:10px;color:#62708b;font-size:11px}.glow-orb{position:absolute;width:280px;height:280px;border-radius:50%;right:5%;top:38%;background:radial-gradient(circle at 34% 35%,rgba(94,231,255,.34),rgba(31,116,181,.12) 42%,transparent 68%);filter:blur(.2px);opacity:.55;pointer-events:none}.arc{position:absolute;width:540px;height:220px;right:8%;top:44%;border-top:1px solid rgba(94,231,255,.45);border-radius:50%;transform:rotate(-8deg);opacity:.55;pointer-events:none}@media(max-width:1120px){.hero{grid-template-columns:1fr}.left,.right{display:grid;grid-template-columns:repeat(2,1fr)}.operator-strip{grid-template-columns:repeat(2,1fr)}.kpi-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.shell{padding:10px}.left,.right,.kpi-grid{grid-template-columns:1fr}.header{flex-direction:column}.controls{justify-content:flex-start}.chart-card{height:360px}.h1{font-size:30px}}
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>Where competitor flying is concentrated</h1>
-  <p style="color:#94a3b8">Top 10 operators · Hourly band breakdown</p>
-
-  <div class="kpis" id="kpis"></div>
-
-  <div class="card">
-    <canvas id="chart"></canvas>
+<div class="stars"></div>
+<div class="shell">
+  <div class="topbar">
+    <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+    <div class="mission-title">WingX / Competitor Intelligence / Mission Band Visualizer</div>
+    <div class="badge">Live Prototype</div>
   </div>
 
-  <div class="card">
-    <label>Operator Drilldown:</label>
-    <select id="operatorSelect"></select>
-    <canvas id="pie"></canvas>
+  <div class="hero">
+    <aside class="left">
+      <div class="panel metric-panel">
+        <div class="label">Competitive Hours</div>
+        <div class="big" id="totalHours">--</div>
+        <div class="value-row"><span class="muted">Operators</span><strong id="operatorCount">10</strong></div>
+        <div class="value-row"><span class="muted">Excluded</span><strong class="cyan">NetJets / Flexjet</strong></div>
+        <div class="value-row"><span class="muted">View</span><strong class="gold" id="viewLabel">All bands</strong></div>
+      </div>
+
+      <div class="panel metric-panel spark">
+        <div class="label">Band Mix Signal</div>
+        <div class="insight" id="topInsight">Loading insight...</div>
+        <canvas id="sparkChart"></canvas>
+      </div>
+
+      <div class="panel metric-panel">
+        <div class="label">Current Drilldown</div>
+        <div class="drill-title" id="selectedName">--</div>
+        <div class="muted" id="selectedSub">--</div>
+        <div id="bandBreakdown"></div>
+      </div>
+    </aside>
+
+    <main class="panel main">
+      <div class="glow-orb"></div><div class="arc"></div>
+      <div class="main-content">
+        <div class="header">
+          <div>
+            <div class="eyebrow">Operator Performance Console</div>
+            <div class="h1">Where competitor flying is concentrated</div>
+            <div class="sub">Top 10 operators ranked by flight hours, segmented by mission duration. Use the dropdowns to isolate bands, change ranking logic, and drill into competitor mix.</div>
+          </div>
+          <div class="controls">
+            <div class="control"><span>Month</span><select id="monthSelect"><option>Current Export</option></select></div>
+            <div class="control"><span>Metric</span><select id="metricSelect"><option value="total">Total Hours</option><option value="under2">Under 2h</option><option value="b23">2-3h</option><option value="b34">3-4h</option><option value="b4">4h+</option><option value="longShare">Long-haul Share</option></select></div>
+            <div class="control"><span>Display</span><select id="displaySelect"><option value="stacked">Stacked Bands</option><option value="focused">Focused Metric</option><option value="percent">Percent Mix</option></select></div>
+          </div>
+        </div>
+
+        <div class="kpi-grid" id="kpis"></div>
+
+        <section class="chart-card">
+          <div class="chart-head">
+            <div><div class="chart-title" id="chartTitle">Mission band hours by operator</div><div class="muted" style="font-size:12px">Click an operator card or table row to update drilldown.</div></div>
+            <div class="legend" id="legend"></div>
+          </div>
+          <canvas id="mainChart"></canvas>
+        </section>
+
+        <div class="operator-strip" id="operatorStrip"></div>
+
+        <section class="panel table-panel">
+          <div class="chart-head"><div><div class="chart-title">Ranked operator table</div><div class="muted" style="font-size:12px">Formatted totals with band-level detail.</div></div><span class="pill" id="rankPill">Top 10</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Rank</th><th>Operator</th><th>Total</th><th>&lt;2h</th><th>2-3h</th><th>3-4h</th><th>4h+</th><th>Long %</th><th>Dominant</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+        </section>
+      </div>
+    </main>
+
+    <aside class="right">
+      <div class="panel queue">
+        <div class="label">Competitor Queue</div>
+        <div class="queue-list" id="queueList"></div>
+      </div>
+      <div class="panel drill">
+        <div class="label">Mission Mix</div>
+        <canvas id="donutChart" style="margin-top:8px"></canvas>
+        <div class="footer-note">Source: uploaded WingX operator band exports. Month selector reflects current export only until monthly files are added.</div>
+      </div>
+    </aside>
   </div>
 </div>
 
 <script>
-const data = [
-  { operator:"flyExclusive", under2:6814, b23:5924, b34:3013, b4:1172 },
-  { operator:"Vista America", under2:3750, b23:3790, b34:1638, b4:3515 },
-  { operator:"Wheels Up", under2:5398, b23:3328, b34:1444, b4:1131 },
-  { operator:"Nicholas Air", under2:2996, b23:1253, b34:398, b4:154 },
-  { operator:"Thrive", under2:1222, b23:702, b34:655, b4:1144 },
-  { operator:"ATI Jet", under2:1755, b23:1383, b34:442, b4:126 },
-  { operator:"Sky Quest", under2:778, b23:1038, b34:87, b4:94 },
-  { operator:"Silverhawk", under2:848, b23:726, b34:351, b4:26 },
-  { operator:"Kalitta", under2:913, b23:589, b34:260, b4:41 },
-  { operator:"Pittsburgh Jet", under2:842, b23:712, b34:91, b4:66 }
+const rawData = [
+  { operator:"flyExclusive", under2:6814.1, b23:5924.1, b34:3012.9, b4:1171.7 },
+  { operator:"Vista America", under2:3750.0, b23:3790.1, b34:1637.8, b4:3514.6 },
+  { operator:"Wheels Up Private Jets", under2:5397.8, b23:3327.6, b34:1443.7, b4:1130.8 },
+  { operator:"Nicholas Air", under2:2995.8, b23:1253.0, b34:398.0, b4:154.3 },
+  { operator:"Thrive Aviation", under2:1222.4, b23:702.2, b34:655.4, b4:1143.7 },
+  { operator:"ATI Jet Inc", under2:1755.4, b23:1382.5, b34:441.8, b4:125.7 },
+  { operator:"Sky Quest", under2:777.9, b23:1037.7, b34:86.6, b4:93.8 },
+  { operator:"Silverhawk Aviation Inc", under2:848.4, b23:725.9, b34:350.8, b4:25.6 },
+  { operator:"Kalitta Charters", under2:913.3, b23:589.2, b34:259.9, b4:41.1 },
+  { operator:"Pittsburgh Jet Center", under2:841.8, b23:712.3, b34:91.0, b4:65.7 }
 ];
-
-function total(o){ return o.under2+o.b23+o.b34+o.b4 }
-
-const sorted = data.map(o=>({...o,total:total(o)})).sort((a,b)=>b.total-a.total);
-
-// KPIs
-const totalHours = sorted.reduce((s,o)=>s+o.total,0);
-const kpisHTML = `
-  <div class="kpi"><b>Total Hours</b><br>${Math.round(totalHours)}</div>
-  <div class="kpi"><b>Leader</b><br>${sorted[0].operator}</div>
-  <div class="kpi"><b>Short Haul %</b><br>${Math.round(sorted.reduce((s,o)=>s+o.under2,0)/totalHours*100)}%</div>
-  <div class="kpi"><b>Long Haul %</b><br>${Math.round(sorted.reduce((s,o)=>s+o.b34+o.b4,0)/totalHours*100)}%</div>
-`;
-document.getElementById('kpis').innerHTML = kpisHTML;
-
-// Bar chart
-new Chart(document.getElementById('chart'),{
-  type:'bar',
-  data:{
-    labels:sorted.map(o=>o.operator),
-    datasets:[
-      {label:'<2h', data:sorted.map(o=>o.under2), backgroundColor:'#22d3ee'},
-      {label:'2-3h', data:sorted.map(o=>o.b23), backgroundColor:'#38bdf8'},
-      {label:'3-4h', data:sorted.map(o=>o.b34), backgroundColor:'#818cf8'},
-      {label:'4h+', data:sorted.map(o=>o.b4), backgroundColor:'#c084fc'}
-    ]
-  },
-  options:{responsive:true, plugins:{legend:{labels:{color:'white'}}}, scales:{x:{ticks:{color:'white'}},y:{ticks:{color:'white'}}}}
-});
-
-// Dropdown
-const select = document.getElementById('operatorSelect');
-sorted.forEach(o=>{
-  const opt = document.createElement('option');
-  opt.value=o.operator;
-  opt.text=o.operator;
-  select.appendChild(opt);
-});
-
-let pie;
-function renderPie(op){
-  const o = sorted.find(x=>x.operator===op);
-  if(pie) pie.destroy();
-  pie = new Chart(document.getElementById('pie'),{
-    type:'pie',
-    data:{
-      labels:['<2h','2-3h','3-4h','4h+'],
-      datasets:[{data:[o.under2,o.b23,o.b34,o.b4], backgroundColor:['#22d3ee','#38bdf8','#818cf8','#c084fc']}]
-    }
-  });
-}
-
-select.addEventListener('change',e=>renderPie(e.target.value));
-renderPie(sorted[0].operator);
-
+const bands=[{key:'under2',label:'<2h',full:'Under 2h',color:'#5ee7ff'},{key:'b23',label:'2-3h',full:'2-3h',color:'#42b8ff'},{key:'b34',label:'3-4h',full:'3-4h',color:'#8b93ff'},{key:'b4',label:'4h+',full:'4h+',color:'#b975ff'}];
+const fmt=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:0});
+const fmt1=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:1});
+const pct=n=>(n*100).toFixed(1)+'%';
+const shortName=n=>n.replace(' Private Jets','').replace(' Aviation Inc',' Aviation').replace(' Charters','');
+const rows=rawData.map(o=>{const total=o.under2+o.b23+o.b34+o.b4;const long=o.b34+o.b4;const dominant=[...bands].sort((a,b)=>o[b.key]-o[a.key])[0];return {...o,total,long,longShare:long/total,shortShare:o.under2/total,dominant:dominant.label,dominantKey:dominant.key}}).sort((a,b)=>b.total-a.total);
+let selected=rows[0].operator, mainChart, donutChart, sparkChart;
+const state={metric:'total',display:'stacked'};
+Chart.defaults.color='#9aa9c1'; Chart.defaults.borderColor='rgba(255,255,255,.07)'; Chart.defaults.font.family='Inter, Arial, sans-serif';
+function metricValue(o){ if(state.metric==='longShare')return o.longShare*100; return o[state.metric]; }
+function sortedRows(){return [...rows].sort((a,b)=>metricValue(b)-metricValue(a));}
+function update(){const sRows=sortedRows();const totals={hours:rows.reduce((s,o)=>s+o.total,0),under2:rows.reduce((s,o)=>s+o.under2,0),long:rows.reduce((s,o)=>s+o.long,0)};const leader=sRows[0];document.getElementById('totalHours').textContent=fmt(totals.hours);document.getElementById('operatorCount').textContent=rows.length;document.getElementById('viewLabel').textContent=document.querySelector('#metricSelect option:checked').textContent;document.getElementById('kpis').innerHTML=`<div class="kpi"><div class="label">Total Hours</div><div class="num">${fmt(totals.hours)}</div><div class="small">Top 10 competitor set</div></div><div class="kpi"><div class="label">Leader</div><div class="num" style="font-size:20px">${leader.operator}</div><div class="small">${fmt1(metricValue(leader))}${state.metric==='longShare'?'%':' hrs'}</div></div><div class="kpi"><div class="label">Short Haul</div><div class="num">${pct(totals.under2/totals.hours)}</div><div class="small">Under 2h mission share</div></div><div class="kpi"><div class="label">Long Haul</div><div class="num">${pct(totals.long/totals.hours)}</div><div class="small">3h+ mission share</div></div>`;document.getElementById('topInsight').textContent=`${rows[0].operator} leads total hours, while ${[...rows].sort((a,b)=>b.longShare-a.longShare)[0].operator} has the strongest long-haul bias.`;renderLegend();renderMainChart(sRows);renderStrip(sRows);renderQueue(sRows);renderTable(sRows);renderDrilldown();renderSpark();}
+function renderLegend(){document.getElementById('legend').innerHTML=bands.map(b=>`<span class="leg"><i class="sw" style="background:${b.color}"></i>${b.full}</span>`).join('');}
+function renderMainChart(sRows){const ctx=document.getElementById('mainChart');if(mainChart)mainChart.destroy();let datasets;if(state.display==='stacked'){datasets=bands.map(b=>({label:b.full,data:sRows.map(o=>o[b.key]),backgroundColor:b.color,borderRadius:5,stack:'hours'}));}else if(state.display==='percent'){datasets=bands.map(b=>({label:b.full,data:sRows.map(o=>o[b.key]/o.total*100),backgroundColor:b.color,borderRadius:5,stack:'mix'}));}else{const b=bands.find(x=>x.key===state.metric)||{key:state.metric,full:document.querySelector('#metricSelect option:checked').textContent,color:'#5ee7ff'};datasets=[{label:b.full,data:sRows.map(o=>metricValue(o)),backgroundColor:b.color,borderRadius:8}];}document.getElementById('chartTitle').textContent=state.display==='percent'?'Percent mission mix by operator':state.display==='focused'?'Focused metric by operator':'Mission band hours by operator';mainChart=new Chart(ctx,{type:'bar',data:{labels:sRows.map(o=>shortName(o.operator)),datasets},options:{responsive:true,maintainAspectRatio:false,animation:{duration:650,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{backgroundColor:'#07101f',borderColor:'rgba(94,231,255,.35)',borderWidth:1,padding:12,callbacks:{label:c=>`${c.dataset.label}: ${state.display==='percent'?c.parsed.y.toFixed(1)+'%':fmt1(c.parsed.y)+' hrs'}`}}},scales:{x:{stacked:state.display!=='focused',grid:{color:'rgba(255,255,255,.035)'},ticks:{color:'#dce7f8',maxRotation:35,minRotation:25}},y:{stacked:state.display!=='focused',beginAtZero:true,grid:{color:'rgba(255,255,255,.055)'},ticks:{callback:v=>state.display==='percent'?v+'%':Number(v).toLocaleString()}}},onClick:(evt,els)=>{if(els.length){selected=sRows[els[0].index].operator;renderDrilldown();renderStrip(sRows);renderQueue(sRows);renderTable(sRows);}}}});}
+function renderStrip(sRows){document.getElementById('operatorStrip').innerHTML=sRows.slice(0,10).map(o=>`<div class="op-card ${o.operator===selected?'active':''}" onclick="selectOperator('${o.operator.replace(/'/g,"\\'")}')"><b>${shortName(o.operator)}</b><span>${fmt1(o.total)} hrs · ${pct(o.longShare)} long</span><div class="mini-bars">${bands.map(b=>`<i style="width:${o[b.key]/o.total*100}%;background:${b.color}"></i>`).join('')}</div></div>`).join('');}
+function renderQueue(sRows){document.getElementById('queueList').innerHTML=sRows.map((o,i)=>`<div class="queue-item ${o.operator===selected?'active':''}" onclick="selectOperator('${o.operator.replace(/'/g,"\\'")}')"><b>${String(i+1).padStart(2,'0')} · ${o.operator}</b><p>${fmt1(o.total)} hrs · dominant ${o.dominant} · ${pct(o.shortShare)} short</p></div>`).join('');}
+function renderTable(sRows){document.getElementById('rankPill').textContent=`Top ${sRows.length}`;document.getElementById('tableBody').innerHTML=sRows.map((o,i)=>`<tr onclick="selectOperator('${o.operator.replace(/'/g,"\\'")}')"><td>#${i+1}</td><td><b>${o.operator}</b></td><td class="cyan">${fmt1(o.total)}</td><td>${fmt1(o.under2)}</td><td>${fmt1(o.b23)}</td><td>${fmt1(o.b34)}</td><td>${fmt1(o.b4)}</td><td>${pct(o.longShare)}</td><td><span class="pill">${o.dominant}</span></td></tr>`).join('');}
+function renderDrilldown(){const o=rows.find(x=>x.operator===selected)||rows[0];document.getElementById('selectedName').textContent=o.operator;document.getElementById('selectedSub').textContent=`${fmt1(o.total)} total hours · ${pct(o.shortShare)} under 2h · ${pct(o.longShare)} 3h+`;document.getElementById('bandBreakdown').innerHTML=bands.map(b=>`<div class="band-row"><div class="band-top"><span>${b.full}</span><strong>${fmt1(o[b.key])} hrs · ${pct(o[b.key]/o.total)}</strong></div><div class="track"><div class="fill" style="width:${o[b.key]/o.total*100}%;background:${b.color}"></div></div></div>`).join('');if(donutChart)donutChart.destroy();donutChart=new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:bands.map(b=>b.full),datasets:[{data:bands.map(b=>o[b.key]),backgroundColor:bands.map(b=>b.color),borderWidth:0,hoverOffset:8}]},options:{cutout:'68%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#dce7f8'}},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt1(c.parsed)} hrs`}}}});}
+function renderSpark(){const totals=bands.map(b=>rows.reduce((s,o)=>s+o[b.key],0));if(sparkChart)sparkChart.destroy();sparkChart=new Chart(document.getElementById('sparkChart'),{type:'line',data:{labels:bands.map(b=>b.label),datasets:[{data:totals,borderColor:'#5ee7ff',backgroundColor:'rgba(94,231,255,.12)',fill:true,tension:.35,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});}
+function selectOperator(name){selected=name;renderDrilldown();renderStrip(sortedRows());renderQueue(sortedRows());renderTable(sortedRows());}
+document.getElementById('metricSelect').addEventListener('change',e=>{state.metric=e.target.value;if(state.metric==='total')state.display='stacked';document.getElementById('displaySelect').value=state.display;update();});document.getElementById('displaySelect').addEventListener('change',e=>{state.display=e.target.value;update();});update();
 </script>
 </body>
 </html>
