@@ -87,8 +87,8 @@ tr.active-row td{background:rgba(56,189,248,.08)}
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-track{background:transparent}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
-@media(max-width:1100px){.main-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}.expanded-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:640px){.kpi-row{grid-template-columns:1fr 1fr}.hbar-row{grid-template-columns:120px 1fr 60px}.expanded-grid{grid-template-columns:1fr 1fr}}
+.wide-panel,.definitions-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:16px}.definition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.definition{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.definition span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.definition p{font-size:12px;color:var(--text2);line-height:1.35;margin-top:5px}@media(max-width:1100px){.main-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}.expanded-grid,.definition-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.kpi-row{grid-template-columns:1fr 1fr}.hbar-row{grid-template-columns:120px 1fr 60px}.expanded-grid,.definition-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -147,6 +147,25 @@ tr.active-row td{background:rgba(56,189,248,.08)}
       </div>
     </div>
   </div>
+  <div class="wide-panel">
+    <div class="chart-header"><div><div class="chart-title" id="trendTitle">Top 5 Operator Trend</div><div class="chart-subtitle" id="trendSub">Monthly hours for the current hour-band filter.</div></div></div>
+    <div style="height:300px"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="definitions-panel">
+    <div class="chart-header"><div><div class="chart-title">KPI Definitions</div><div class="chart-subtitle">Plain-English definitions for the KPI cards.</div></div></div>
+    <div class="definition-grid">
+      <div class="definition"><span>Market Hours</span><p>Total hours inside the current period, scope, and selected hour-band filter.</p></div>
+      <div class="definition"><span>Largest Band</span><p>When All Bands is selected, this is the hour band with the biggest share of total market hours. Example: 44.2% means that band is 44.2% of the filtered market.</p></div>
+      <div class="definition"><span>Leader Share</span><p>The leading operator's share of the filtered market hours.</p></div>
+      <div class="definition"><span>Market Share</span><p>In operator view, this is the selected operator's share of the filtered market hours.</p></div>
+      <div class="definition"><span>Operator Mix</span><p>In operator view, this is how much of that operator's own activity sits in the selected band, or 3h+ when All Bands is selected.</p></div>
+      <div class="definition"><span>Period Change</span><p>Compares the current period against the prior month or prior quarter using the same selected band and scope.</p></div>
+      <div class="definition"><span>Dominant</span><p>The hour band where that operator has the most hours.</p></div>
+      <div class="definition"><span>Market %</span><p>In the table, this is each operator's share of the currently filtered market.</p></div>
+      <div class="definition"><span>Top 5 Trend</span><p>Shows the top five operators from the current view tracked across available months.</p></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -175,6 +194,8 @@ let state={mode:'monthly',period:null,scope:'25',band:'all',selected:'all'};
 let expanded=new Set();
 let donutChart=null;
 let sparkChart=null;
+let trendChart=null;
+const TREND_COLORS=['#38bdf8','#6366f1','#a78bfa','#f472b6','#fbbf24'];
 
 Chart.defaults.color='#94a3b8';
 Chart.defaults.borderColor='rgba(255,255,255,.06)';
@@ -293,7 +314,7 @@ function marketObject(rows){
 
 function populateOperators(rows){
   const sel=document.getElementById('operatorSelect');
-  const names=sortedRows(rows).map(o=>o.operator);
+  const names=[...new Set(rows.map(o=>o.operator))].sort((a,b)=>a.localeCompare(b));
   sel.innerHTML='<option value="all">All Operators</option>'+names.map(n=>`<option value="${n}">${n}</option>`).join('');
   if(state.selected!=='all'&&!names.includes(state.selected)) state.selected='all';
   sel.value=state.selected;
@@ -353,7 +374,7 @@ function update(){
 
     document.getElementById('kpis').innerHTML=`
       <div class="kpi"><div class="kpi-label">Market Hours</div><div class="kpi-val">${fmt(metricTotal)}</div><div class="kpi-sub">${isFocused?band.full:'all bands'} · ${state.scope==='all'?'all operators':'top '+state.scope}</div></div>
-      <div class="kpi"><div class="kpi-label">Largest Band</div><div class="kpi-val" style="color:${largest.color}">${pct(largest.share)}</div><div class="kpi-sub">${largest.full} · ${fmt(largest.hours)} hrs</div></div>
+      ${isFocused?`<div class="kpi"><div class="kpi-label">Selected Band Share</div><div class="kpi-val" style="color:${band.color}">${pct(metricTotal/marketTotal)}</div><div class="kpi-sub">${band.full} of filtered market</div></div>`:`<div class="kpi"><div class="kpi-label">Largest Band</div><div class="kpi-val" style="color:${largest.color}">${pct(largest.share)}</div><div class="kpi-sub">${largest.full} · ${fmt(largest.hours)} hrs</div></div>`}
       <div class="kpi"><div class="kpi-label">Leader</div><div class="kpi-val" style="font-size:17px">${leader.operator}</div><div class="kpi-sub">${fmt1(rankValue(leader))} hrs in view</div></div>
       <div class="kpi"><div class="kpi-label">Leader Share</div><div class="kpi-val">${pct(leaderShare)}</div><div class="kpi-sub">of filtered market hours</div></div>
       <div class="kpi"><div class="kpi-label">Period Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub}</div></div>`;
@@ -370,6 +391,7 @@ function update(){
   renderTable(view,metricTotal);
   renderDetail(source,view);
   renderSpark(view);
+  renderTrend(source);
 }
 
 function renderBars(view,isFocused,band){
@@ -479,6 +501,28 @@ function renderSpark(view){
     type:'bar',
     data:{labels:top.map(o=>o.operator.split(' ')[0].slice(0,8)),datasets:BANDS.map(b=>({label:b.full,data:top.map(o=>o[b.key]),backgroundColor:b.color+'99',borderColor:b.color,borderWidth:1.5,borderRadius:3}))},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:true}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:9}}},y:{stacked:true,display:false}}}
+  });
+}
+
+function renderTrend(source){
+  const topFive=sortedRows(source).slice(0,5);
+  const labels=months.map(monthLabel);
+  const datasets=topFive.map((op,i)=>({
+    label:op.operator,
+    data:months.map(m=>{
+      const r=enrich(rawData.filter(x=>x.month===m)).find(x=>x.operator===op.operator);
+      return r ? (state.band==='all' ? r.total : (r[state.band]||0)) : 0;
+    }),
+    backgroundColor:TREND_COLORS[i%TREND_COLORS.length],
+    borderRadius:5
+  }));
+  const bandLabel=state.band==='all'?'total hours':BANDS.find(b=>b.key===state.band).full;
+  document.getElementById('trendSub').textContent='Top five operators in current view · '+bandLabel;
+  if(trendChart) trendChart.destroy();
+  trendChart=new Chart(document.getElementById('trendChart'),{
+    type:'bar',
+    data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#94a3b8'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>c.dataset.label+': '+fmt1(c.parsed.y)+' hrs'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()}}}}
   });
 }
 
