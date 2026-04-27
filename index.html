@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>WingX Operator Intelligence</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#02050d;--panel:#07101f;--text:#eef6ff;--muted:#7f8ea8;--cyan:#5ee7ff}
 body{margin:0;background:linear-gradient(180deg,#02050d,#030713);color:var(--text);font-family:Inter,Arial}
 .container{max-width:1400px;margin:auto;padding:24px}
-h2{margin-bottom:10px}
-.controls{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-select,input{background:#07101f;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;font-weight:600}
+h2{margin:0 0 10px 0}
+.controls{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+select{background:#07101f;color:#fff;border:1px solid #333;padding:10px;border-radius:8px;font-weight:600}
 .chart-card{background:var(--panel);padding:16px;border-radius:12px}
+.helper{color:#7f8ea8;font-size:12px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -22,8 +22,6 @@ select,input{background:#07101f;color:#fff;border:1px solid #333;padding:10px;bo
 <h2>Competitor Flight Distribution</h2>
 
 <div class="controls">
-<input type="file" id="fileInput" multiple />
-
 <select id="metricSelect">
 <option value="under2">Under 2h</option>
 <option value="b23">2-3h</option>
@@ -51,54 +49,64 @@ select,input{background:#07101f;color:#fff;border:1px solid #333;padding:10px;bo
 <canvas id="mainChart"></canvas>
 </div>
 
+<div class="helper">
+Replace the <b>data</b> array in the code with your full dataset. No uploads, no Excel handling.
+</div>
+
 </div>
 
 <script>
-let data = [];
+
+// =====================
+// 🔴 REPLACE THIS WITH YOUR FULL DATASET
+// =====================
+const data = [
+{operator:"flyExclusive",under2:6814.1,b23:5924.1,b34:3012.9,b4:1171.7},
+{operator:"Vista America",under2:3750.0,b23:3790.1,b34:1637.8,b4:3514.6},
+{operator:"Wheels Up Private Jets",under2:5397.8,b23:3327.6,b34:1443.7,b4:1130.8},
+{operator:"Nicholas Air",under2:2995.8,b23:1253.0,b34:398.0,b4:154.3},
+{operator:"Thrive Aviation",under2:1222.4,b23:702.2,b34:655.4,b4:1143.7},
+{operator:"ATI Jet Inc",under2:1755.4,b23:1382.5,b34:441.8,b4:125.7},
+{operator:"Sky Quest",under2:777.9,b23:1037.7,b34:86.6,b4:93.8},
+{operator:"Silverhawk Aviation Inc",under2:848.4,b23:725.9,b34:350.8,b4:25.6},
+{operator:"Kalitta Charters",under2:913.3,b23:589.2,b34:259.9,b4:41.1},
+{operator:"Pittsburgh Jet Center",under2:841.8,b23:712.3,b34:91.0,b4:65.7},
+{operator:"Cirrus Aviation",under2:1143.9,b23:296.9,b34:116.8,b4:135.4},
+{operator:"Worldwide Jet Charter",under2:275.9,b23:240.8,b34:198.2,b4:863.8},
+{operator:"AB Jets",under2:722.1,b23:407.1,b34:224.0,b4:185.3},
+{operator:"Ventura Air Services",under2:606.6,b23:525.5,b34:176.8,b4:216.3},
+{operator:"M&N Aviation",under2:996.4,b23:293.1,b34:101.1,b4:115.9},
+{operator:"Latitude 33 Aviation",under2:766.6,b23:301.1,b34:206.0,b4:179.5},
+{operator:"Private Jets Inc",under2:675.5,b23:455.4,b34:185.8,b4:80.1},
+{operator:"Epps Air Service",under2:827.5,b23:357.1,b34:68.3,b4:89.8},
+{operator:"Pro Airways LLC",under2:700.8,b23:297.2,b34:124.4,b4:185.4},
+{operator:"Jett Aircraft LLC",under2:520.8,b23:315.3,b34:260.0,b4:100.3},
+{operator:"Reliant Air Charter",under2:724.2,b23:201.4,b34:57.3,b4:210.0},
+{operator:"Jet Access Aviation LLC",under2:793.0,b23:156.5,b34:84.9,b4:88.8},
+{operator:"Guardian Jet Center LLC",under2:756.6,b23:167.3,b34:89.0,b4:91.8},
+{operator:"Exclusive Jets LLC",under2:579.6,b23:182.1,b34:102.9,b4:214.3},
+{operator:"North Coast Air Inc",under2:753.8,b23:223.6,b34:60.8,b4:27.9},
+{operator:"Pinnacle Aviation Charter LLC",under2:369.6,b23:277.4,b34:172.8,b4:202.5},
+{operator:"Jet Edge International",under2:291.6,b23:392.8,b34:153.0,b4:135.8},
+{operator:"Airshare LLC",under2:417.7,b23:438.3,b34:64.1,b4:31.6},
+{operator:"Mountain Aviation",under2:489.8,b23:195.2,b34:121.9,b4:130.6},
+{operator:"Jet Linx Aviation LLC",under2:410.0,b23:191.8,b34:131.6,b4:202.4},
+{operator:"Presidential Aviation",under2:408.5,b23:290.1,b34:83.7,b4:123.9},
+{operator:"Jet It LLC",under2:649.5,b23:201.0,b34:39.0,b4:7.7},
+{operator:"Gama Aviation LLC",under2:321.9,b23:184.8,b34:205.2,b4:160.3},
+{operator:"Clay Lacy Aviation Inc",under2:201.8,b23:230.0,b34:137.7,b4:226.9},
+{operator:"Jet Aviation Flight Services Inc",under2:224.9,b23:180.7,b34:123.9,b4:260.7},
+{operator:"Solairus Aviation LLC",under2:221.7,b23:202.0,b34:111.3,b4:190.6},
+{operator:"Gulfstream Aerospace Corp",under2:219.0,b23:180.9,b34:103.3,b4:225.6},
+{operator:"Avjet Corporation",under2:175.2,b23:179.5,b34:138.8,b4:193.9},
+{operator:"Northern Jet Management Inc",under2:253.7,b23:175.5,b34:120.3,b4:132.3}
+];
+// =====================
+
 const bands={under2:"#5ee7ff",b23:"#42b8ff",b34:"#8b93ff",b4:"#b975ff"};
 let chart;
 
 function total(o){return (o.under2||0)+(o.b23||0)+(o.b34||0)+(o.b4||0)}
-
-function detectBand(filename){
-filename = filename.toLowerCase();
-if(filename.includes("under")) return "under2";
-if(filename.includes("2-3")) return "b23";
-if(filename.includes("3-4")) return "b34";
-if(filename.includes("4+")) return "b4";
-return null;
-}
-
-function processFiles(files){
-const map = {};
-
-Array.from(files).forEach(file=>{
-const band = detectBand(file.name);
-if(!band) return;
-
-const reader = new FileReader();
-reader.onload = e => {
-const wb = XLSX.read(e.target.result, {type:"binary"});
-const ws = wb.Sheets[wb.SheetNames[0]];
-const rows = XLSX.utils.sheet_to_json(ws, {header:1});
-
-rows.forEach(r=>{
-const operator = r[0];
-const hours = r[4];
-if(!operator || typeof hours !== "number") return;
-
-if(!map[operator]) map[operator]={operator,under2:0,b23:0,b34:0,b4:0};
-map[operator][band] = hours;
-});
-
-// rebuild data after each file load
-data = Object.values(map);
-populateCompare();
-render();
-};
-reader.readAsBinaryString(file);
-});
-}
 
 function populateCompare(){
 const sel=document.getElementById("compareSelect");
@@ -106,8 +114,6 @@ sel.innerHTML=data.map(o=>`<option value="${o.operator}">${o.operator}</option>`
 }
 
 function render(){
-if(data.length===0) return;
-
 const metric=document.getElementById("metricSelect").value;
 const scope=document.getElementById("scopeSelect").value;
 const mode=document.getElementById("modeSelect").value;
@@ -154,8 +160,11 @@ scales:{y:{ticks:{callback:(v)=>mode==="percent"?v+"%":Number(v).toLocaleString(
 });
 }
 
-document.getElementById("fileInput").addEventListener("change",e=>processFiles(e.target.files));
 ["metricSelect","scopeSelect","modeSelect","compareSelect"].forEach(id=>document.getElementById(id).addEventListener("change",render));
+
+populateCompare();
+render();
+
 </script>
 
 </body>
