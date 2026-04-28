@@ -63,7 +63,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 .donut-center .dc-big{font-size:20px;font-weight:900;font-family:'JetBrains Mono',monospace}
 .donut-center .dc-sm{font-size:10px;color:var(--text3);text-transform:uppercase}
-.table-panel{margin-top:16px}.trend-panel{margin-top:16px}.trend-wrap{height:280px}.definitions-panel{margin-top:16px}.definitions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.definition{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.definition b{display:block;font-size:12px;margin-bottom:4px}.definition span{display:block;color:var(--text3);font-size:12px;line-height:1.35}
+.table-panel{margin-top:16px}.trend-panel{margin-top:16px}.trend-wrap{height:300px}.trend-values{margin-top:12px;overflow-x:auto}.trend-values table{min-width:640px;width:100%;border-collapse:collapse}.trend-values th,.trend-values td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px}.trend-values th{color:var(--text3);text-transform:uppercase;letter-spacing:.08em}.trend-values td{font-family:'JetBrains Mono',monospace}.trend-values td:first-child{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--text)}.definitions-panel{margin-top:16px}.definitions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.definition{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.definition b{display:block;font-size:12px;margin-bottom:4px}.definition span{display:block;color:var(--text3);font-size:12px;line-height:1.35}.band-share-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}.band-share-row{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;font-size:12px}.band-share-dot{width:10px;height:10px;border-radius:50%}.band-share-label{color:var(--text2)}.band-share-val{font-family:'JetBrains Mono',monospace;color:var(--text)}.dc-note{font-size:11px;color:var(--text3);margin-top:10px;line-height:1.35}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:1120px}
 th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:700;padding:10px 8px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
@@ -124,6 +124,7 @@ tr.active-row td{background:rgba(56,189,248,.08)}
           </div>
         </div>
         <div class="trend-wrap"><canvas id="trendChart"></canvas></div>
+        <div class="trend-values" id="trendValues"></div>
       </div>
 
       <div class="table-panel">
@@ -149,6 +150,13 @@ tr.active-row td{background:rgba(56,189,248,.08)}
       <div class="detail-card">
         <div class="dc-label">Mission Mix</div>
         <div class="donut-wrap"><canvas id="donutChart"></canvas><div class="donut-center"><div class="dc-big" id="donutVal">—</div><div class="dc-sm">total hrs</div></div></div>
+      </div>
+
+      <div class="detail-card">
+        <div class="dc-label">All Hours Breakdown</div>
+        <div class="donut-wrap"><canvas id="marketBreakdownChart"></canvas></div>
+        <div id="marketBreakdownList" class="band-share-list"></div>
+        <div class="dc-note" id="marketBreakdownNote">Current filtered market by hourly band.</div>
       </div>
 
       <div class="detail-card">
@@ -204,6 +212,7 @@ const quarterOf=m=>{const [y,mo]=m.split('-').map(Number);return `${y} Q${Math.c
 let state={mode:'monthly',period:null,scope:'25',band:'all',selected:'all'};
 let expanded=new Set();
 let donutChart=null;
+let marketBreakdownChart=null;
 let sparkChart=null;
 let trendChart=null;
 
@@ -409,6 +418,7 @@ function update(){
   renderTop5Trend(view);
   renderTable(view,metricTotal);
   renderDetail(source,view);
+  renderMarketBreakdown(view);
   renderSpark(view);
 }
 
@@ -518,6 +528,40 @@ function renderDetail(source,view){
 }
 
 
+function renderMarketBreakdown(view){
+  const totals=BANDS.map(b=>view.reduce((sum,o)=>sum+(o[b.key]||0),0));
+  const grandTotal=totals.reduce((sum,v)=>sum+v,0);
+  const note=document.getElementById('marketBreakdownNote');
+  if(note){
+    note.textContent=`${periodText()} · ${state.scope==='all'?'All operators':'Top '+state.scope} · hourly band share of total hours`;
+  }
+  const list=document.getElementById('marketBreakdownList');
+  if(list){
+    list.innerHTML=BANDS.map((b,idx)=>{
+      const share=grandTotal?totals[idx]/grandTotal:0;
+      return `<div class="band-share-row"><span class="band-share-dot" style="background:${b.color}"></span><span class="band-share-label">${b.full}</span><span class="band-share-val">${fmt1(totals[idx])} hrs · ${pct(share)}</span></div>`;
+    }).join('');
+  }
+  const canvas=document.getElementById('marketBreakdownChart');
+  if(!canvas) return;
+  if(marketBreakdownChart) marketBreakdownChart.destroy();
+  marketBreakdownChart=new Chart(canvas,{
+    type:'pie',
+    data:{labels:BANDS.map(b=>b.full),datasets:[{data:totals,backgroundColor:BANDS.map(b=>b.color),borderColor:'#111827',borderWidth:2,hoverOffset:8}]},
+    options:{
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{
+          const total=c.dataset.data.reduce((s,v)=>s+v,0);
+          const share=total?c.parsed/total:0;
+          return `${c.label}: ${fmt1(c.parsed)} hrs (${pct(share)})`;
+        }}}
+      }
+    }
+  });
+}
+
+
 function renderTop5Trend(view){
   const canvas=document.getElementById('trendChart');
   if(!canvas) return;
@@ -525,47 +569,74 @@ function renderTop5Trend(view){
   const top=sortedRows(view).slice(0,5);
   const labels=months.map(monthLabel);
   const palette=['#38bdf8','#6366f1','#a78bfa','#f472b6','#34d399'];
+  const bandLabel=state.band==='all'?'total hours':BANDS.find(b=>b.key===state.band).full+' hours';
+
+  const series=top.map((op,idx)=>{
+    const values=months.map(m=>{
+      const monthRows=enrich(rawData.filter(r=>r.month===m));
+      const match=monthRows.find(r=>r.operator===op.operator);
+      return match ? (state.band==='all'?match.total:(match[state.band]||0)) : null;
+    });
+    return {operator:op.operator,color:palette[idx%palette.length],values};
+  });
 
   if(trendChart) trendChart.destroy();
 
-  const datasets=top.map((op,idx)=>({
-    label:op.operator,
-    data:months.map(m=>{
-      const monthRows=enrich(rawData.filter(r=>r.month===m));
-      const match=monthRows.find(r=>r.operator===op.operator);
-      if(!match) return null;
-      return state.band==='all'?match.total:(match[state.band]||0);
-    }),
-    borderColor:palette[idx%palette.length],
-    backgroundColor:palette[idx%palette.length]+'33',
-    pointRadius:3,
-    pointHoverRadius:5,
-    borderWidth:2,
-    tension:.32,
-    spanGaps:true
-  }));
-
-  const bandLabel=state.band==='all'?'total hours':BANDS.find(b=>b.key===state.band).full+' hours';
   document.getElementById('trendTitle').textContent='Top 5 Progress Over Time';
-  document.getElementById('trendSub').textContent=`Monthly ${bandLabel} trend for the current top 5 operators.`;
+  document.getElementById('trendSub').textContent=`Grouped monthly ${bandLabel}. Hover bars for exact hours or use the grid below.`;
 
   trendChart=new Chart(canvas,{
-    type:'line',
-    data:{labels,datasets},
+    type:'bar',
+    data:{
+      labels,
+      datasets:series.map(s=>({
+        label:s.operator,
+        data:s.values,
+        backgroundColor:s.color+'aa',
+        borderColor:s.color,
+        borderWidth:1.5,
+        borderRadius:4,
+        maxBarThickness:34
+      }))
+    },
     options:{
       responsive:true,
       maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},
-        tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${fmt1(c.parsed.y)} hrs`}}
+        tooltip:{
+          enabled:true,
+          mode:'index',
+          intersect:false,
+          backgroundColor:'#111827',
+          borderColor:'rgba(56,189,248,.3)',
+          borderWidth:1,
+          padding:12,
+          callbacks:{
+            title:items=>items.length?items[0].label:'',
+            label:c=>`${c.dataset.label}: ${fmt1(c.parsed.y)} hrs`
+          }
+        }
       },
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.04)'}},
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#cbd5e1'}},
         y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}}
       }
     }
   });
+
+  const valueBox=document.getElementById('trendValues');
+  if(valueBox){
+    const header=`<tr><th>Operator</th>${labels.map(l=>`<th>${l}</th>`).join('')}<th>Change</th></tr>`;
+    const body=series.map(s=>{
+      const first=s.values.find(v=>v!==null&&v!==undefined);
+      const last=[...s.values].reverse().find(v=>v!==null&&v!==undefined);
+      const change=(first&&last)?signedPct((last-first)/first):'—';
+      return `<tr><td><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${s.color};margin-right:6px"></span>${s.operator}</td>${s.values.map(v=>`<td>${v===null||v===undefined?'—':fmt1(v)}</td>`).join('')}<td>${change}</td></tr>`;
+    }).join('');
+    valueBox.innerHTML=`<table>${header}${body}</table>`;
+  }
 }
 
 function renderSpark(view){
