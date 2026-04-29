@@ -13,7 +13,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .app{max-width:1440px;margin:0 auto;padding:20px 24px 40px}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px}
 .topbar h1{font-size:20px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}.tabs{display:flex;gap:8px;margin:-8px 0 18px}.tab-btn{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--text2);border-radius:999px;padding:8px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;font-weight:700;cursor:pointer}.tab-btn:hover{border-color:var(--accent);color:var(--text)}.tab-btn.active{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.45);color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block}.fuel-tab-panel{margin-top:0}.fuel-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.fuel-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.fuel-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.fuel-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.fuel-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.fuel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.fuel-chart-box{height:300px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018)}.fuel-chart-box.tall{height:360px}.fuel-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.fuel-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.4;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}.fuel-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.fuel-table{width:100%;border-collapse:collapse;min-width:980px}.fuel-table th,.fuel-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.fuel-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.fuel-table td{font-family:'JetBrains Mono',monospace}.fuel-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.positive{color:#34d399}.negative{color:#fb7185}@media(max-width:1100px){.fuel-kpi-grid{grid-template-columns:repeat(3,1fr)}.fuel-grid{grid-template-columns:1fr}}@media(max-width:640px){.fuel-kpi-grid{grid-template-columns:1fr 1fr}}
+.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}.app *::-webkit-scrollbar{width:6px;height:6px}.app *::-webkit-scrollbar-track{background:rgba(255,255,255,.02);border-radius:999px}.app *::-webkit-scrollbar-thumb{background:rgba(148,163,184,.28);border-radius:999px}.app *::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.45)}.table-wrap,.trend-values,.fuel-table-wrap,.scroll-area{scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.38) rgba(255,255,255,.02)}.tabs{display:flex;gap:8px;margin:-8px 0 18px}.tab-btn{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--text2);border-radius:999px;padding:8px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;font-weight:700;cursor:pointer}.tab-btn:hover{border-color:var(--accent);color:var(--text)}.tab-btn.active{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.45);color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block}.fuel-tab-panel{margin-top:0}.fuel-controls{margin-bottom:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);align-items:flex-end}.fuel-controls .control-group select{min-width:180px}.fuel-controls .button-lite{height:37px;margin-top:18px}.fuel-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.fuel-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.fuel-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.fuel-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.fuel-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.fuel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.fuel-chart-box{height:300px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018);position:relative;overflow:hidden}.fuel-chart-box.tall{height:360px}.fuel-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.fuel-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.4;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}.fuel-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.fuel-table{width:100%;border-collapse:collapse;min-width:980px}.fuel-table th,.fuel-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.fuel-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.fuel-table td{font-family:'JetBrains Mono',monospace}.fuel-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.positive{color:#34d399}.negative{color:#fb7185}@media(max-width:1100px){.fuel-kpi-grid{grid-template-columns:repeat(3,1fr)}.fuel-grid{grid-template-columns:1fr}}@media(max-width:640px){.fuel-kpi-grid{grid-template-columns:1fr 1fr}}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
 .control-group{display:flex;flex-direction:column;gap:4px}
 .control-group label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)}
@@ -193,8 +193,9 @@ tr.active-row td{background:rgba(56,189,248,.08)}
   </div>
 
   <div id="fuelTab" class="tab-panel fuel-tab-panel">
-    <div class="controls">
-      <div class="control-group"><label>Fuel View</label><select id="fuelViewSelect"><option value="market">Market</option><option value="operator">Selected Operator</option></select></div>
+    <div class="controls fuel-controls">
+      <div class="control-group"><label>Fuel Period</label><select id="fuelPeriodSelect"></select></div>
+      <div class="control-group"><label>Fuel Operator</label><select id="fuelOperatorSelect"></select></div>
       <div class="control-group"><label>Fuel Metric</label><select id="fuelMetricSelect"><option value="skew">Fuel Share vs Hours Share</option><option value="intensity">Fuel / Hour Index</option><option value="departure">Fuel / Departure</option><option value="distance">Fuel / Estimated NM</option><option value="fleet">Fuel / Aircraft</option></select></div>
       <button class="button-lite" id="fuelSyncBtn">Use dashboard filters</button>
     </div>
@@ -269,6 +270,7 @@ const monthLabel=m=>{const [y,mo]=m.split('-');const label=new Date(Number(y),Nu
 const quarterOf=m=>{const [y,mo]=m.split('-').map(Number);return `${y} Q${Math.ceil(mo/3)}`};
 
 let state={mode:'monthly',period:null,scope:'25',band:'all',selected:'all'};
+let fuelState={period:null,operator:'all'};
 let expanded=new Set();
 let donutChart=null;
 let marketBreakdownChart=null;
@@ -714,6 +716,47 @@ function renderSpark(view){
 }
 
 
+
+function setupFuelControls(){
+  const periodSelect=document.getElementById('fuelPeriodSelect');
+  const operatorSelect=document.getElementById('fuelOperatorSelect');
+  if(!periodSelect || !operatorSelect) return;
+
+  const periodOptions=[
+    {value:'historical',label:'All Historical'},
+    ...months.map(m=>({value:m,label:monthLabel(m)})),
+    ...quarters.map(q=>({value:q,label:q}))
+  ];
+
+  if(!fuelState.period){
+    fuelState.period=months[months.length-1]||'historical';
+  }
+
+  periodSelect.innerHTML=periodOptions.map(o=>`<option value="${o.value}">${o.label}</option>`).join('');
+  if(!periodOptions.some(o=>o.value===fuelState.period)) fuelState.period=periodOptions[0]?.value||'historical';
+  periodSelect.value=fuelState.period;
+
+  const source=fuelSourceRows();
+  const names=[...source].map(o=>o.operator).sort((a,b)=>a.localeCompare(b));
+  operatorSelect.innerHTML='<option value="all">All Operators</option>'+names.map(n=>`<option value="${n}">${n}</option>`).join('');
+  if(fuelState.operator!=='all'&&!names.includes(fuelState.operator)) fuelState.operator='all';
+  operatorSelect.value=fuelState.operator;
+}
+
+function fuelPeriodLabel(){
+  if(fuelState.period==='historical') return 'All Historical';
+  if(months.includes(fuelState.period)) return monthLabel(fuelState.period);
+  return fuelState.period||'All Historical';
+}
+
+function fuelSourceRows(){
+  if(!fuelState.period || fuelState.period==='historical') return aggregate(rawData,'All Historical');
+  if(months.includes(fuelState.period)) return enrich(rawData.filter(o=>o.month===fuelState.period));
+  if(quarters.includes(fuelState.period)) return aggregate(rawData.filter(o=>quarterOf(o.month)===fuelState.period),fuelState.period);
+  return aggregate(rawData,'All Historical');
+}
+
+
 function fuelSummary(rows){
   const totalHours=sumRows(rows,'total');
   const fuel=rows.reduce((s,o)=>s+(o.fuel||0),0);
@@ -724,11 +767,11 @@ function fuelSummary(rows){
 }
 
 function fuelRows(){
-  const source=sourceRows();
+  setupFuelControls();
+  const source=fuelSourceRows();
   const view=scoped(source);
-  const fuelMode=document.getElementById('fuelViewSelect')?.value||'market';
-  if(fuelMode==='operator' && state.selected!=='all'){
-    const selected=source.find(o=>o.operator===state.selected);
+  if(fuelState.operator!=='all'){
+    const selected=source.find(o=>o.operator===fuelState.operator);
     return {source,view,rows:selected?[selected]:view,isOperator:!!selected,selected};
   }
   return {source,view,rows:view,isOperator:false,selected:null};
@@ -776,7 +819,7 @@ function renderFuelTab(){
   const current=fuelSummary(rows);
 
   document.getElementById('fuelMainTitle').textContent=isOperator?`Fuel Intelligence · ${selected.operator}`:'Fuel Intelligence · Market View';
-  document.getElementById('fuelMainSub').textContent=`${periodText()} · ${state.scope==='all'?'All operators':'Top '+state.scope} · ${fuelMetricLabel(metric)}`;
+  document.getElementById('fuelMainSub').textContent=`${fuelPeriodLabel()} · ${state.scope==='all'?'All operators':'Top '+state.scope} · ${fuelMetricLabel(metric)}`;
 
   const marketFuelShare=isOperator && market.fuel ? current.fuel/market.fuel : 1;
   const marketHoursShare=isOperator && market.totalHours ? current.totalHours/market.totalHours : 1;
@@ -839,7 +882,7 @@ function renderFuelTab(){
   document.getElementById('fuelTableBody').innerHTML=[...metrics].sort((a,b)=>b.fuelSkew-a.fuelSkew).slice(0,30).map(o=>`
     <tr><td>${o.operator}</td><td>${fmt(o.fuel)}</td><td>${fmt1(o.hours)}</td><td>${fmt1(o.fuelPerHour)}</td><td>${fmt(o.fuelPerDeparture)}</td><td>${fmt(o.estNm)}</td><td>${fmt1(o.fuelPerNm)}</td><td>${pct(o.hoursShare)}</td><td>${pct(o.fuelShare)}</td><td class="${o.fuelSkew>=0?'positive':'negative'}">${signedPct(o.fuelSkew)}</td></tr>`).join('');
 
-  document.getElementById('fuelNote').innerHTML=`Fuel uses <b>Potential Fuel (USG)</b> from WingX. Fuel by hour band is estimated by allocating each operator’s fuel across bands using that operator’s hour mix, because the embedded model stores total potential fuel per operator-period. Estimated NM uses <b>avg sector length × departures</b>. Current data supports monthly / April MTD pacing; week-over-week needs weekly or date-level exports.`;
+  document.getElementById('fuelNote').innerHTML=`Fuel uses <b>Potential Fuel (USG)</b> from WingX. Fuel by hour band is estimated by allocating each operator’s fuel across bands using that operator’s hour mix, because the embedded model stores total potential fuel per operator-period. Estimated NM uses <b>avg sector length × departures</b>. The Fuel tab has independent period and operator controls; use the sync button only when you want to copy dashboard filters. Current data supports monthly / April MTD pacing; week-over-week needs weekly or date-level exports.`;
 }
 
 
@@ -855,9 +898,14 @@ document.getElementById('scopeSelect').addEventListener('change',e=>{state.scope
 document.getElementById('bandSelect').addEventListener('change',e=>{state.band=e.target.value;update();});
 document.getElementById('operatorSelect').addEventListener('change',e=>{state.selected=e.target.value;update();});
 document.getElementById('clearOperatorBtn').addEventListener('click',()=>{state.selected='all';update();});
-document.getElementById('fuelViewSelect').addEventListener('change',()=>renderFuelTab());
+document.getElementById('fuelPeriodSelect').addEventListener('change',e=>{fuelState.period=e.target.value;renderFuelTab();});
+document.getElementById('fuelOperatorSelect').addEventListener('change',e=>{fuelState.operator=e.target.value;renderFuelTab();});
 document.getElementById('fuelMetricSelect').addEventListener('change',()=>renderFuelTab());
-document.getElementById('fuelSyncBtn').addEventListener('click',()=>renderFuelTab());
+document.getElementById('fuelSyncBtn').addEventListener('click',()=>{
+  fuelState.operator=state.selected;
+  fuelState.period=state.mode==='historical'?'historical':state.period;
+  renderFuelTab();
+});
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -870,6 +918,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 });
 
 setupPeriods();
+setupFuelControls();
 update();
 renderFuelTab();
 </script>
