@@ -13,7 +13,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .app{max-width:1440px;margin:0 auto;padding:20px 24px 40px}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px}
 .topbar h1{font-size:20px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}
+.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}.tabs{display:flex;gap:8px;margin:-8px 0 18px}.tab-btn{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--text2);border-radius:999px;padding:8px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;font-weight:700;cursor:pointer}.tab-btn:hover{border-color:var(--accent);color:var(--text)}.tab-btn.active{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.45);color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block}.fuel-tab-panel{margin-top:0}.fuel-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.fuel-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.fuel-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.fuel-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.fuel-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.fuel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.fuel-chart-box{height:300px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018)}.fuel-chart-box.tall{height:360px}.fuel-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.fuel-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.4;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}.fuel-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.fuel-table{width:100%;border-collapse:collapse;min-width:980px}.fuel-table th,.fuel-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.fuel-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.fuel-table td{font-family:'JetBrains Mono',monospace}.fuel-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.positive{color:#34d399}.negative{color:#fb7185}@media(max-width:1100px){.fuel-kpi-grid{grid-template-columns:repeat(3,1fr)}.fuel-grid{grid-template-columns:1fr}}@media(max-width:640px){.fuel-kpi-grid{grid-template-columns:1fr 1fr}}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
 .control-group{display:flex;flex-direction:column;gap:4px}
 .control-group label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)}
@@ -94,6 +94,13 @@ tr.active-row td{background:rgba(56,189,248,.08)}
 <body>
 <div class="app">
   <div class="topbar"><h1>WingX Operator Intelligence</h1><span class="tag">Branded Charter · US Domestic · Operator Drilldown</span></div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="fuel">Fuel Intelligence</button>
+  </div>
+
+  <div id="dashboardTab" class="tab-panel active">
 
   <div class="controls">
     <div class="control-group"><label>Time View</label><select id="periodMode"><option value="historical">All Historical</option><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option></select></div>
@@ -182,6 +189,58 @@ tr.active-row td{background:rgba(56,189,248,.08)}
       <div class="definition"><b>Hours / Aircraft</b><span>WingX hours divided by matched JetNET operating aircraft count. Only appears where JetNET matched cleanly.</span></div>
     </div>
   </div>
+
+  </div>
+
+  <div id="fuelTab" class="tab-panel fuel-tab-panel">
+    <div class="controls">
+      <div class="control-group"><label>Fuel View</label><select id="fuelViewSelect"><option value="market">Market</option><option value="operator">Selected Operator</option></select></div>
+      <div class="control-group"><label>Fuel Metric</label><select id="fuelMetricSelect"><option value="skew">Fuel Share vs Hours Share</option><option value="intensity">Fuel / Hour Index</option><option value="departure">Fuel / Departure</option><option value="distance">Fuel / Estimated NM</option><option value="fleet">Fuel / Aircraft</option></select></div>
+      <button class="button-lite" id="fuelSyncBtn">Use dashboard filters</button>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title" id="fuelMainTitle">Fuel Intelligence</div>
+          <div class="chart-subtitle" id="fuelMainSub">Potential Fuel (USG), demand intensity, and market skew.</div>
+        </div>
+      </div>
+
+      <div class="fuel-kpi-grid" id="fuelKpis"></div>
+
+      <div class="fuel-grid">
+        <div class="fuel-chart-box tall">
+          <div class="fuel-chart-title" id="fuelRankTitle">Fuel Skew by Operator</div>
+          <canvas id="fuelRankChart"></canvas>
+        </div>
+        <div class="fuel-chart-box tall">
+          <div class="fuel-chart-title">Monthly Fuel Intensity Trend</div>
+          <canvas id="fuelTrendChart"></canvas>
+        </div>
+      </div>
+
+      <div class="fuel-grid">
+        <div class="fuel-chart-box">
+          <div class="fuel-chart-title">Fuel Share vs Hours Share</div>
+          <canvas id="fuelShareChart"></canvas>
+        </div>
+        <div class="fuel-chart-box">
+          <div class="fuel-chart-title">Fuel by Hour Band</div>
+          <canvas id="fuelBandChart"></canvas>
+        </div>
+      </div>
+
+      <div class="fuel-table-wrap">
+        <table class="fuel-table">
+          <thead><tr><th>Operator</th><th>Fuel</th><th>Hours</th><th>Fuel/Hr</th><th>Fuel/Dep</th><th>Est. NM</th><th>Fuel/NM</th><th>Hours Share</th><th>Fuel Share</th><th>Skew</th></tr></thead>
+          <tbody id="fuelTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="fuel-note" id="fuelNote"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -215,6 +274,10 @@ let donutChart=null;
 let marketBreakdownChart=null;
 let sparkChart=null;
 let trendChart=null;
+let fuelRankChart=null;
+let fuelTrendChart=null;
+let fuelShareChart=null;
+let fuelBandChart=null;
 
 Chart.defaults.color='#94a3b8';
 Chart.defaults.borderColor='rgba(255,255,255,.06)';
@@ -420,6 +483,7 @@ function update(){
   renderDetail(source,view);
   renderMarketBreakdown(view);
   renderSpark(view);
+  if(document.getElementById('fuelTab')?.classList.contains('active')) renderFuelTab();
 }
 
 function renderBars(view,isFocused,band){
@@ -649,6 +713,136 @@ function renderSpark(view){
   });
 }
 
+
+function fuelSummary(rows){
+  const totalHours=sumRows(rows,'total');
+  const fuel=rows.reduce((s,o)=>s+(o.fuel||0),0);
+  const deps=rows.reduce((s,o)=>s+(o.deps||0),0);
+  const estNm=rows.reduce((s,o)=>s+((o.avgSector||0)*(o.deps||0)),0);
+  const operatingAircraft=rows.reduce((s,o)=>s+(o.operatingAircraft||0),0);
+  return {totalHours,fuel,deps,estNm,operatingAircraft,fuelPerHour:totalHours?fuel/totalHours:0,fuelPerDeparture:deps?fuel/deps:0,fuelPerNm:estNm?fuel/estNm:0,fuelPerAircraft:operatingAircraft?fuel/operatingAircraft:0,hoursPerAircraft:operatingAircraft?totalHours/operatingAircraft:0};
+}
+
+function fuelRows(){
+  const source=sourceRows();
+  const view=scoped(source);
+  const fuelMode=document.getElementById('fuelViewSelect')?.value||'market';
+  if(fuelMode==='operator' && state.selected!=='all'){
+    const selected=source.find(o=>o.operator===state.selected);
+    return {source,view,rows:selected?[selected]:view,isOperator:!!selected,selected};
+  }
+  return {source,view,rows:view,isOperator:false,selected:null};
+}
+
+function fuelOperatorMetrics(view){
+  const market=fuelSummary(view);
+  return view.map(o=>{
+    const fuel=o.fuel||0, hours=o.total||0, deps=o.deps||0, estNm=(o.avgSector||0)*(o.deps||0);
+    const hoursShare=market.totalHours?hours/market.totalHours:0;
+    const fuelShare=market.fuel?fuel/market.fuel:0;
+    const fuelPerHour=hours?fuel/hours:0;
+    const fuelPerDeparture=deps?fuel/deps:0;
+    const fuelPerNm=estNm?fuel/estNm:0;
+    const fuelIntensityIndex=market.fuelPerHour?fuelPerHour/market.fuelPerHour:0;
+    const fuelPerAircraft=o.operatingAircraft?fuel/o.operatingAircraft:0;
+    return {...o,fuel,hours,deps,estNm,hoursShare,fuelShare,fuelSkew:fuelShare-hoursShare,fuelPerHour,fuelPerDeparture,fuelPerNm,fuelIntensityIndex,fuelPerAircraft};
+  });
+}
+
+function fuelRankValue(o,metric){
+  if(metric==='intensity') return o.fuelIntensityIndex;
+  if(metric==='departure') return o.fuelPerDeparture;
+  if(metric==='distance') return o.fuelPerNm;
+  if(metric==='fleet') return o.fuelPerAircraft;
+  return o.fuelSkew;
+}
+
+function fuelMetricLabel(metric){
+  if(metric==='intensity') return 'Fuel / Hour Index';
+  if(metric==='departure') return 'Fuel / Departure';
+  if(metric==='distance') return 'Fuel / Estimated NM';
+  if(metric==='fleet') return 'Fuel / Aircraft';
+  return 'Fuel Share - Hours Share';
+}
+
+function renderFuelTab(){
+  const fuelTab=document.getElementById('fuelTab');
+  if(!fuelTab) return;
+  const {view,rows,isOperator,selected}=fuelRows();
+  if(!view.length) return;
+
+  const metric=document.getElementById('fuelMetricSelect')?.value||'skew';
+  const market=fuelSummary(view);
+  const current=fuelSummary(rows);
+
+  document.getElementById('fuelMainTitle').textContent=isOperator?`Fuel Intelligence · ${selected.operator}`:'Fuel Intelligence · Market View';
+  document.getElementById('fuelMainSub').textContent=`${periodText()} · ${state.scope==='all'?'All operators':'Top '+state.scope} · ${fuelMetricLabel(metric)}`;
+
+  const marketFuelShare=isOperator && market.fuel ? current.fuel/market.fuel : 1;
+  const marketHoursShare=isOperator && market.totalHours ? current.totalHours/market.totalHours : 1;
+  const skew=marketFuelShare-marketHoursShare;
+  const intensity=market.fuelPerHour?current.fuelPerHour/market.fuelPerHour:0;
+
+  document.getElementById('fuelKpis').innerHTML=`
+    <div class="fuel-kpi"><span>Potential Fuel</span><b>${fmt(current.fuel)}</b><small>USG in current fuel view</small></div>
+    <div class="fuel-kpi"><span>Fuel / Hour</span><b>${fmt1(current.fuelPerHour)}</b><small>${isOperator?intensity.toFixed(2)+'x market':'market average'}</small></div>
+    <div class="fuel-kpi"><span>Fuel / Departure</span><b>${fmt(current.fuelPerDeparture)}</b><small>mission weight proxy</small></div>
+    <div class="fuel-kpi"><span>Fuel / Est. NM</span><b>${fmt1(current.fuelPerNm)}</b><small>distance-adjusted proxy</small></div>
+    <div class="fuel-kpi"><span>Fuel Skew</span><b class="${skew>=0?'positive':'negative'}">${isOperator?signedPct(skew):'Market'}</b><small>${isOperator?'fuel share minus hours share':'select operator to isolate'}</small></div>`;
+
+  const metrics=fuelOperatorMetrics(view);
+  const ranked=[...metrics].filter(o=>fuelRankValue(o,metric)>0 || metric==='skew').sort((a,b)=>fuelRankValue(b,metric)-fuelRankValue(a,metric)).slice(0,12);
+  document.getElementById('fuelRankTitle').textContent=fuelMetricLabel(metric)+' by Operator';
+
+  if(fuelRankChart) fuelRankChart.destroy();
+  fuelRankChart=new Chart(document.getElementById('fuelRankChart'),{
+    type:'bar',
+    data:{labels:ranked.map(o=>o.operator.length>20?o.operator.slice(0,20)+'…':o.operator),datasets:[{label:fuelMetricLabel(metric),data:ranked.map(o=>fuelRankValue(o,metric)),backgroundColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#fb718577':'#38bdf877'),borderColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#fb7185':'#38bdf8'),borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{if(metric==='skew')return `Skew: ${signedPct(c.parsed.x)}`;if(metric==='intensity')return `Index: ${fmt1(c.parsed.x)}x`;if(metric==='distance')return `${fmt1(c.parsed.x)} USG / est. NM`;if(metric==='fleet')return `${fmt(c.parsed.x)} USG / aircraft`;return `${fmt(c.parsed.x)} USG / departure`;}}}},scales:{x:{beginAtZero:metric!=='skew',ticks:{callback:v=>metric==='skew'?signedPct(v):Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
+  });
+
+  const monthly=months.map(m=>{
+    const monthRows=enrich(rawData.filter(r=>r.month===m));
+    let selectedRows=monthRows;
+    if(isOperator){
+      const match=monthRows.find(o=>o.operator===selected.operator);
+      selectedRows=match?[match]:[];
+    }else{
+      selectedRows=scoped(monthRows);
+    }
+    return {label:monthLabel(m),...fuelSummary(selectedRows)};
+  });
+
+  if(fuelTrendChart) fuelTrendChart.destroy();
+  fuelTrendChart=new Chart(document.getElementById('fuelTrendChart'),{
+    type:'line',
+    data:{labels:monthly.map(d=>d.label),datasets:[{label:'Fuel / Hour',data:monthly.map(d=>d.fuelPerHour),borderColor:'#38bdf8',backgroundColor:'#38bdf833',pointRadius:3,tension:.3},{label:'Fuel / Departure',data:monthly.map(d=>d.fuelPerDeparture),borderColor:'#f472b6',backgroundColor:'#f472b633',pointRadius:3,tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${fmt1(c.parsed.y)}`}}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'}},y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}}}}
+  });
+
+  const shareTop=[...metrics].sort((a,b)=>b.fuelShare-a.fuelShare).slice(0,10);
+  if(fuelShareChart) fuelShareChart.destroy();
+  fuelShareChart=new Chart(document.getElementById('fuelShareChart'),{
+    type:'bar',
+    data:{labels:shareTop.map(o=>o.operator.split(' ')[0].slice(0,10)),datasets:[{label:'Hours Share',data:shareTop.map(o=>o.hoursShare),backgroundColor:'#6366f188',borderColor:'#6366f1',borderWidth:1.5,borderRadius:4},{label:'Fuel Share',data:shareTop.map(o=>o.fuelShare),backgroundColor:'#38bdf888',borderColor:'#38bdf8',borderWidth:1.5,borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${pct(c.parsed.y)}`}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>pct(v)},grid:{color:'rgba(255,255,255,.06)'}}}}
+  });
+
+  const bandFuel=BANDS.map(b=>view.reduce((s,o)=>s+((o.fuel||0)*(o.total?((o[b.key]||0)/o.total):0)),0));
+  if(fuelBandChart) fuelBandChart.destroy();
+  fuelBandChart=new Chart(document.getElementById('fuelBandChart'),{
+    type:'doughnut',
+    data:{labels:BANDS.map(b=>b.full),datasets:[{data:bandFuel,backgroundColor:BANDS.map(b=>b.color),borderColor:'#111827',borderWidth:2,hoverOffset:8}]},
+    options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{const total=c.dataset.data.reduce((s,v)=>s+v,0);return `${c.label}: ${fmt(c.parsed)} est. USG (${pct(total?c.parsed/total:0)})`;}}}}}
+  });
+
+  document.getElementById('fuelTableBody').innerHTML=[...metrics].sort((a,b)=>b.fuelSkew-a.fuelSkew).slice(0,30).map(o=>`
+    <tr><td>${o.operator}</td><td>${fmt(o.fuel)}</td><td>${fmt1(o.hours)}</td><td>${fmt1(o.fuelPerHour)}</td><td>${fmt(o.fuelPerDeparture)}</td><td>${fmt(o.estNm)}</td><td>${fmt1(o.fuelPerNm)}</td><td>${pct(o.hoursShare)}</td><td>${pct(o.fuelShare)}</td><td class="${o.fuelSkew>=0?'positive':'negative'}">${signedPct(o.fuelSkew)}</td></tr>`).join('');
+
+  document.getElementById('fuelNote').innerHTML=`Fuel uses <b>Potential Fuel (USG)</b> from WingX. Fuel by hour band is estimated by allocating each operator’s fuel across bands using that operator’s hour mix, because the embedded model stores total potential fuel per operator-period. Estimated NM uses <b>avg sector length × departures</b>. Current data supports monthly / April MTD pacing; week-over-week needs weekly or date-level exports.`;
+}
+
+
 function selectOperator(name){
   state.selected=name;
   document.getElementById('operatorSelect').value=name;
@@ -661,9 +855,23 @@ document.getElementById('scopeSelect').addEventListener('change',e=>{state.scope
 document.getElementById('bandSelect').addEventListener('change',e=>{state.band=e.target.value;update();});
 document.getElementById('operatorSelect').addEventListener('change',e=>{state.selected=e.target.value;update();});
 document.getElementById('clearOperatorBtn').addEventListener('click',()=>{state.selected='all';update();});
+document.getElementById('fuelViewSelect').addEventListener('change',()=>renderFuelTab());
+document.getElementById('fuelMetricSelect').addEventListener('change',()=>renderFuelTab());
+document.getElementById('fuelSyncBtn').addEventListener('click',()=>renderFuelTab());
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    const tab=btn.dataset.tab;
+    document.getElementById(tab==='fuel'?'fuelTab':'dashboardTab').classList.add('active');
+    if(tab==='fuel') renderFuelTab();
+  });
+});
 
 setupPeriods();
 update();
+renderFuelTab();
 </script>
 </body>
 </html>
