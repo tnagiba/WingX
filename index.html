@@ -269,7 +269,7 @@ tr.active-row td{background:rgba(56,189,248,.08)}
       <div class="chart-header">
         <div>
           <div class="chart-title">Market Signals + Targeting Model</div>
-          <div class="chart-subtitle">Directional forecast logic using April MTD pacing, MoM momentum, YoY confirmation, fuel intensity, and concentration.</div>
+          <div class="chart-subtitle">Directional targeting logic using April 2026 pacing, MoM momentum, YoY confirmation, fuel intensity, and concentration.</div>
         </div>
       </div>
 
@@ -963,7 +963,7 @@ function renderFuelTab(){
   document.getElementById('fuelTableBody').innerHTML=[...metrics].sort((a,b)=>b.fuelSkew-a.fuelSkew).slice(0,30).map(o=>`
     <tr><td>${o.operator}</td><td>${fmt(o.fuel)}</td><td>${fmt1(o.hours)}</td><td>${fmt1(o.fuelPerHour)}</td><td>${fmt(o.fuelPerDeparture)}</td><td>${fmt(o.estNm)}</td><td>${fmt1(o.fuelPerNm)}</td><td>${pct(o.hoursShare)}</td><td>${pct(o.fuelShare)}</td><td class="${o.fuelSkew>=0?'positive':'negative'}">${signedPct(o.fuelSkew)}</td></tr>`).join('');
 
-  document.getElementById('fuelNote').innerHTML=`Fuel uses <b>Potential Fuel (USG)</b> from WingX. Fuel by hour band is estimated by allocating each operator’s fuel across bands using that operator’s hour mix, because the embedded model stores total potential fuel per operator-period. Estimated NM uses <b>avg sector length × departures</b>. The Fuel tab has independent period and operator controls; use the sync button only when you want to copy dashboard filters. Current data supports monthly / April MTD pacing; week-over-week needs weekly or date-level exports.`;
+  document.getElementById('fuelNote').innerHTML=`Fuel uses <b>Potential Fuel (USG)</b> from WingX. Fuel by hour band is estimated by allocating each operator’s fuel across bands using that operator’s hour mix, because the embedded model stores total potential fuel per operator-period. Estimated NM uses <b>avg sector length × departures</b>. The Fuel tab has independent period and operator controls; use the sync button only when you want to copy dashboard filters. Current data supports monthly April 2026 pacing; week-over-week needs weekly or date-level exports.`;
 }
 
 
