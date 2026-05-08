@@ -7781,7 +7781,7 @@ function update(){
       <div class="kpi"><div class="kpi-label">Market Share</div><div class="kpi-val">${pct(marketShare)}</div><div class="kpi-sub">of filtered market hours</div></div>
       <div class="kpi"><div class="kpi-label">Rank</div><div class="kpi-val">#${rank}</div><div class="kpi-sub">within current filters</div></div>
       <div class="kpi"><div class="kpi-label">Hours / Aircraft</div><div class="kpi-val">${selectedOp.hoursPerAircraft?fmt1(selectedOp.hoursPerAircraft):'—'}</div><div class="kpi-sub">${selectedOp.operatingAircraft?fmt(selectedOp.operatingAircraft)+' operating aircraft':'no JetNET match'}</div></div>
-      <div class="kpi"><div class="kpi-label">Period Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub}</div></div>`;
+      <div class="kpi"><div class="kpi-label">MoM Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub} · period-over-period</div></div>`;
   }else{
     const bandShares=BANDS.map(b=>({...b,hours:sumRows(view,b.key),share:marketTotal?sumRows(view,b.key)/marketTotal:0}));
     const largest=[...bandShares].sort((a,b)=>b.share-a.share)[0];
@@ -7793,7 +7793,7 @@ function update(){
       <div class="kpi"><div class="kpi-label">Largest Band</div><div class="kpi-val" style="color:${largest.color}">${pct(largest.share)}</div><div class="kpi-sub">${largest.full} · ${fmt(largest.hours)} hrs</div></div>
       <div class="kpi"><div class="kpi-label">Leader</div><div class="kpi-val" style="font-size:17px">${leader.operator}</div><div class="kpi-sub">${fmt1(rankValue(leader))} hrs in view</div></div>
       <div class="kpi"><div class="kpi-label">Leader Share</div><div class="kpi-val">${pct(leaderShare)}</div><div class="kpi-sub">of filtered market hours</div></div>
-      <div class="kpi"><div class="kpi-label">Period Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub}</div></div>`;
+      <div class="kpi"><div class="kpi-label">MoM Change</div><div class="kpi-val">${chg}</div><div class="kpi-sub">${chgSub} · period-over-period</div></div>`;
   }
 
   document.getElementById('legend').innerHTML=isFocused
@@ -8638,7 +8638,7 @@ function renderFboTab(){
     <div class="fbo-kpi"><span>Total Hours</span><b>${fmt1(totHours)}</b><small>${periodLabel[fboState.period]}</small></div>
     <div class="fbo-kpi"><span>Total Departures</span><b>${fmt(totDeps)}</b><small>all bands</small></div>
     <div class="fbo-kpi"><span>#1 Airport</span><b style="font-size:12px">${topAirport?topAirport.airport.split(',')[0]:'—'}</b><small>${topAirport?fmtK(getFboMetricVal(topAirport,metric))+' '+mLabel:'—'}</small></div>
-    <div class="fbo-kpi"><span>Avg YoY Hours</span><b class="${avgYoY>=0?'positive':'negative'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</b><small>vs prior year</small></div>
+    <div class="fbo-kpi"><span>YoY Hours Growth</span><b class="${avgYoY>=0?'positive':'negative'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</b><small>same period last year</small></div>
   `;
 
   // ── Bar chart: Top 20 — reversed so #1 is at top
@@ -9012,7 +9012,19 @@ function renderOverviewTab(){
   const totDeps=agg.reduce((s,r)=>s+r.deps,0);
   const leaderShare=totHrs?agg[0].total/totHrs:0;
   const yoyRows=agg.filter(r=>r.yoyHours!==null);
-  const avgYoY=yoyRows.length?yoyRows.reduce((s,r)=>s+r.yoyHours,0)/yoyRows.length:0;
+  // Hours-weighted YoY so big operators carry proportional weight (no single-tail outliers)
+  const yoyTotalHrs=yoyRows.reduce((s,r)=>s+r.total,0);
+  const avgYoY=yoyTotalHrs?yoyRows.reduce((s,r)=>s+r.yoyHours*r.total,0)/yoyTotalHrs:0;
+  // Month-over-Month change: compare current period total vs immediately prior period
+  let momPct=null, momLabel='';
+  if(mths.length===1){
+    const cur=mths[0]; const prevIdx=months.indexOf(cur)-1;
+    if(prevIdx>=0){
+      const prev=months[prevIdx];
+      const prevTot=enrich(rawData.filter(r=>r.month===prev)).reduce((s,r)=>s+r.total,0);
+      if(prevTot>0){momPct=(totHrs-prevTot)/prevTot; momLabel='vs '+monthLabel(prev);}
+    }
+  }
   const bandTotals=BANDS.map(b=>({...b,hrs:agg.reduce((s,r)=>s+(r[b.key]||0),0)}));
   const topBand=bandTotals.reduce((a,b)=>b.hrs>a.hrs?b:a);
   const fmtK=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':Math.round(n).toLocaleString();
@@ -9025,7 +9037,8 @@ function renderOverviewTab(){
     <div class="kpi"><div class="kpi-label">Departures</div><div class="kpi-val">${fmtK(totDeps)}</div><div class="kpi-sub">total flights</div></div>
     <div class="kpi"><div class="kpi-label">Market Leader</div><div class="kpi-val" style="font-size:16px;letter-spacing:-.02em">${agg[0]?.operator.split(' ')[0]||'—'}</div><div class="kpi-sub">${(leaderShare*100).toFixed(1)}% of market hours</div></div>
     <div class="kpi"><div class="kpi-label">Top Band</div><div class="kpi-val" style="font-size:16px;color:${topBand.color}">${topBand.full}</div><div class="kpi-sub">${totHrs?(topBand.hrs/totHrs*100).toFixed(1)+'% of hours':'—'}</div></div>
-    <div class="kpi"><div class="kpi-label">Avg YoY Hours</div><div class="kpi-val" style="color:${avgYoY>=0?'var(--green)':'#fb7185'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</div><div class="kpi-sub">vs prior year</div></div>`;
+    <div class="kpi"><div class="kpi-label">MoM Change</div><div class="kpi-val" style="color:${momPct===null?'var(--text2)':momPct>=0?'var(--green)':'#fb7185'}">${momPct===null?'—':(momPct>=0?'+':'')+(momPct*100).toFixed(1)+'%'}</div><div class="kpi-sub">${momPct===null?'select a single month':momLabel+' · period-over-period'}</div></div>
+    <div class="kpi"><div class="kpi-label">YoY Growth</div><div class="kpi-val" style="color:${avgYoY>=0?'var(--green)':'#fb7185'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</div><div class="kpi-sub">${mths.length===1?monthLabel(mths[0]):mths.length+' periods'} vs same period prior year · weighted by hours</div></div>`;
 
   // Band trend — always all 4 months
   if(ovBandChart) ovBandChart.destroy();
