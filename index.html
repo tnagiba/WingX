@@ -1035,96 +1035,16 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
   <div class="topbar"><h1>Market Data</h1><span class="brand-sub" style="font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--text3);margin-left:12px">BRANDED CHARTER &nbsp;·&nbsp; US DOMESTIC &nbsp;·&nbsp; JAN–APR 2026</span></div>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="overview">Overview</button>
-    <button class="tab-btn" data-tab="dashboard">Operators</button>
+    <button class="tab-btn active" data-tab="dashboard">Operators</button>
     <button class="tab-btn" data-tab="fuel">Fuel Intelligence</button>
     <button class="tab-btn" data-tab="signals">Market Signals</button>
     <button class="tab-btn" data-tab="airport">Airport Intelligence</button>
     <button class="tab-btn" data-tab="fleet">Fleet Mix</button>
   </div>
 
-    <div id="overviewTab" class="tab-panel active">
+    
 
-    <div class="controls">
-      <div class="control-group"><label>Time View</label><select id="ovPeriodMode">
-        <option value="historical">All Historical</option>
-        <option value="monthly" selected>Monthly</option>
-        <option value="quarterly">Quarterly</option>
-      </select></div>
-      <div class="control-group"><label>Period</label><select id="ovPeriodSelect"></select></div>
-      <div class="control-group"><label>Scope</label><select id="ovScope">
-        <option value="10">Top 10</option>
-        <option value="25" selected>Top 25</option>
-        <option value="50">Top 50</option>
-        <option value="100">Top 100</option>
-        <option value="all">All Operators</option>
-      </select></div>
-      <div class="control-group"><label>Hour Band</label><select id="ovBandFilter">
-        <option value="all" selected>All Bands</option>
-        <option value="under2">Under 2h</option>
-        <option value="b23">2–3h</option>
-        <option value="b34">3–4h</option>
-        <option value="b4">4h+</option>
-      </select></div>
-      <div class="control-group"><label>Metric</label><select id="ovMetric">
-        <option value="hours" selected>Hours</option>
-        <option value="fuel">Fuel (USG)</option>
-        <option value="deps">Departures</option>
-      </select></div>
-    </div>
-
-    <!-- Market KPI Strip -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px" id="ovKpiStrip"></div>
-
-    <!-- Charts row -->
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin-bottom:16px">
-      <div class="chart-panel" style="padding:16px">
-        <div class="chart-header" style="margin-bottom:12px">
-          <div><div class="chart-title">Market Hours by Band — All Time</div>
-          <div class="chart-subtitle">Mission type split across all four months of data.</div></div>
-        </div>
-        <div style="height:260px"><canvas id="ovBandChart"></canvas></div>
-      </div>
-      <div class="chart-panel" style="padding:16px">
-        <div class="dc-label" style="margin-bottom:10px">Band Share</div>
-        <div style="position:relative;width:160px;height:160px;margin:0 auto 10px">
-          <canvas id="ovDonut"></canvas>
-          <div class="donut-center"><div class="dc-big" id="ovDonutVal">—</div><div class="dc-sm">hrs</div></div>
-        </div>
-        <div id="ovBandBreakdown" class="band-share-list"></div>
-      </div>
-    </div>
-
-    <!-- Operator table + segment preview -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;min-width:0">
-      <div class="chart-panel" style="padding:16px;overflow:hidden;min-width:0">
-        <div class="chart-header" style="margin-bottom:10px">
-          <div><div class="chart-title" id="ovTableTitle">Top Operators</div>
-          <div class="chart-subtitle" id="ovTableSub"></div></div>
-        </div>
-        <div class="table-wrap" style="max-height:380px;overflow:auto">
-          <table id="ovOperatorTable"><thead><tr>
-            <th class="sortable-th" style="position:static"># <span class="sort-icon">↕</span></th>
-            <th class="sortable-th" style="position:static">Operator <span class="sort-icon">↕</span></th>
-            <th class="sortable-th" style="position:static">Hrs <span class="sort-icon">↕</span></th>
-            <th class="sortable-th" style="position:static">Share <span class="sort-icon">↕</span></th>
-            <th class="sortable-th" style="position:static">YoY <span class="sort-icon">↕</span></th>
-            <th class="sortable-th" style="position:static">Fuel <span class="sort-icon">↕</span></th>
-          </tr></thead><tbody id="ovTableBody"></tbody></table>
-        </div>
-      </div>
-      <div class="chart-panel" style="padding:16px;overflow:hidden;min-width:0">
-        <div class="chart-header" style="margin-bottom:12px">
-          <div><div class="chart-title">Fleet Mix — Hours by Segment</div>
-          <div class="chart-subtitle">Aircraft category split for the period.</div></div>
-        </div>
-        <div style="height:280px"><canvas id="ovSegChart"></canvas></div>
-      </div>
-    </div>
-
-  </div>
-
-<div id="dashboardTab" class="tab-panel">
+<div id="dashboardTab" class="tab-panel active">
 
   <div class="controls">
     <div class="control-group"><label>Time View</label><select id="periodMode"><option value="historical">All Historical</option><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option></select></div>
@@ -8473,7 +8393,6 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     const panelId=tab==='overview'?'overviewTab':tab==='fuel'?'fuelTab':tab==='signals'?'signalsTab':tab==='airport'?'airportTab':tab==='fleet'?'fleetTab':'dashboardTab';
     document.getElementById(panelId).classList.add('active');
     if(tab==='fuel') renderFuelTab();
-    if(tab==='overview') renderOverviewTab();
     if(tab==='airport') renderFboTab();
     if(tab==='fleet') renderFleetTab();
     if(tab==='signals'){
@@ -9131,7 +9050,6 @@ function setupOverviewControls(){
 }
 // ── END OVERVIEW TAB ─────────────────────────────────────────────────────────
 
-setupOverviewControls();
 setupFboControls();
 document.getElementById('fleetPeriod')?.addEventListener('change',renderFleetTab);
 document.getElementById('fleetMetric')?.addEventListener('change',renderFleetTab);
