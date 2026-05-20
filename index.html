@@ -1103,6 +1103,25 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
   table-layout: auto;
 }
 
+
+.trend-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.trend-kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.trend-kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.trend-kpi-val{font-size:24px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace;letter-spacing:-.02em}
+.trend-kpi-unit{font-size:12px;font-weight:400;color:var(--text3);margin-left:4px}
+.trend-kpi-sub{font-size:12px;color:var(--text2);margin-top:6px;font-family:'JetBrains Mono',monospace}
+.trend-chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;height:440px}
+.trend-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.trend-table{width:100%;border-collapse:collapse;font-size:13px;font-family:'JetBrains Mono',monospace}
+.trend-table th{text-align:left;padding:8px 12px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);text-transform:uppercase;font-size:11px;letter-spacing:.04em}
+.trend-table td{padding:8px 12px;border-bottom:1px solid rgba(148,163,184,.06);color:var(--text2)}
+.trend-table td:first-child{color:var(--text);font-weight:500}
+.kpi-pos{color:var(--green)}
+.kpi-neg{color:var(--neg)}
+.trend-mtd{font-size:10px;color:#ffd166;background:rgba(255,209,102,.12);padding:1px 6px;border-radius:6px;margin-left:4px;text-transform:uppercase;letter-spacing:.04em}
+.trend-paced{font-size:11px;margin-left:6px;opacity:.85}
+.trend-pending{color:var(--text3);font-style:italic}
+
 </style>
 </head>
 <body>
@@ -1115,6 +1134,7 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
     <button class="tab-btn" data-tab="signals">Market Signals</button>
     <button class="tab-btn" data-tab="airport">Airport Intelligence</button>
     <button class="tab-btn" data-tab="fleet">Fleet Mix</button>
+    <button class="tab-btn" data-tab="trend">Market Trend</button>
   </div>
 
     
@@ -1461,6 +1481,54 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
         </table>
       </div>
 
+    </div>
+  </div>
+
+
+  <div id="trendTab" class="tab-panel">
+    <div class="chart-panel">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Market Trend — Charter Volume</div>
+          <div class="chart-subtitle">US-to-US Branded Charter, Business Jet (excl. Ultra Long Range) · Jan 2025 - May 19, 2026 · May 2026 is MTD (19 of 31 days)</div>
+        </div>
+      </div>
+
+      <div class="controls" style="margin-top:10px;display:flex;gap:14px;flex-wrap:wrap">
+        <div class="control-group"><label>Metric</label><select id="trendMetric">
+          <option value="deps" selected>Departures</option>
+          <option value="hrs">Hours</option>
+          <option value="fuel">Potential Fuel (USG)</option>
+          <option value="tails">Active Tails</option>
+        </select></div>
+        <div class="control-group"><label>View</label><select id="trendMode">
+          <option value="timeline" selected>Timeline (all months)</option>
+          <option value="yoy">Year-over-Year Overlay (2025 vs 2026)</option>
+          <option value="custom">Custom Comparison</option>
+          <option value="may1to19">May 1-19 Head-to-Head (2025 vs 2026)</option>
+          <option value="monthlyHrs">Monthly Hours (Jan - May 1-19, 2025 vs 2026)</option>
+        </select></div>
+      </div>
+
+      <div id="trendCustomControls" class="controls" style="margin-top:10px;display:none;flex-wrap:wrap;gap:14px;align-items:flex-end;background:rgba(142,213,255,.04);border:1px solid rgba(142,213,255,.18);border-radius:10px;padding:12px 14px">
+        <div class="control-group" style="flex:0 0 auto"><label style="color:var(--accent)">Range A — Start</label><select id="trendAStart"></select></div>
+        <div class="control-group" style="flex:0 0 auto"><label style="color:var(--accent)">Range A — End</label><select id="trendAEnd"></select></div>
+        <div style="color:var(--text3);align-self:center;font-size:18px;padding:0 4px">vs</div>
+        <div class="control-group" style="flex:0 0 auto"><label style="color:var(--accent2)">Range B — Start</label><select id="trendBStart"></select></div>
+        <div class="control-group" style="flex:0 0 auto"><label style="color:var(--accent2)">Range B — End</label><select id="trendBEnd"></select></div>
+        <div id="trendCustomNote" style="font-size:11px;color:var(--text3);flex-basis:100%;margin-top:4px"></div>
+      </div>
+
+      <div class="trend-kpi-grid" id="trendKpis" style="margin-top:14px"></div>
+
+      <div class="trend-chart-box" style="margin-top:14px">
+        <canvas id="marketTrendChart"></canvas>
+      </div>
+
+      <div class="trend-table-wrap" style="margin-top:18px">
+        <div class="chart-subtitle" style="margin-bottom:8px">Month-by-month YoY (2025 vs 2026). April 2026 pending data. May 2026 paced YoY normalizes against May 1-19 2025 estimate.</div>
+        <table class="trend-table" id="trendTable"></table>
+      </div>
     </div>
   </div>
 
@@ -5855,11 +5923,12 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     const tab=btn.dataset.tab;
-    const panelId=tab==='overview'?'overviewTab':tab==='fuel'?'fuelTab':tab==='signals'?'signalsTab':tab==='airport'?'airportTab':tab==='fleet'?'fleetTab':'dashboardTab';
+    const panelId=tab==='overview'?'overviewTab':tab==='fuel'?'fuelTab':tab==='signals'?'signalsTab':tab==='airport'?'airportTab':tab==='fleet'?'fleetTab':tab==='trend'?'trendTab':'dashboardTab';
     document.getElementById(panelId).classList.add('active');
     if(tab==='fuel') renderFuelTab();
     if(tab==='airport') renderFboTab();
     if(tab==='fleet') renderFleetTab();
+    if(tab==='trend') renderTrendTab();
     if(tab==='signals'){
       renderSignalsTab();
       setTimeout(()=>{
@@ -6548,6 +6617,586 @@ setupFuelControls();
 update();
 renderFuelTab();
 renderSignalsTab();
+
+
+// ──────────────────────────────────────────────────────────────────────
+// MARKET TREND TAB — US Branded Charter Business Jet (excl. ULR)
+// Source: monthly WingX market exports, Grand Total row
+// April 2026 data not yet uploaded — chart shows gap
+// May 2026 is partial (1-19 of 31 days) — paced where comparable
+// ──────────────────────────────────────────────────────────────────────
+const MARKET_TREND_DATA = [
+  {mo:'2025-01',deps:31617,hrs:49946.7,fuel:12009378.71,tails:1569,airports:1059,ops:327,tonnage:379057.062,sector:511.717,yoyDep:0.16089591,yoyHrs:0.18395543,partial:null,monthDays:31},
+  {mo:'2025-02',deps:29479,hrs:46689.5,fuel:11210935.93,tails:1557,airports:1085,ops:320,tonnage:358082.682,sector:519.488,yoyDep:0.0802917,yoyHrs:0.07879961,partial:null,monthDays:28},
+  {mo:'2025-03',deps:33306,hrs:52027.2,fuel:12455691.1,tails:1535,airports:1101,ops:309,tonnage:388275.48,sector:510.22,yoyDep:0.08598259,yoyHrs:0.08252319,partial:null,monthDays:31},
+  {mo:'2025-04',deps:32225,hrs:49567.4,fuel:12001443.3,tails:1529,airports:1075,ops:316,tonnage:372884.23,sector:522.418,yoyDep:0.0492983,yoyHrs:0.0511188,partial:null,monthDays:30},
+  {mo:'2025-05',deps:34497,hrs:52939.5,fuel:12819834.55,tails:1544,airports:1086,ops:313,tonnage:397318.11,sector:521.115,yoyDep:0.05770351,yoyHrs:0.05801227,partial:null,monthDays:31},
+  {mo:'2025-06',deps:32964,hrs:49699.4,fuel:12044391.66,tails:1537,airports:1063,ops:308,tonnage:373612.485,sector:510.281,yoyDep:0.09278966,yoyHrs:0.09317442,partial:null,monthDays:30},
+  {mo:'2025-07',deps:32334,hrs:47961.6,fuel:11576720.04,tails:1463,airports:1067,ops:296,tonnage:357942.03,sector:503.184,yoyDep:0.01778463,yoyHrs:0.01803276,partial:null,monthDays:31},
+  {mo:'2025-08',deps:31886,hrs:47613.2,fuel:11484537.51,tails:1475,airports:1066,ops:290,tonnage:354621.27,sector:506.205,yoyDep:0.04178783,yoyHrs:0.0428271,partial:null,monthDays:31},
+  {mo:'2025-09',deps:33367,hrs:49821.3,fuel:12009094.51,tails:1492,airports:1077,ops:295,tonnage:369552.515,sector:504.91,yoyDep:0.02155344,yoyHrs:0.02220517,partial:null,monthDays:30},
+  {mo:'2025-10',deps:37229,hrs:56528.1,fuel:13624123.18,tails:1451,airports:1075,ops:302,tonnage:418886.11,sector:511.875,yoyDep:0.02373096,yoyHrs:0.02447331,partial:null,monthDays:31},
+  {mo:'2025-11',deps:34759,hrs:53654.9,fuel:12950330.32,tails:1443,airports:1062,ops:298,tonnage:398214.33,sector:522.226,yoyDep:0.05599101,yoyHrs:0.05612218,partial:null,monthDays:30},
+  {mo:'2025-12',deps:33103,hrs:52927.4,fuel:12779482.65,tails:1461,airports:1053,ops:295,tonnage:391960.86,sector:540.31,yoyDep:-0.06959161,yoyHrs:-0.05945619,partial:null,monthDays:31},
+  {mo:'2026-01',deps:28157,hrs:44767.6,fuel:10758606.58,tails:1429,airports:1060,ops:321,tonnage:328441.302,sector:522.968,yoyDep:-0.1094348,yoyHrs:-0.10369321,partial:null,monthDays:31},
+  {mo:'2026-02',deps:27535,hrs:43394.1,fuel:10474076.05,tails:1393,airports:1086,ops:313,tonnage:322063.11,sector:537.812,yoyDep:-0.06594525,yoyHrs:-0.07067008,partial:null,monthDays:28},
+  {mo:'2026-03',deps:32859,hrs:51676.2,fuel:12533013.45,tails:1435,airports:1097,ops:317,tonnage:384024.08,sector:524.42,yoyDep:-0.01342101,yoyHrs:-0.00674338,partial:null,monthDays:31},
+  {mo:'2026-04',deps:31616,hrs:47675.8,fuel:11194632.27,tails:1438,airports:1220,ops:344,tonnage:362050.884,sector:490.734,yoyDep:-0.01889837,yoyHrs:-0.03816108,partial:null,monthDays:30},
+  {mo:'2026-05',deps:19771,hrs:30092.6,fuel:7273486.92,tails:1265,airports:942,ops:271,tonnage:224515.62,sector:522.114,yoyDep:-0.09178189,yoyHrs:-0.08947126,partial:19,monthDays:31}
+];
+const MAY_1_19_2025 = {mo:'2025-05',label:'May 1-19 2025',deps:21769,hrs:33439.8,fuel:8033137.04,tails:1453,airports:1100,ops:299,tonnage:251768.192,sector:506.555,partial:19,monthDays:31};
+let trendChartInst=null;
+const trendState={metric:'deps',mode:'timeline',aStart:'2026-01',aEnd:'2026-05',bStart:'2025-01',bEnd:'2025-05'}; // mode: 'timeline' | 'yoy' | 'custom'
+
+function trendMonthLabel(mo){
+  const [y,m]=mo.split('-').map(Number);
+  return new Date(y,m-1,1).toLocaleString('en',{month:'short',year:'2-digit'});
+}
+function trendMetricLabel(k){
+  return ({deps:'Departures',hrs:'Hours',fuel:'Potential Fuel (USG)',tails:'Active Tails'})[k];
+}
+function trendFmtVal(v,k){
+  if(k==='hrs') return Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+  if(k==='fuel') return Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+  return Number(v).toLocaleString();
+}
+// Pace a partial month's value to its full-month projection (used for projection KPI)
+function trendPaceFull(row,k){
+  if(!row.partial) return row[k];
+  return row[k] * (row.monthDays / row.partial);
+}
+// Pace a full month down to a same-day window (used to compare 2025 full month vs 2026 MTD)
+function trendPaceTo(row,k,days){
+  return row[k] * (days / row.monthDays);
+}
+
+
+function trendBuildRange(startMo,endMo){
+  const data=MARKET_TREND_DATA;
+  const idxStart=data.findIndex(r=>r.mo===startMo);
+  const idxEnd=data.findIndex(r=>r.mo===endMo);
+  if(idxStart<0 || idxEnd<0 || idxEnd<idxStart) return [];
+  return data.slice(idxStart, idxEnd+1);
+}
+
+function trendEnsureCustomSelects(){
+  // Populate the four selects once
+  const sA=document.getElementById('trendAStart');
+  if(sA && sA.options.length>0) return; // already populated
+  const opts=MARKET_TREND_DATA.map(r=>`<option value="${r.mo}">${trendMonthLabel(r.mo)}${r.partial?' (MTD)':''}</option>`).join('');
+  ['trendAStart','trendAEnd','trendBStart','trendBEnd'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.innerHTML=opts;
+      // Set initial value from state
+      const stateKey = id.replace('trend','').toLowerCase().replace('start','Start').replace('end','End');
+      const lookup = {astart:'aStart',aend:'aEnd',bstart:'bStart',bend:'bEnd'};
+      const key = lookup[id.replace('trend','').toLowerCase()];
+      if(key && trendState[key]) el.value = trendState[key];
+    }
+  });
+}
+
+function renderTrendTab(){
+  const data=MARKET_TREND_DATA;
+  const k=trendState.metric;
+  const mode=trendState.mode;
+  const canvas=document.getElementById('marketTrendChart');
+  if(!canvas) return;
+
+  // Toggle custom controls visibility & populate selects on first show
+  const customRow=document.getElementById('trendCustomControls');
+  if(customRow){
+    customRow.style.display = (mode==='custom') ? 'flex' : 'none';
+    if(mode==='custom') trendEnsureCustomSelects();
+  }
+  const metricSel=document.getElementById('trendMetric');
+  if(metricSel){
+    metricSel.disabled = (mode==='may1to19'||mode==='monthlyHrs');
+    metricSel.style.opacity = (mode==='may1to19'||mode==='monthlyHrs') ? '.4' : '1';
+  }
+
+  let datasets, labels;
+
+  if(mode==='yoy'){
+    labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const by2025={}, by2026={};
+    data.forEach(r=>{
+      const [y,m]=r.mo.split('-').map(Number);
+      if(y===2025) by2025[m]=r;
+      if(y===2026) by2026[m]=r;
+    });
+    const make=(bucket,color,label)=>({
+      label, data:labels.map((_,i)=>bucket[i+1]?bucket[i+1][k]:null),
+      borderColor:color, backgroundColor:color+'22',
+      tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, spanGaps:false
+    });
+    datasets=[ make(by2025,'#8ed5ff','2025'), make(by2026,'#c0c1ff','2026') ];
+  } else if(mode==='custom'){
+    // Build two ordered ranges
+    const rangeA=trendBuildRange(trendState.aStart, trendState.aEnd);
+    const rangeB=trendBuildRange(trendState.bStart, trendState.bEnd);
+    if(!rangeA.length || !rangeB.length){
+      if(trendChartInst){trendChartInst.destroy();trendChartInst=null;}
+      document.getElementById('trendCustomNote').textContent='Pick a start and end month for both ranges.';
+      renderTrendKpis(); renderTrendTable();
+      return;
+    }
+    // Align by index — label is "month #1, #2, ..."
+    const maxLen=Math.max(rangeA.length, rangeB.length);
+    labels=Array.from({length:maxLen}, (_,i)=>{
+      const a=rangeA[i], b=rangeB[i];
+      if(a && b) return `${trendMonthLabel(a.mo).split(' ')[0]} / ${trendMonthLabel(b.mo).split(' ')[0]}`;
+      if(a) return trendMonthLabel(a.mo);
+      return trendMonthLabel(b.mo);
+    });
+    const pluckVal=(r,k)=>r ? r[k] : null;
+    datasets=[
+      {
+        label:`Range A: ${trendMonthLabel(rangeA[0].mo)} - ${trendMonthLabel(rangeA[rangeA.length-1].mo)}`,
+        data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeA[i],k)),
+        borderColor:'#8ed5ff', backgroundColor:'rgba(142,213,255,.12)',
+        tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, spanGaps:false,
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeA[i]&&rangeA[i].partial)?'#ffd166':'#8ed5ff'),
+      },
+      {
+        label:`Range B: ${trendMonthLabel(rangeB[0].mo)} - ${trendMonthLabel(rangeB[rangeB.length-1].mo)}`,
+        data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeB[i],k)),
+        borderColor:'#c0c1ff', backgroundColor:'rgba(192,193,255,.12)',
+        tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, borderDash:[4,3], spanGaps:false,
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeB[i]&&rangeB[i].partial)?'#ffd166':'#c0c1ff'),
+      }
+    ];
+    // Note text
+    const noteEl=document.getElementById('trendCustomNote');
+    if(noteEl){
+      const lenMismatch = rangeA.length!==rangeB.length;
+      const partials = [...rangeA,...rangeB].filter(r=>r&&r.partial).map(r=>`${trendMonthLabel(r.mo)} (${r.partial}d of ${r.monthDays})`);
+      noteEl.innerHTML = [
+        `Range A: ${rangeA.length} months · Range B: ${rangeB.length} months`,
+        lenMismatch?'<span style="color:#ffd166">⚠ Ranges have different lengths — totals compared raw</span>':'',
+        partials.length?`<span style="color:#ffd166">MTD: ${partials.join(', ')}</span>`:''
+      ].filter(Boolean).join(' · ');
+    }  } else if(mode==='may1to19'){
+    // Direct same-window comparison — no pacing required
+    const may26 = MARKET_TREND_DATA.find(r=>r.mo==='2026-05');
+    const m25 = MAY_1_19_2025;
+    labels=['Departures','Hours','Fuel (M USG)','Active Tails'];
+    const keys=['deps','hrs','fuel','tails'];
+    const norm = v => v;  // raw values; tooltip handles formatting
+    datasets=[
+      {
+        label:'May 1-19, 2025 (actual)',
+        data:keys.map(kk => kk==='fuel' ? m25[kk]/1e6 : m25[kk]),
+        backgroundColor:'rgba(142,213,255,.55)',
+        borderColor:'#8ed5ff',
+        borderWidth:1.5,
+        borderRadius:6,
+        type:'bar',
+        yAxisID:'y'
+      },
+      {
+        label:'May 1-19, 2026 (actual)',
+        data:keys.map(kk => kk==='fuel' ? may26[kk]/1e6 : may26[kk]),
+        backgroundColor:'rgba(192,193,255,.55)',
+        borderColor:'#c0c1ff',
+        borderWidth:1.5,
+        borderRadius:6,
+        type:'bar',
+        yAxisID:'y'
+      }
+    ];  } else if(mode==='monthlyHrs'){
+    // Hours-only YoY by month: Jan, Feb, Mar, Apr full + May 1-19 (both years actual)
+    const months=[
+      {key:1, label:'Jan',      mo25:'2025-01', mo26:'2026-01'},
+      {key:2, label:'Feb',      mo25:'2025-02', mo26:'2026-02'},
+      {key:3, label:'Mar',      mo25:'2025-03', mo26:'2026-03'},
+      {key:4, label:'Apr',      mo25:'2025-04', mo26:'2026-04'},
+      {key:5, label:'May 1-19', mo25:'__may1925', mo26:'2026-05', partialBoth:true},
+    ];
+    const get=mo=>{
+      if(mo==='__may1925') return MAY_1_19_2025;
+      return MARKET_TREND_DATA.find(r=>r.mo===mo);
+    };
+    labels=months.map(m=>m.label);
+    const v25=months.map(m=>get(m.mo25)?get(m.mo25).hrs:null);
+    const v26=months.map(m=>get(m.mo26)?get(m.mo26).hrs:null);
+    const yoyPct=months.map((m,i)=>{
+      if(v25[i]===null || v26[i]===null || !v25[i]) return null;
+      return ((v26[i]-v25[i])/v25[i]) * 100;
+    });
+    // Stash on canvas for the plugin
+    canvas.__monthlyHrsYoy = yoyPct;
+    canvas.__monthlyHrsLabels = labels;
+    datasets=[
+      {
+        label:'2025 (hours)',
+        data:v25,
+        backgroundColor:'rgba(142,213,255,.55)',
+        borderColor:'#8ed5ff',
+        borderWidth:1.5,
+        borderRadius:6,
+        type:'bar',
+        yAxisID:'y',
+        order:2
+      },
+      {
+        label:'2026 (hours)',
+        data:v26,
+        backgroundColor:'rgba(192,193,255,.55)',
+        borderColor:'#c0c1ff',
+        borderWidth:1.5,
+        borderRadius:6,
+        type:'bar',
+        yAxisID:'y',
+        order:2
+      }
+    ];
+
+
+  } else {
+    // Timeline
+    labels=data.map(r=>trendMonthLabel(r.mo));
+    datasets=[{
+      label:trendMetricLabel(k),
+      data:data.map(r=>r[k]),
+      borderColor:'#8ed5ff',
+      backgroundColor:'rgba(142,213,255,.10)',
+      tension:0.30, fill:true,
+      pointRadius:data.map(r=>r.partial?8:5),
+      pointHoverRadius:9,
+      pointBackgroundColor:data.map(r=>r.partial?'#ffd166':'#8ed5ff'),
+      pointBorderColor:data.map(r=>r.partial?'#ffd166':'#8ed5ff'),
+      borderWidth:2.5, spanGaps:false
+    }];
+    const projData=data.map(r=>r.partial?trendPaceFull(r,k):null);
+    if(projData.some(v=>v!==null)){
+      datasets.push({
+        label:'May 2026 projection (full month pace)',
+        data:projData,
+        borderColor:'rgba(255,209,102,.7)',
+        backgroundColor:'rgba(255,209,102,.05)',
+        borderDash:[6,5], pointRadius:6, pointHoverRadius:8,
+        pointBackgroundColor:'rgba(255,209,102,.7)', borderWidth:2, spanGaps:false
+      });
+    }
+  }
+
+  if(trendChartInst) trendChartInst.destroy();
+  // Per-bar YoY % callouts plugin (active only in monthlyHrs mode)
+  const monthlyHrsCalloutPlugin = {
+    id:'monthlyHrsCallout',
+    afterDatasetsDraw(chart){
+      if(trendState.mode!=='monthlyHrs') return;
+      const yoy = chart.canvas.__monthlyHrsYoy;
+      if(!yoy) return;
+      const ctx = chart.ctx;
+      const ds25 = chart.getDatasetMeta(0);
+      const ds26 = chart.getDatasetMeta(1);
+      if(!ds25 || !ds26) return;
+      ctx.save();
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      yoy.forEach((pct,i)=>{
+        if(pct===null) return;
+        const b25 = ds25.data[i], b26 = ds26.data[i];
+        if(!b25 || !b26) return;
+        const cx = (b25.x + b26.x) / 2;
+        const topY = Math.min(b25.y, b26.y) - 8;
+        const txt = (pct>=0?'+':'') + pct.toFixed(1) + '%';
+        const color = pct>=0 ? '#4ee6aa' : '#ffb4ab';
+        // soft background pill
+        const w = ctx.measureText(txt).width + 10;
+        const h = 16;
+        ctx.fillStyle = 'rgba(5,20,36,.85)';
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        const rx = cx - w/2, ry = topY - h + 2;
+        // rounded rect
+        const r = 4;
+        ctx.beginPath();
+        ctx.moveTo(rx+r, ry);
+        ctx.lineTo(rx+w-r, ry);
+        ctx.quadraticCurveTo(rx+w, ry, rx+w, ry+r);
+        ctx.lineTo(rx+w, ry+h-r);
+        ctx.quadraticCurveTo(rx+w, ry+h, rx+w-r, ry+h);
+        ctx.lineTo(rx+r, ry+h);
+        ctx.quadraticCurveTo(rx, ry+h, rx, ry+h-r);
+        ctx.lineTo(rx, ry+r);
+        ctx.quadraticCurveTo(rx, ry, rx+r, ry);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = color;
+        ctx.fillText(txt, cx, topY+1);
+      });
+      ctx.restore();
+    }
+  };
+  trendChartInst=new Chart(canvas,{
+    type: (mode==='may1to19'||mode==='monthlyHrs') ? 'bar' : 'line',
+    data:{labels,datasets},
+    plugins: (mode==='monthlyHrs') ? [monthlyHrsCalloutPlugin] : [],
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      layout:{padding:{top:(mode==='monthlyHrs'?28:8),bottom:8,left:6,right:12}},
+      plugins:{
+        legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1',font:{size:11},padding:14}},
+        tooltip:{
+          backgroundColor:'#111827', borderColor:'rgba(56,189,248,.3)', borderWidth:1, padding:12,
+          callbacks:{
+            label:c=>{
+              if(c.parsed.y===null||c.parsed.y===undefined) return c.dataset.label+': —';
+              if(mode==='may1to19'){
+                const metricKeys=['deps','hrs','fuel','tails'];
+                const mk=metricKeys[c.dataIndex];
+                const raw = mk==='fuel' ? c.parsed.y * 1e6 : c.parsed.y;
+                const u = mk==='deps'?'flights':mk==='hrs'?'hrs':mk==='fuel'?'USG':'tails';
+                return `${c.dataset.label}: ${trendFmtVal(raw,mk)} ${u}`;
+              }
+              if(mode==='monthlyHrs'){
+                return `${c.dataset.label}: ${trendFmtVal(c.parsed.y,'hrs')} hrs`;
+              }
+              const val=trendFmtVal(c.parsed.y,k);
+              const unit=k==='deps'?'flights':k==='hrs'?'hrs':k==='fuel'?'USG':'tails';
+              return `${c.dataset.label}: ${val} ${unit}`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#cbd5e1',maxRotation:0,autoSkipPadding:8}},
+        y:{beginAtZero:(mode==='may1to19'||mode==='monthlyHrs'),ticks:{color:'#cbd5e1',callback:v=>{
+          if(mode==='may1to19') return Number(v).toLocaleString();
+          if(mode==='monthlyHrs') return Number(v).toLocaleString();
+          if(k==='fuel') return (v/1e6).toFixed(1)+'M';
+          return Number(v).toLocaleString();
+        }},grid:{color:'rgba(255,255,255,.06)'}}
+      }
+    }
+  });
+
+  renderTrendKpis();
+  renderTrendTable();
+
+}
+
+function renderTrendKpis(){
+  const k=trendState.metric;
+  const unit=k==='deps'?'flights':k==='hrs'?'hrs':k==='fuel'?'USG':'tails';
+  const fmt=v=>trendFmtVal(v,k);
+  const sign=v=>(v>=0?'+':'')+(v*100).toFixed(1)+'%';
+  const cls=v=>v>=0?'kpi-pos':'kpi-neg';
+
+  // ── Custom-mode KPIs ──────────────────────────────────────────────────────
+  if(trendState.mode==='custom'){
+    const rA=trendBuildRange(trendState.aStart, trendState.aEnd);
+    const rB=trendBuildRange(trendState.bStart, trendState.bEnd);
+    if(!rA.length || !rB.length){ document.getElementById('trendKpis').innerHTML=''; return; }
+    const sumRaw = arr => arr.reduce((s,r)=>s+r[k],0);
+    const sumPaced = arr => arr.reduce((s,r)=>s+(r.partial?trendPaceFull(r,k):r[k]),0);
+    const aRaw=sumRaw(rA), bRaw=sumRaw(rB);
+    const aPaced=sumPaced(rA), bPaced=sumPaced(rB);
+    const rawDiff=aRaw-bRaw, rawPct=bRaw?rawDiff/bRaw:0;
+    const pacedDiff=aPaced-bPaced, pacedPct=bPaced?pacedDiff/bPaced:0;
+    const aPartials=rA.filter(r=>r.partial).length;
+    const bPartials=rB.filter(r=>r.partial).length;
+    const aLabel=`${trendMonthLabel(rA[0].mo)} - ${trendMonthLabel(rA[rA.length-1].mo)}`;
+    const bLabel=`${trendMonthLabel(rB[0].mo)} - ${trendMonthLabel(rB[rB.length-1].mo)}`;
+    document.getElementById('trendKpis').innerHTML=`
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">Range A · ${aLabel}</div>
+        <div class="trend-kpi-val">${fmt(aRaw)} <span class="trend-kpi-unit">${unit}</span></div>
+        <div class="trend-kpi-sub">${rA.length} months${aPartials?` · ${aPartials} partial`:''}</div>
+      </div>
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">Range B · ${bLabel}</div>
+        <div class="trend-kpi-val">${fmt(bRaw)} <span class="trend-kpi-unit">${unit}</span></div>
+        <div class="trend-kpi-sub">${rB.length} months${bPartials?` · ${bPartials} partial`:''}</div>
+      </div>
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">A vs B (raw)</div>
+        <div class="trend-kpi-val ${cls(rawPct)}">${sign(rawPct)}</div>
+        <div class="trend-kpi-sub">${rawDiff>=0?'+':''}${fmt(rawDiff)} ${unit}</div>
+      </div>
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">A vs B (paced)</div>
+        <div class="trend-kpi-val ${cls(pacedPct)}">${sign(pacedPct)}</div>
+        <div class="trend-kpi-sub">Partial months projected to full</div>
+      </div>
+    `;
+    return;
+  }
+
+  // ── Monthly hours KPIs (Jan-May, 2025 vs 2026) ─────────────────────────
+  if(trendState.mode==='monthlyHrs'){
+    const months=[
+      {label:'Jan',      a:MARKET_TREND_DATA.find(r=>r.mo==='2025-01'), b:MARKET_TREND_DATA.find(r=>r.mo==='2026-01')},
+      {label:'Feb',      a:MARKET_TREND_DATA.find(r=>r.mo==='2025-02'), b:MARKET_TREND_DATA.find(r=>r.mo==='2026-02')},
+      {label:'Mar',      a:MARKET_TREND_DATA.find(r=>r.mo==='2025-03'), b:MARKET_TREND_DATA.find(r=>r.mo==='2026-03')},
+      {label:'Apr',      a:MARKET_TREND_DATA.find(r=>r.mo==='2025-04'), b:MARKET_TREND_DATA.find(r=>r.mo==='2026-04')},
+      {label:'May 1-19', a:MAY_1_19_2025,                                b:MARKET_TREND_DATA.find(r=>r.mo==='2026-05')},
+    ];
+    let html2 = months.map(({label,a,b})=>{
+      const aV=a?a.hrs:null, bV=b?b.hrs:null;
+      const d=(aV!==null&&bV!==null)?bV-aV:null;
+      const pct=(aV!==null&&aV)?d/aV:null;
+      const cv=pct===null?'':cls(pct);
+      const sv=pct===null?'—':sign(pct);
+      return `<div class="trend-kpi">
+        <div class="trend-kpi-label">${label} · hours YoY</div>
+        <div class="trend-kpi-val ${cv}">${sv}</div>
+        <div class="trend-kpi-sub">'25: ${trendFmtVal(aV,'hrs')} → '26: ${trendFmtVal(bV,'hrs')}</div>
+      </div>`;
+    }).join('');
+    // Sixth card — cumulative
+    const sumA = months.reduce((s,m)=>s+(m.a?m.a.hrs:0),0);
+    const sumB = months.reduce((s,m)=>s+(m.b?m.b.hrs:0),0);
+    const sumPct = sumA?(sumB-sumA)/sumA:0;
+    html2 += `<div class="trend-kpi" style="border-color:rgba(142,213,255,.35);background:rgba(142,213,255,.06)">
+      <div class="trend-kpi-label">Total · same-window YoY</div>
+      <div class="trend-kpi-val ${cls(sumPct)}">${sign(sumPct)}</div>
+      <div class="trend-kpi-sub">'25: ${trendFmtVal(sumA,'hrs')} → '26: ${trendFmtVal(sumB,'hrs')} hrs</div>
+    </div>`;
+    document.getElementById('trendKpis').innerHTML = html2;
+    return;
+  }
+
+  // ── May 1-19 head-to-head KPIs (no pacing) ──────────────────────────────
+  if(trendState.mode==='may1to19'){
+    const may26 = MARKET_TREND_DATA.find(r=>r.mo==='2026-05');
+    const m25 = MAY_1_19_2025;
+    const ks = [
+      {k:'deps',  label:'Departures',          unit:'flights'},
+      {k:'hrs',   label:'Hours',               unit:'hrs'},
+      {k:'fuel',  label:'Potential Fuel',      unit:'USG'},
+      {k:'tails', label:'Active Tails',        unit:'tails'},
+    ];
+    document.getElementById('trendKpis').innerHTML = ks.map(({k:kk,label,unit})=>{
+      const a=m25[kk], b=may26[kk];
+      const d=b-a, pct=a?d/a:0;
+      return `<div class="trend-kpi">
+        <div class="trend-kpi-label">${label} · May 1-19 YoY</div>
+        <div class="trend-kpi-val ${cls(pct)}">${sign(pct)}</div>
+        <div class="trend-kpi-sub">'25: ${trendFmtVal(a,kk)} → '26: ${trendFmtVal(b,kk)} ${unit}</div>
+      </div>`;
+    }).join('');
+    return;
+  }
+
+  // ── Default-mode KPIs (timeline & yoy) ───────────────────────────────────
+  const data=MARKET_TREND_DATA;
+  const has=(mo)=>data.find(r=>r.mo===mo);
+  const sumFor=(year,opts)=>{
+    let s=0;
+    [1,2,3].forEach(m=>{ const r=has(`${year}-${String(m).padStart(2,'0')}`); if(r) s+=r[k]; });
+    if(opts.includeApril){
+      if(year===2025){ const a=has('2025-04'); if(a) s+=a[k]; }
+      else { const a=has('2026-04'); if(a) s+=a[k]; }
+    }
+    if(year===2026){ const r=has('2026-05'); if(r) s+=r[k]; }
+    else { s+=MAY_1_19_2025[k]; }  // true actual May 1-19 2025 — no pacing
+    return s;
+  };
+  const haveApr26=!!has('2026-04');
+  const v2026=sumFor(2026,{includeApril:haveApr26});
+  const v2025=sumFor(2025,{includeApril:haveApr26});
+  const diff=v2026-v2025;
+  const pct=v2025?diff/v2025:0;
+
+  const may26=has('2026-05'), may25=has('2025-05');
+  const mayProj=may26?trendPaceFull(may26,k):0;
+  const mayDiff=mayProj-(may25?may25[k]:0);
+  const mayPct=may25 && may25[k]?mayDiff/may25[k]:0;
+
+  const mar26=has('2026-03'), mar25=has('2025-03');
+  const marDiff=mar26&&mar25?(mar26[k]-mar25[k])/mar25[k]:0;
+  const apr26=has('2026-04'), apr25=has('2025-04');
+  const aprDiff=apr26&&apr25?(apr26[k]-apr25[k])/apr25[k]:0;
+  const aprNote=haveApr26?'Includes Apr':'Apr excluded both years';
+
+  document.getElementById('trendKpis').innerHTML=`
+    <div class="trend-kpi">
+      <div class="trend-kpi-label">YTD 2026 (Jan 1 - May 19)</div>
+      <div class="trend-kpi-val">${fmt(v2026)} <span class="trend-kpi-unit">${unit}</span></div>
+      <div class="trend-kpi-sub">Same window 2025 (actuals, no pacing): ${fmt(v2025)} · ${aprNote}</div>
+    </div>
+    <div class="trend-kpi">
+      <div class="trend-kpi-label">YTD YoY change</div>
+      <div class="trend-kpi-val ${cls(pct)}">${sign(pct)}</div>
+      <div class="trend-kpi-sub">${diff>=0?'+':''}${fmt(diff)} ${unit}</div>
+    </div>
+    <div class="trend-kpi">
+      <div class="trend-kpi-label">May 1-19 YoY (true)</div>
+      <div class="trend-kpi-val ${cls((may26[k]-MAY_1_19_2025[k])/MAY_1_19_2025[k])}">${sign((may26[k]-MAY_1_19_2025[k])/MAY_1_19_2025[k])}</div>
+      <div class="trend-kpi-sub">${fmt(may26[k])} vs ${fmt(MAY_1_19_2025[k])} actual · full-month pace: ${fmt(mayProj)}</div>
+    </div>
+    <div class="trend-kpi">
+      <div class="trend-kpi-label">Most recent full-month YoY</div>
+      <div class="trend-kpi-val ${cls(aprDiff)}">${sign(aprDiff)}</div>
+      <div class="trend-kpi-sub">Apr '26 vs Apr '25 · Mar YoY: <span class="${cls(marDiff)}">${sign(marDiff)}</span></div>
+    </div>
+  `;
+
+}
+
+function renderTrendTable(){
+  const data=MARKET_TREND_DATA;
+  const k=trendState.metric;
+  // YoY pairs for each month with both years
+  const by={};
+  data.forEach(r=>{
+    const [y,m]=r.mo.split('-').map(Number);
+    by[m]=by[m]||{};
+    by[m][y]=r;
+  });
+  const monthsList=Object.keys(by).map(Number).sort((a,b)=>a-b);
+  const monthName=i=>['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i-1];
+
+  const rows=monthsList.map(mn=>{
+    const a=by[mn][2025], b=by[mn][2026];
+    const aVal=a?a[k]:null;
+    let bVal=b?b[k]:null;
+    let bNote='';
+    if(b && b.partial){
+      // Show actual + paced
+      bNote=` <span class="trend-mtd">MTD ${b.partial}d</span>`;
+    }
+    const yoy=(aVal!==null && bVal!==null)?(bVal-aVal)/aVal:null;
+    // For partial months, also compute paced YoY
+    let pacedYoY=null;
+    if(b && b.partial && a){
+      const aPaced=trendPaceTo(a,k,b.partial);
+      pacedYoY=(b[k]-aPaced)/aPaced;
+    }
+    const yoyDisp=yoy===null?'—':(yoy>=0?'+':'')+(yoy*100).toFixed(1)+'%';
+    const yoyCls=yoy===null?'':(yoy>=0?'kpi-pos':'kpi-neg');
+    const pacedDisp=pacedYoY===null?'':` <span class="trend-paced ${pacedYoY>=0?'kpi-pos':'kpi-neg'}">${(pacedYoY>=0?'+':'')+(pacedYoY*100).toFixed(1)}% paced</span>`;
+    return `<tr>
+      <td>${monthName(mn)}</td>
+      <td>${aVal===null?'—':trendFmtVal(aVal,k)}</td>
+      <td>${bVal===null?'<span class="trend-pending">pending</span>':trendFmtVal(bVal,k)}${bNote}</td>
+      <td class="${yoyCls}">${yoyDisp}${pacedDisp}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('trendTable').innerHTML=`
+    <thead><tr><th>Month</th><th>2025</th><th>2026</th><th>YoY</th></tr></thead>
+    <tbody>${rows}</tbody>
+  `;
+}
+
+document.addEventListener('change',e=>{
+  if(e.target.id==='trendMetric'){trendState.metric=e.target.value;renderTrendTab();}
+  if(e.target.id==='trendMode'){trendState.mode=e.target.value;renderTrendTab();}
+  if(e.target.id==='trendAStart'){trendState.aStart=e.target.value;renderTrendTab();}
+  if(e.target.id==='trendAEnd'){trendState.aEnd=e.target.value;renderTrendTab();}
+  if(e.target.id==='trendBStart'){trendState.bStart=e.target.value;renderTrendTab();}
+  if(e.target.id==='trendBEnd'){trendState.bEnd=e.target.value;renderTrendTab();}
+});
+
 </script>
 </body>
 </html>
