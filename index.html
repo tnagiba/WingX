@@ -309,19 +309,19 @@
 
 /* ── DESIGN TOKEN OVERLAY (Manrope + Space Grotesk) ────────────────────────── */
 :root {
-  --bg: #051424;
-  --bg-2: #051424;
-  --surface: #122131;
-  --surface-2: #1c2b3c;
-  --border: rgba(148,163,184,.12);
-  --line: rgba(148,163,184,.1);
-  --text: #d4e4fa;
-  --text2: #bdc8d1;
-  --text3: #87929a;
-  --accent: #8ed5ff;
-  --accent2: #c0c1ff;
-  --green: #4ee6aa;
-  --neg: #ffb4ab;
+  --bg: #061418;
+  --bg-2: #061418;
+  --surface: #0f2329;
+  --surface-2: #173640;
+  --border: rgba(100,180,200,.18);
+  --line: rgba(100,180,200,.10);
+  --text: #e8f4f7;
+  --text2: #aac4cd;
+  --text3: #6b8590;
+  --accent: #06d6c4;
+  --accent2: #f4a261;
+  --green: #95d44a;
+  --neg: #ef6f6c;
 }
 body {
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
@@ -1215,7 +1215,7 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
     <div class="chart-header">
       <div>
         <div class="chart-title">KPI Definitions</div>
-        <div class="chart-subtitle">Plain-English definitions for the top-line metrics.</div>
+        <div class="chart-subtitle">North America Branded Charter · Business Jet (excl. ULR) · Jan 2025 - May 19, 2026 · Magellan figures exclude international flights to match market scope</div>
       </div>
     </div>
     <div class="definitions-grid">
@@ -1490,7 +1490,7 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
       <div class="chart-header">
         <div>
           <div class="chart-title">Market Trend — Charter Volume</div>
-          <div class="chart-subtitle">US-to-US Branded Charter, Business Jet (excl. Ultra Long Range) · Jan 2025 - May 19, 2026 · May 2026 is MTD (19 of 31 days)</div>
+          <div class="chart-subtitle">North America Branded Charter · Business Jet (excl. ULR) · Jan 2025 - May 19, 2026 · Magellan stripped of international flights to match market scope</div>
         </div>
       </div>
 
@@ -1503,10 +1503,11 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
         </select></div>
         <div class="control-group"><label>View</label><select id="trendMode">
           <option value="timeline" selected>Timeline (all months)</option>
-          <option value="yoy">Year-over-Year Overlay (2025 vs 2026)</option>
           <option value="custom">Custom Comparison</option>
           <option value="may1to19">May 1-19 Head-to-Head (2025 vs 2026)</option>
           <option value="monthlyHrs">Monthly Hours (Jan - May 1-19, 2025 vs 2026)</option>
+          <option value="magVsMarket">Magellan vs Market — Monthly Growth %</option>
+          <option value="fleetMix">Magellan Block Hours by Aircraft Category (last 7 mo)</option>
         </select></div>
       </div>
 
@@ -6626,27 +6627,74 @@ renderSignalsTab();
 // May 2026 is partial (1-19 of 31 days) — paced where comparable
 // ──────────────────────────────────────────────────────────────────────
 const MARKET_TREND_DATA = [
-  {mo:'2025-01',deps:31617,hrs:49946.7,fuel:12009378.71,tails:1569,airports:1059,ops:327,tonnage:379057.062,sector:511.717,yoyDep:0.16089591,yoyHrs:0.18395543,partial:null,monthDays:31},
-  {mo:'2025-02',deps:29479,hrs:46689.5,fuel:11210935.93,tails:1557,airports:1085,ops:320,tonnage:358082.682,sector:519.488,yoyDep:0.0802917,yoyHrs:0.07879961,partial:null,monthDays:28},
-  {mo:'2025-03',deps:33306,hrs:52027.2,fuel:12455691.1,tails:1535,airports:1101,ops:309,tonnage:388275.48,sector:510.22,yoyDep:0.08598259,yoyHrs:0.08252319,partial:null,monthDays:31},
-  {mo:'2025-04',deps:32225,hrs:49567.4,fuel:12001443.3,tails:1529,airports:1075,ops:316,tonnage:372884.23,sector:522.418,yoyDep:0.0492983,yoyHrs:0.0511188,partial:null,monthDays:30},
-  {mo:'2025-05',deps:34497,hrs:52939.5,fuel:12819834.55,tails:1544,airports:1086,ops:313,tonnage:397318.11,sector:521.115,yoyDep:0.05770351,yoyHrs:0.05801227,partial:null,monthDays:31},
-  {mo:'2025-06',deps:32964,hrs:49699.4,fuel:12044391.66,tails:1537,airports:1063,ops:308,tonnage:373612.485,sector:510.281,yoyDep:0.09278966,yoyHrs:0.09317442,partial:null,monthDays:30},
-  {mo:'2025-07',deps:32334,hrs:47961.6,fuel:11576720.04,tails:1463,airports:1067,ops:296,tonnage:357942.03,sector:503.184,yoyDep:0.01778463,yoyHrs:0.01803276,partial:null,monthDays:31},
-  {mo:'2025-08',deps:31886,hrs:47613.2,fuel:11484537.51,tails:1475,airports:1066,ops:290,tonnage:354621.27,sector:506.205,yoyDep:0.04178783,yoyHrs:0.0428271,partial:null,monthDays:31},
-  {mo:'2025-09',deps:33367,hrs:49821.3,fuel:12009094.51,tails:1492,airports:1077,ops:295,tonnage:369552.515,sector:504.91,yoyDep:0.02155344,yoyHrs:0.02220517,partial:null,monthDays:30},
-  {mo:'2025-10',deps:37229,hrs:56528.1,fuel:13624123.18,tails:1451,airports:1075,ops:302,tonnage:418886.11,sector:511.875,yoyDep:0.02373096,yoyHrs:0.02447331,partial:null,monthDays:31},
-  {mo:'2025-11',deps:34759,hrs:53654.9,fuel:12950330.32,tails:1443,airports:1062,ops:298,tonnage:398214.33,sector:522.226,yoyDep:0.05599101,yoyHrs:0.05612218,partial:null,monthDays:30},
-  {mo:'2025-12',deps:33103,hrs:52927.4,fuel:12779482.65,tails:1461,airports:1053,ops:295,tonnage:391960.86,sector:540.31,yoyDep:-0.06959161,yoyHrs:-0.05945619,partial:null,monthDays:31},
-  {mo:'2026-01',deps:28157,hrs:44767.6,fuel:10758606.58,tails:1429,airports:1060,ops:321,tonnage:328441.302,sector:522.968,yoyDep:-0.1094348,yoyHrs:-0.10369321,partial:null,monthDays:31},
-  {mo:'2026-02',deps:27535,hrs:43394.1,fuel:10474076.05,tails:1393,airports:1086,ops:313,tonnage:322063.11,sector:537.812,yoyDep:-0.06594525,yoyHrs:-0.07067008,partial:null,monthDays:28},
-  {mo:'2026-03',deps:32859,hrs:51676.2,fuel:12533013.45,tails:1435,airports:1097,ops:317,tonnage:384024.08,sector:524.42,yoyDep:-0.01342101,yoyHrs:-0.00674338,partial:null,monthDays:31},
-  {mo:'2026-04',deps:31616,hrs:47675.8,fuel:11194632.27,tails:1438,airports:1220,ops:344,tonnage:362050.884,sector:490.734,yoyDep:-0.01889837,yoyHrs:-0.03816108,partial:null,monthDays:30},
-  {mo:'2026-05',deps:19771,hrs:30092.6,fuel:7273486.92,tails:1265,airports:942,ops:271,tonnage:224515.62,sector:522.114,yoyDep:-0.09178189,yoyHrs:-0.08947126,partial:19,monthDays:31}
+  {mo:'2025-01',deps:34440,hrs:56304.3,fuel:14115611.66,tails:1591,airports:1236,ops:326,tonnage:418051.646,sector:551.422,yoyDep:0.15764706,yoyHrs:0.14348956,partial:null,monthDays:31},
+  {mo:'2025-02',deps:31933,hrs:51871.2,fuel:12836355.90,tails:1576,airports:1190,ops:329,tonnage:383959.672,sector:541.884,yoyDep:0.07674411,yoyHrs:0.07595605,partial:null,monthDays:28},
+  {mo:'2025-03',deps:36135,hrs:58054.3,fuel:14253510.35,tails:1562,airports:1261,ops:320,tonnage:426953.239,sector:530.857,yoyDep:0.07733818,yoyHrs:0.07089064,partial:null,monthDays:31},
+  {mo:'2025-04',deps:34599,hrs:54477.6,fuel:13281864.87,tails:1544,airports:1298,ops:323,tonnage:407605.366,sector:521.524,yoyDep:0.05632900,yoyHrs:0.07830507,partial:null,monthDays:30},
+  {mo:'2025-05',deps:36601,hrs:57143.8,fuel:13889335.60,tails:1561,airports:1345,ops:315,tonnage:430208.831,sector:517.543,yoyDep:0.05338744,yoyHrs:0.07753299,partial:null,monthDays:31},
+  {mo:'2025-06',deps:35095,hrs:53878.2,fuel:13048932.60,tails:1552,airports:1374,ops:321,tonnage:409261.729,sector:509.432,yoyDep:0.08858836,yoyHrs:0.12311127,partial:null,monthDays:30},
+  {mo:'2025-07',deps:34526,hrs:52188.9,fuel:12628227.92,tails:1481,airports:1361,ops:327,tonnage:400534.615,sector:496.721,yoyDep:0.01948857,yoyHrs:0.03972646,partial:null,monthDays:31},
+  {mo:'2025-08',deps:33707,hrs:51069.0,fuel:12324478.41,tails:1497,airports:1391,ops:332,tonnage:391411.387,sector:499.731,yoyDep:0.03672377,yoyHrs:0.05849880,partial:null,monthDays:31},
+  {mo:'2025-09',deps:34972,hrs:52942.4,fuel:12836822.90,tails:1499,airports:1385,ops:339,tonnage:407922.577,sector:505.655,yoyDep:0.02209493,yoyHrs:0.04944155,partial:null,monthDays:30},
+  {mo:'2025-10',deps:38877,hrs:59807.8,fuel:14320313.60,tails:1468,airports:1393,ops:343,tonnage:446751.396,sector:512.560,yoyDep:0.02383335,yoyHrs:0.04311528,partial:null,monthDays:31},
+  {mo:'2025-11',deps:36982,hrs:58354.3,fuel:14159027.63,tails:1459,airports:1308,ops:346,tonnage:434016.997,sector:523.363,yoyDep:0.05702118,yoyHrs:0.08657097,partial:null,monthDays:30},
+  {mo:'2025-12',deps:35701,hrs:58736.1,fuel:14400913.23,tails:1477,airports:1273,ops:344,tonnage:423828.117,sector:543.695,yoyDep:-0.07250857,yoyHrs:-0.06474619,partial:null,monthDays:31},
+  {mo:'2026-01',deps:31085,hrs:51728.1,fuel:12756091.95,tails:1457,airports:1164,ops:335,tonnage:373632.742,sector:553.392,yoyDep:-0.09741580,yoyHrs:-0.08127678,partial:null,monthDays:31},
+  {mo:'2026-02',deps:29955,hrs:48719.2,fuel:11958342.46,tails:1409,airports:1198,ops:327,tonnage:358746.996,sector:540.348,yoyDep:-0.06194219,yoyHrs:-0.06076743,partial:null,monthDays:28},
+  {mo:'2026-03',deps:35650,hrs:57560.9,fuel:13961478.57,tails:1448,airports:1250,ops:343,tonnage:422230.196,sector:535.308,yoyDep:-0.01342189,yoyHrs:-0.00849999,partial:null,monthDays:31},
+  {mo:'2026-04',deps:33749,hrs:52196.7,fuel:12436604.26,tails:1451,airports:1323,ops:348,tonnage:392925.573,sector:506.705,yoyDep:-0.02456718,yoyHrs:-0.04186914,partial:null,monthDays:30},
+  {mo:'2026-05',deps:20864,hrs:32251.9,fuel:7556646.32,tails:1286,airports:1162,ops:326,tonnage:237204.061,sector:507.671,yoyDep:-0.09416924,yoyHrs:-0.10379715,partial:19,monthDays:31}
 ];
-const MAY_1_19_2025 = {mo:'2025-05',label:'May 1-19 2025',deps:21769,hrs:33439.8,fuel:8033137.04,tails:1453,airports:1100,ops:299,tonnage:251768.192,sector:506.555,partial:19,monthDays:31};
+const MAY_1_19_2025 = {mo:'2025-05',label:'May 1-19 2025',deps:23033,hrs:35987.3,fuel:0,tails:1469,airports:0,ops:0,tonnage:0,sector:0,partial:19,monthDays:31};
+const MAGELLAN_INTL_SHARE = [
+  {mo:'2025-01', trips:82,  intl:6,  intlPct:0.073, intlRevPct:0.182},
+  {mo:'2025-02', trips:80,  intl:11, intlPct:0.138, intlRevPct:0.223},
+  {mo:'2025-03', trips:108, intl:14, intlPct:0.130, intlRevPct:0.211},
+  {mo:'2025-04', trips:63,  intl:5,  intlPct:0.079, intlRevPct:0.195},
+  {mo:'2025-05', trips:113, intl:8,  intlPct:0.071, intlRevPct:0.104},
+  {mo:'2025-06', trips:86,  intl:5,  intlPct:0.058, intlRevPct:0.082},
+  {mo:'2025-07', trips:117, intl:14, intlPct:0.120, intlRevPct:0.172},
+  {mo:'2025-08', trips:92,  intl:9,  intlPct:0.098, intlRevPct:0.147},
+  {mo:'2025-09', trips:98,  intl:4,  intlPct:0.041, intlRevPct:0.057},
+  {mo:'2025-10', trips:110, intl:7,  intlPct:0.064, intlRevPct:0.120},
+  {mo:'2025-11', trips:98,  intl:6,  intlPct:0.061, intlRevPct:0.122},
+  {mo:'2025-12', trips:123, intl:9,  intlPct:0.073, intlRevPct:0.101},
+  {mo:'2026-01', trips:87,  intl:10, intlPct:0.115, intlRevPct:0.165},
+  {mo:'2026-02', trips:102, intl:4,  intlPct:0.039, intlRevPct:0.070},
+  {mo:'2026-03', trips:136, intl:12, intlPct:0.088, intlRevPct:0.243},
+  {mo:'2026-04', trips:109, intl:3,  intlPct:0.028, intlRevPct:0.025}
+];
+const MAGELLAN_BLOCK_HOURS = [
+  {mo:'2025-11', light:44,  mid:107, superMid:160, heavy:114, turboProp:3},
+  {mo:'2025-12', light:51,  mid:109, superMid:232, heavy:135, turboProp:9},
+  {mo:'2026-01', light:31,  mid:76,  superMid:166, heavy:147, turboProp:12},
+  {mo:'2026-02', light:42,  mid:121, superMid:125, heavy:75,  turboProp:18},
+  {mo:'2026-03', light:61,  mid:172, superMid:236, heavy:150, turboProp:0},
+  {mo:'2026-04', light:48,  mid:84,  superMid:228, heavy:92,  turboProp:15},
+  {mo:'2026-05', light:42,  mid:81,  superMid:118, heavy:82,  turboProp:9, forecast:true}
+];
+const MAGELLAN_DATA = [
+  {mo:'2024-12',trips:83,legs:133,hrs:401,revM:4.00,forecast:false},
+  {mo:'2025-01',trips:82,legs:124,hrs:364,revM:3.89,forecast:false},
+  {mo:'2025-02',trips:80,legs:130,hrs:341,revM:3.66,forecast:false},
+  {mo:'2025-03',trips:108,legs:176,hrs:528,revM:5.62,forecast:false},
+  {mo:'2025-04',trips:63,legs:100,hrs:282,revM:2.76,forecast:false},
+  {mo:'2025-05',trips:113,legs:179,hrs:507,revM:5.09,forecast:false},
+  {mo:'2025-06',trips:86,legs:147,hrs:439,revM:4.68,forecast:false},
+  {mo:'2025-07',trips:117,legs:191,hrs:513,revM:5.21,forecast:false},
+  {mo:'2025-08',trips:92,legs:165,hrs:440,revM:4.84,forecast:false},
+  {mo:'2025-09',trips:98,legs:154,hrs:331,revM:3.09,forecast:false},
+  {mo:'2025-10',trips:110,legs:168,hrs:541,revM:5.91,forecast:false},
+  {mo:'2025-11',trips:98,legs:146,hrs:428,revM:4.37,forecast:false},
+  {mo:'2025-12',trips:123,legs:190,hrs:536,revM:5.86,forecast:false},
+  {mo:'2026-01',trips:87,legs:132,hrs:431,revM:4.74,forecast:false},
+  {mo:'2026-02',trips:102,legs:149,hrs:381,revM:3.76,forecast:false},
+  {mo:'2026-03',trips:136,legs:207,hrs:620,revM:6.94,forecast:false},
+  {mo:'2026-04',trips:109,legs:180,hrs:473,revM:5.03,forecast:false},
+  {mo:'2026-05',trips:100,legs:150,hrs:395,revM:4.60,forecast:true} // full booked w/ BNF — forecast
+];
 let trendChartInst=null;
-const trendState={metric:'deps',mode:'timeline',aStart:'2026-01',aEnd:'2026-05',bStart:'2025-01',bEnd:'2025-05'}; // mode: 'timeline' | 'yoy' | 'custom'
+const trendState={metric:'deps',mode:'timeline',aStart:'2026-01',aEnd:'2026-05',bStart:'2025-01',bEnd:'2025-05',compareMode:'ytd',compareMetric:'hrs'}; // mode: 'timeline' | 'yoy' | 'custom'
 
 function trendMonthLabel(mo){
   const [y,m]=mo.split('-').map(Number);
@@ -6712,27 +6760,13 @@ function renderTrendTab(){
   }
   const metricSel=document.getElementById('trendMetric');
   if(metricSel){
-    metricSel.disabled = (mode==='may1to19'||mode==='monthlyHrs');
-    metricSel.style.opacity = (mode==='may1to19'||mode==='monthlyHrs') ? '.4' : '1';
+    metricSel.disabled = (mode==='may1to19'||mode==='monthlyHrs'||mode==='magVsMarket'||mode==='fleetMix');
+    metricSel.style.opacity = (mode==='may1to19'||mode==='monthlyHrs'||mode==='magVsMarket'||mode==='fleetMix') ? '.4' : '1';
   }
 
   let datasets, labels;
 
-  if(mode==='yoy'){
-    labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const by2025={}, by2026={};
-    data.forEach(r=>{
-      const [y,m]=r.mo.split('-').map(Number);
-      if(y===2025) by2025[m]=r;
-      if(y===2026) by2026[m]=r;
-    });
-    const make=(bucket,color,label)=>({
-      label, data:labels.map((_,i)=>bucket[i+1]?bucket[i+1][k]:null),
-      borderColor:color, backgroundColor:color+'22',
-      tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, spanGaps:false
-    });
-    datasets=[ make(by2025,'#8ed5ff','2025'), make(by2026,'#c0c1ff','2026') ];
-  } else if(mode==='custom'){
+  if(mode==='custom'){
     // Build two ordered ranges
     const rangeA=trendBuildRange(trendState.aStart, trendState.aEnd);
     const rangeB=trendBuildRange(trendState.bStart, trendState.bEnd);
@@ -6755,16 +6789,16 @@ function renderTrendTab(){
       {
         label:`Range A: ${trendMonthLabel(rangeA[0].mo)} - ${trendMonthLabel(rangeA[rangeA.length-1].mo)}`,
         data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeA[i],k)),
-        borderColor:'#8ed5ff', backgroundColor:'rgba(142,213,255,.12)',
+        borderColor:'#06d6c4', backgroundColor:'rgba(6,214,196,.12)',
         tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, spanGaps:false,
-        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeA[i]&&rangeA[i].partial)?'#ffd166':'#8ed5ff'),
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeA[i]&&rangeA[i].partial)?'#f4a261':'#06d6c4'),
       },
       {
         label:`Range B: ${trendMonthLabel(rangeB[0].mo)} - ${trendMonthLabel(rangeB[rangeB.length-1].mo)}`,
         data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeB[i],k)),
-        borderColor:'#c0c1ff', backgroundColor:'rgba(192,193,255,.12)',
+        borderColor:'#f4a261', backgroundColor:'rgba(244,162,97,.12)',
         tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, borderDash:[4,3], spanGaps:false,
-        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeB[i]&&rangeB[i].partial)?'#ffd166':'#c0c1ff'),
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeB[i]&&rangeB[i].partial)?'#f4a261':'#f4a261'),
       }
     ];
     // Note text
@@ -6774,22 +6808,21 @@ function renderTrendTab(){
       const partials = [...rangeA,...rangeB].filter(r=>r&&r.partial).map(r=>`${trendMonthLabel(r.mo)} (${r.partial}d of ${r.monthDays})`);
       noteEl.innerHTML = [
         `Range A: ${rangeA.length} months · Range B: ${rangeB.length} months`,
-        lenMismatch?'<span style="color:#ffd166">⚠ Ranges have different lengths — totals compared raw</span>':'',
-        partials.length?`<span style="color:#ffd166">MTD: ${partials.join(', ')}</span>`:''
+        lenMismatch?'<span style="color:#f4a261">⚠ Ranges have different lengths — totals compared raw</span>':'',
+        partials.length?`<span style="color:#f4a261">MTD: ${partials.join(', ')}</span>`:''
       ].filter(Boolean).join(' · ');
     }  } else if(mode==='may1to19'){
     // Direct same-window comparison — no pacing required
     const may26 = MARKET_TREND_DATA.find(r=>r.mo==='2026-05');
     const m25 = MAY_1_19_2025;
-    labels=['Departures','Hours','Fuel (M USG)','Active Tails'];
-    const keys=['deps','hrs','fuel','tails'];
-    const norm = v => v;  // raw values; tooltip handles formatting
+    labels=['Departures','Hours'];
+    const keys=['deps','hrs'];
     datasets=[
       {
         label:'May 1-19, 2025 (actual)',
-        data:keys.map(kk => kk==='fuel' ? m25[kk]/1e6 : m25[kk]),
-        backgroundColor:'rgba(142,213,255,.55)',
-        borderColor:'#8ed5ff',
+        data:keys.map(kk => m25[kk]),
+        backgroundColor:'rgba(6,214,196,.55)',
+        borderColor:'#06d6c4',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6797,9 +6830,9 @@ function renderTrendTab(){
       },
       {
         label:'May 1-19, 2026 (actual)',
-        data:keys.map(kk => kk==='fuel' ? may26[kk]/1e6 : may26[kk]),
-        backgroundColor:'rgba(192,193,255,.55)',
-        borderColor:'#c0c1ff',
+        data:keys.map(kk => may26[kk]),
+        backgroundColor:'rgba(244,162,97,.55)',
+        borderColor:'#f4a261',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6832,8 +6865,8 @@ function renderTrendTab(){
       {
         label:'2025 (hours)',
         data:v25,
-        backgroundColor:'rgba(142,213,255,.55)',
-        borderColor:'#8ed5ff',
+        backgroundColor:'rgba(6,214,196,.55)',
+        borderColor:'#06d6c4',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6843,53 +6876,219 @@ function renderTrendTab(){
       {
         label:'2026 (hours)',
         data:v26,
-        backgroundColor:'rgba(192,193,255,.55)',
-        borderColor:'#c0c1ff',
+        backgroundColor:'rgba(244,162,97,.55)',
+        borderColor:'#f4a261',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
         yAxisID:'y',
         order:2
       }
+    ];  } else if(mode==='magVsMarket'){
+    // Month-over-month growth rate: Magellan NOAM-only vs NOAM market.
+    // Each point = that month's hours / prior month's hours - 1.
+    // No YoY anywhere. No 2025-vs-2026 base. Just sequential MoM change.
+    const months = [
+      '2025-01','2025-02','2025-03','2025-04','2025-05','2025-06',
+      '2025-07','2025-08','2025-09','2025-10','2025-11','2025-12',
+      '2026-01','2026-02','2026-03','2026-04'
     ];
+    const getIntl = mo => {
+      const r = MAGELLAN_INTL_SHARE.find(d => d.mo === mo);
+      return r ? r.intlPct : null;
+    };
+    const getMagNoam = mo => {
+      const r = MAGELLAN_DATA.find(d => d.mo === mo && !d.forecast);
+      const intl = getIntl(mo);
+      if (!r || intl == null) return null;
+      return r.hrs * (1 - intl);
+    };
+    const getMkt = mo => {
+      const r = MARKET_TREND_DATA.find(d => d.mo === mo);
+      return r ? r.hrs : null;
+    };
 
-
-  } else {
-    // Timeline
-    labels=data.map(r=>trendMonthLabel(r.mo));
-    datasets=[{
-      label:trendMetricLabel(k),
-      data:data.map(r=>r[k]),
-      borderColor:'#8ed5ff',
-      backgroundColor:'rgba(142,213,255,.10)',
-      tension:0.30, fill:true,
-      pointRadius:data.map(r=>r.partial?8:5),
-      pointHoverRadius:9,
-      pointBackgroundColor:data.map(r=>r.partial?'#ffd166':'#8ed5ff'),
-      pointBorderColor:data.map(r=>r.partial?'#ffd166':'#8ed5ff'),
-      borderWidth:2.5, spanGaps:false
-    }];
-    const projData=data.map(r=>r.partial?trendPaceFull(r,k):null);
-    if(projData.some(v=>v!==null)){
-      datasets.push({
-        label:'May 2026 projection (full month pace)',
-        data:projData,
-        borderColor:'rgba(255,209,102,.7)',
-        backgroundColor:'rgba(255,209,102,.05)',
-        borderDash:[6,5], pointRadius:6, pointHoverRadius:8,
-        pointBackgroundColor:'rgba(255,209,102,.7)', borderWidth:2, spanGaps:false
+    // Build MoM series — start at Feb 2025 (need a prior-month base)
+    const series = [];
+    for (let i = 1; i < months.length; i++) {
+      const mo = months[i], prev = months[i-1];
+      const magNow = getMagNoam(mo), magPrev = getMagNoam(prev);
+      const mktNow = getMkt(mo), mktPrev = getMkt(prev);
+      if (magNow == null || magPrev == null || !mktNow || !mktPrev) continue;
+      series.push({
+        mo,
+        mag: ((magNow - magPrev) / magPrev) * 100,
+        mkt: ((mktNow - mktPrev) / mktPrev) * 100
       });
     }
+
+    canvas.__momSeries = series;
+    labels = series.map(s => trendMonthLabel(s.mo));
+    datasets = [
+      {
+        label: 'Magellan MoM (NOAM only)',
+        data: series.map(s => s.mag),
+        borderColor: '#06d6c4',
+        backgroundColor: 'rgba(6,214,196,.12)',
+        borderWidth: 3,
+        tension: 0.35,
+        fill: false,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: '#06d6c4',
+        pointBorderColor: '#06d6c4',
+        type: 'line'
+      },
+      {
+        label: 'Market MoM (NOAM)',
+        data: series.map(s => s.mkt),
+        borderColor: '#f4a261',
+        backgroundColor: 'rgba(244,162,97,.08)',
+        borderWidth: 3,
+        tension: 0.35,
+        fill: false,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: '#f4a261',
+        pointBorderColor: '#f4a261',
+        borderDash: [4,3],
+        type: 'line'
+      }
+    ];
+  } else if(mode==='fleetMix'){
+    // Stacked bar chart: block hours per aircraft category, last 7 months
+    const series = MAGELLAN_BLOCK_HOURS;
+    labels = series.map(s => trendMonthLabel(s.mo) + (s.forecast?' *':''));
+    const cats = [
+      {key:'light',     label:'Light Jet',   color:'#06d6c4'},
+      {key:'mid',       label:'Mid Jet',     color:'#f4a261'},
+      {key:'superMid',  label:'Super Mid',   color:'#95d44a'},
+      {key:'heavy',     label:'Heavy Jet',   color:'#ef6f6c'},
+      {key:'turboProp', label:'Turboprop',   color:'#5eead4'},
+    ];
+    datasets = cats.map(c => ({
+      label: c.label,
+      data: series.map(s => s[c.key] || 0),
+      backgroundColor: c.color + 'cc',
+      borderColor: c.color,
+      borderWidth: 1,
+      borderRadius: 3,
+      stack: 'fleet',
+      type: 'bar'
+    }));
+  } else {
+    // Timeline — full months only as a connected line; partial months as isolated points
+    const fullMonths = data.filter(r => !r.partial);
+    const partialMonths = data.filter(r => r.partial);
+    labels = data.map(r => trendMonthLabel(r.mo));
+
+    // Line dataset: only full months (nulls for partials so the line doesn't connect to them)
+    const lineSeries = data.map(r => r.partial ? null : r[k]);
+    // Point dataset: only partial months (nulls elsewhere)
+    const partialSeries = data.map(r => r.partial ? r[k] : null);
+
+    datasets = [
+      {
+        label: trendMetricLabel(k) + ' (full months)',
+        data: lineSeries,
+        borderColor: '#06d6c4',
+        backgroundColor: 'rgba(6,214,196,.10)',
+        tension: 0.30,
+        fill: true,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: '#06d6c4',
+        pointBorderColor: '#06d6c4',
+        borderWidth: 2.5,
+        spanGaps: false
+      },
+      {
+        label: 'Partial month (MTD)',
+        data: partialSeries,
+        borderColor: 'transparent',
+        backgroundColor: 'transparent',
+        pointRadius: 8,
+        pointHoverRadius: 10,
+        pointBackgroundColor: '#f4a261',
+        pointBorderColor: '#f4a261',
+        borderWidth: 0,
+        showLine: false,
+        spanGaps: false
+      }
+    ];
   }
 
   if(trendChartInst) trendChartInst.destroy();
   // Per-bar YoY % callouts plugin (active only in monthlyHrs mode)
+  // Bold zero baseline + shade gap between Magellan and Market lines
+  const magVsMarketZeroPlugin = {
+    id: 'magVsMarketZero',
+    afterDatasetsDraw(chart) {
+      if (trendState.mode !== 'magVsMarket') return;
+      const ctx = chart.ctx;
+      const chartArea = chart.chartArea;
+      const yAxis = chart.scales.y;
+      const y0 = yAxis.getPixelForValue(0);
+      ctx.save();
+
+      // Shaded gap area first (drawn under lines)
+      const series = chart.canvas.__momSeries;
+      if (series && series.length >= 2) {
+        const meta0 = chart.getDatasetMeta(0);
+        const meta1 = chart.getDatasetMeta(1);
+        for (let i = 0; i < series.length - 1; i++) {
+          const p0a = meta0.data[i], p0b = meta0.data[i+1];
+          const p1a = meta1.data[i], p1b = meta1.data[i+1];
+          if (!p0a || !p0b || !p1a || !p1b) continue;
+          const magAvg = (series[i].mag + series[i+1].mag) / 2;
+          const mktAvg = (series[i].mkt + series[i+1].mkt) / 2;
+          ctx.fillStyle = magAvg > mktAvg ? 'rgba(132,204,22,.10)' : 'rgba(239,111,108,.10)';
+          ctx.beginPath();
+          ctx.moveTo(p0a.x, p0a.y);
+          ctx.lineTo(p0b.x, p0b.y);
+          ctx.lineTo(p1b.x, p1b.y);
+          ctx.lineTo(p1a.x, p1a.y);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+
+      // Bold zero baseline
+      ctx.strokeStyle = 'rgba(255,255,255,.65)';
+      ctx.setLineDash([]);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(chartArea.left, y0);
+      ctx.lineTo(chartArea.right, y0);
+      ctx.stroke();
+      // "0% (flat)" label
+      ctx.fillStyle = 'rgba(13, 20, 25, .92)';
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      const labelText = '0% (flat)';
+      const labelW = ctx.measureText(labelText).width;
+      ctx.fillRect(chartArea.right - labelW - 10, y0 - 9, labelW + 8, 18);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(labelText, chartArea.right - 5, y0);
+
+      ctx.restore();
+    }
+  };
+
   const monthlyHrsCalloutPlugin = {
     id:'monthlyHrsCallout',
     afterDatasetsDraw(chart){
-      if(trendState.mode!=='monthlyHrs') return;
-      const yoy = chart.canvas.__monthlyHrsYoy;
-      if(!yoy) return;
+      const mode = trendState.mode;
+      let labels=null;
+      if(mode==='monthlyHrs'){
+        labels = chart.canvas.__monthlyHrsYoy;
+      } else if(mode==='magVsMarket'){
+        const series = chart.canvas.__pacingSeries;
+        labels = series ? series.map(s=>s.magYoY - s.mktYoY) : null;
+      }
+      if(!labels) return;
+      const yoy = labels;
       const ctx = chart.ctx;
       const ds25 = chart.getDatasetMeta(0);
       const ds26 = chart.getDatasetMeta(1);
@@ -6899,21 +7098,20 @@ function renderTrendTab(){
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
       yoy.forEach((pct,i)=>{
-        if(pct===null) return;
+        if(pct===null||pct===undefined) return;
         const b25 = ds25.data[i], b26 = ds26.data[i];
         if(!b25 || !b26) return;
         const cx = (b25.x + b26.x) / 2;
         const topY = Math.min(b25.y, b26.y) - 8;
-        const txt = (pct>=0?'+':'') + pct.toFixed(1) + '%';
-        const color = pct>=0 ? '#4ee6aa' : '#ffb4ab';
-        // soft background pill
+        const unit = (trendState.mode==='magVsMarket') ? ' pts' : '%';
+        const txt = (pct>=0?'+':'') + pct.toFixed(1) + unit;
+        const color = pct>=0 ? '#84cc16' : '#ef6f6c';
         const w = ctx.measureText(txt).width + 10;
         const h = 16;
-        ctx.fillStyle = 'rgba(5,20,36,.85)';
+        ctx.fillStyle = 'rgba(13, 20, 25, .92)';
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         const rx = cx - w/2, ry = topY - h + 2;
-        // rounded rect
         const r = 4;
         ctx.beginPath();
         ctx.moveTo(rx+r, ry);
@@ -6931,17 +7129,28 @@ function renderTrendTab(){
         ctx.fillStyle = color;
         ctx.fillText(txt, cx, topY+1);
       });
+      // Solid zero baseline so reading the chart is obvious
+      const yAxis = chart.scales.y;
+      const y0 = yAxis.getPixelForValue(0);
+      const chartArea = chart.chartArea;
+      ctx.strokeStyle = 'rgba(255,255,255,.5)';
+      ctx.setLineDash([]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(chartArea.left, y0);
+      ctx.lineTo(chartArea.right, y0);
+      ctx.stroke();
       ctx.restore();
     }
   };
   trendChartInst=new Chart(canvas,{
-    type: (mode==='may1to19'||mode==='monthlyHrs') ? 'bar' : 'line',
+    type: (mode==='may1to19'||mode==='monthlyHrs'||mode==='fleetMix') ? 'bar' : 'line',
     data:{labels,datasets},
-    plugins: (mode==='monthlyHrs') ? [monthlyHrsCalloutPlugin] : [],
+    plugins: (mode==='monthlyHrs') ? [monthlyHrsCalloutPlugin] : (mode==='magVsMarket' ? [magVsMarketZeroPlugin] : []),
     options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
-      layout:{padding:{top:(mode==='monthlyHrs'?28:8),bottom:8,left:6,right:12}},
+      layout:{padding:{top:((mode==='monthlyHrs'||mode==='magVsMarket')?28:8),bottom:8,left:6,right:12}},
       plugins:{
         legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1',font:{size:11},padding:14}},
         tooltip:{
@@ -6950,14 +7159,20 @@ function renderTrendTab(){
             label:c=>{
               if(c.parsed.y===null||c.parsed.y===undefined) return c.dataset.label+': —';
               if(mode==='may1to19'){
-                const metricKeys=['deps','hrs','fuel','tails'];
+                const metricKeys=['deps','hrs'];
                 const mk=metricKeys[c.dataIndex];
-                const raw = mk==='fuel' ? c.parsed.y * 1e6 : c.parsed.y;
-                const u = mk==='deps'?'flights':mk==='hrs'?'hrs':mk==='fuel'?'USG':'tails';
-                return `${c.dataset.label}: ${trendFmtVal(raw,mk)} ${u}`;
+                const u = mk==='deps'?'flights':'hrs';
+                return `${c.dataset.label}: ${trendFmtVal(c.parsed.y,mk)} ${u}`;
               }
               if(mode==='monthlyHrs'){
                 return `${c.dataset.label}: ${trendFmtVal(c.parsed.y,'hrs')} hrs`;
+              }
+              if(mode==='magVsMarket'){
+                const v = c.parsed.y;
+                return `${c.dataset.label}: ${v>=0?'+':''}${v.toFixed(1)}%`;
+              }
+              if(mode==='fleetMix'){
+                return `${c.dataset.label}: ${Number(c.parsed.y).toLocaleString()} h`;
               }
               const val=trendFmtVal(c.parsed.y,k);
               const unit=k==='deps'?'flights':k==='hrs'?'hrs':k==='fuel'?'USG':'tails';
@@ -6967,10 +7182,12 @@ function renderTrendTab(){
         }
       },
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#cbd5e1',maxRotation:0,autoSkipPadding:8}},
-        y:{beginAtZero:(mode==='may1to19'||mode==='monthlyHrs'),ticks:{color:'#cbd5e1',callback:v=>{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#cbd5e1',maxRotation:0,autoSkipPadding:8},stacked:(mode==='fleetMix')},
+        y:{beginAtZero:(mode==='may1to19'||mode==='monthlyHrs'||mode==='fleetMix'),stacked:(mode==='fleetMix'),ticks:{color:'#cbd5e1',callback:v=>{
+          if(mode==='magVsMarket') return (v>=0?'+':'')+v.toFixed(0)+'%';
           if(mode==='may1to19') return Number(v).toLocaleString();
           if(mode==='monthlyHrs') return Number(v).toLocaleString();
+          if(mode==='fleetMix') return Number(v).toLocaleString()+' h';
           if(k==='fuel') return (v/1e6).toFixed(1)+'M';
           return Number(v).toLocaleString();
         }},grid:{color:'rgba(255,255,255,.06)'}}
@@ -7030,6 +7247,150 @@ function renderTrendKpis(){
     return;
   }
 
+  if(trendState.mode==='fleetMix'){
+    const data = MAGELLAN_BLOCK_HOURS;
+    // Most recent FULL (non-forecast) month and prior month
+    const acts = data.filter(d => !d.forecast);
+    const last = acts[acts.length-1];
+    const prev = acts[acts.length-2];
+    const cats = [
+      {key:'light',     label:'Light Jet',   color:'#06d6c4'},
+      {key:'mid',       label:'Mid Jet',     color:'#f4a261'},
+      {key:'superMid',  label:'Super Mid',   color:'#95d44a'},
+      {key:'heavy',     label:'Heavy Jet',   color:'#f4a261'},
+      {key:'turboProp', label:'Turboprop',   color:'#5eead4'},
+    ];
+    const totLast = cats.reduce((s,c)=>s+(last[c.key]||0),0);
+
+    // Three KPI cards: total hrs latest month, top category, biggest mix shifter
+    // 1. Total hours
+    // 2. Dominant category share (latest)
+    // 3. Biggest MoM shift in share
+    const shareLast = cats.map(c => ({...c, hrs:last[c.key]||0, share:(last[c.key]||0)/totLast}));
+    shareLast.sort((a,b)=>b.share - a.share);
+    const top = shareLast[0];
+
+    const totPrev = cats.reduce((s,c)=>s+(prev[c.key]||0),0);
+    const shifts = cats.map(c => {
+      const a = (prev[c.key]||0)/totPrev;
+      const b = (last[c.key]||0)/totLast;
+      return {label:c.label, color:c.color, shift:b-a, lastShare:b, prevShare:a};
+    });
+    shifts.sort((a,b)=>Math.abs(b.shift)-Math.abs(a.shift));
+    const biggestShift = shifts[0];
+
+    // YTD '26 (Jan-Apr) category split
+    const ytd26 = MAGELLAN_BLOCK_HOURS.filter(d => !d.forecast && d.mo >= '2026-01' && d.mo <= '2026-04');
+    const ytdTotals = cats.map(c => ({...c, hrs: ytd26.reduce((s,d)=>s+(d[c.key]||0),0)}));
+    const ytdGrand = ytdTotals.reduce((s,c)=>s+c.hrs,0);
+
+    const lastLabel = trendMonthLabel(last.mo);
+    document.getElementById('trendKpis').innerHTML = `
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">${lastLabel} total block hours</div>
+        <div class="trend-kpi-val">${totLast} <span class="trend-kpi-unit">h</span></div>
+        <div class="trend-kpi-sub">vs prior month ${trendMonthLabel(prev.mo)}: ${totPrev} h (${((totLast-totPrev)/totPrev*100).toFixed(1)}%)</div>
+      </div>
+      <div class="trend-kpi" style="border-color:${top.color}66;background:${top.color}14">
+        <div class="trend-kpi-label">Dominant category · ${lastLabel}</div>
+        <div class="trend-kpi-val">${top.label}</div>
+        <div class="trend-kpi-sub">${top.hrs} h · ${(top.share*100).toFixed(0)}% of mix</div>
+      </div>
+      <div class="trend-kpi" style="border-color:${biggestShift.color}66;background:${biggestShift.color}14">
+        <div class="trend-kpi-label">Biggest mix shift · ${trendMonthLabel(prev.mo)} → ${lastLabel}</div>
+        <div class="trend-kpi-val ${biggestShift.shift>=0?'kpi-pos':'kpi-neg'}">${biggestShift.shift>=0?'+':''}${(biggestShift.shift*100).toFixed(1)} pts</div>
+        <div class="trend-kpi-sub">${biggestShift.label}: ${(biggestShift.prevShare*100).toFixed(0)}% → ${(biggestShift.lastShare*100).toFixed(0)}%</div>
+      </div>
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">YTD '26 fleet mix (Jan - Apr)</div>
+        <div class="trend-kpi-val" style="font-size:14px;font-weight:500;line-height:1.5">
+          ${ytdTotals.map(c => `<div style="display:flex;justify-content:space-between;gap:8px"><span style="color:${c.color}">●</span><span style="flex:1;color:var(--text2)">${c.label}</span><span style="font-family:'JetBrains Mono'">${(c.hrs/ytdGrand*100).toFixed(0)}%</span></div>`).join('')}
+        </div>
+        <div class="trend-kpi-sub">Total: ${ytdGrand} h</div>
+      </div>
+    `;
+    return;
+  }
+
+  // ── Magellan vs Market KPIs ──────────────────────────────────────────
+  if(trendState.mode==='magVsMarket'){
+    // KPIs are based on the MoM series — same calculation as the chart
+    const months = [
+      '2025-01','2025-02','2025-03','2025-04','2025-05','2025-06',
+      '2025-07','2025-08','2025-09','2025-10','2025-11','2025-12',
+      '2026-01','2026-02','2026-03','2026-04'
+    ];
+    const getIntl = mo => {
+      const r = MAGELLAN_INTL_SHARE.find(d => d.mo === mo);
+      return r ? r.intlPct : null;
+    };
+    const getMagNoam = mo => {
+      const r = MAGELLAN_DATA.find(d => d.mo === mo && !d.forecast);
+      const intl = getIntl(mo);
+      if (!r || intl == null) return null;
+      return r.hrs * (1 - intl);
+    };
+    const getMkt = mo => {
+      const r = MARKET_TREND_DATA.find(d => d.mo === mo);
+      return r ? r.hrs : null;
+    };
+
+    const series = [];
+    for (let i = 1; i < months.length; i++) {
+      const mo = months[i], prev = months[i-1];
+      const magNow = getMagNoam(mo), magPrev = getMagNoam(prev);
+      const mktNow = getMkt(mo), mktPrev = getMkt(prev);
+      if (magNow == null || magPrev == null || !mktNow || !mktPrev) continue;
+      series.push({
+        mo,
+        mag: ((magNow - magPrev) / magPrev) * 100,
+        mkt: ((mktNow - mktPrev) / mktPrev) * 100
+      });
+    }
+
+    // Aggregates
+    const wins = series.filter(s => s.mag > s.mkt).length;
+    const losses = series.length - wins;
+    const avgMag = series.reduce((s,p)=>s+p.mag,0) / series.length;
+    const avgMkt = series.reduce((s,p)=>s+p.mkt,0) / series.length;
+    const avgGap = avgMag - avgMkt;
+
+    // Most recent month
+    const last = series[series.length-1];
+    const lastLabel = trendMonthLabel(last.mo);
+
+    document.getElementById('trendKpis').innerHTML = `
+      <div style="grid-column: 1 / -1; padding:14px 18px; background:rgba(6,214,196,.10); border-left: 3px solid #06d6c4; border-radius:6px; margin-bottom:4px; font-size:14px; color:var(--text); line-height:1.55">
+        <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">How to read this</div>
+        Each point on the chart is one month's growth vs the prior month. <strong style="color:#06d6c4">Teal = Magellan</strong> (North America flights only — international stripped). <strong style="color:#f4a261">Gold = NOAM charter market.</strong> The bold white line is zero — above means we grew month-over-month, below means we shrank. The shaded area between the lines shows the gap: <span style="color:#84cc16">green when Magellan outpaced market</span>, <span style="color:#ef6f6c">coral when market outpaced Magellan</span>.
+      </div>
+      <div class="trend-kpi" style="border-color:rgba(6,214,196,.45);background:rgba(6,214,196,.08)">
+        <div class="trend-kpi-label">Avg Magellan MoM growth</div>
+        <div class="trend-kpi-val ${cls(avgMag/100)}">${avgMag>=0?'+':''}${avgMag.toFixed(1)}%</div>
+        <div class="trend-kpi-sub">Average across ${series.length} months (Feb '25 - Apr '26)</div>
+      </div>
+      <div class="trend-kpi" style="border-color:rgba(244,162,97,.45);background:rgba(244,162,97,.08)">
+        <div class="trend-kpi-label">Avg Market MoM growth</div>
+        <div class="trend-kpi-val ${cls(avgMkt/100)}">${avgMkt>=0?'+':''}${avgMkt.toFixed(1)}%</div>
+        <div class="trend-kpi-sub">Average across ${series.length} months</div>
+      </div>
+      <div class="trend-kpi" style="border-color:rgba(149,212,74,.5);background:rgba(149,212,74,.10)">
+        <div class="trend-kpi-label">Avg outperformance per month</div>
+        <div class="trend-kpi-val ${cls(avgGap/100)}">${avgGap>=0?'+':''}${avgGap.toFixed(1)} pts</div>
+        <div class="trend-kpi-sub">Magellan MoM minus market MoM</div>
+      </div>
+      <div class="trend-kpi">
+        <div class="trend-kpi-label">Months we outpaced</div>
+        <div class="trend-kpi-val">${wins} / ${series.length}</div>
+        <div class="trend-kpi-sub">${lastLabel} latest: Mag ${last.mag>=0?'+':''}${last.mag.toFixed(1)}% · Mkt ${last.mkt>=0?'+':''}${last.mkt.toFixed(1)}%</div>
+      </div>
+      <div style="grid-column: 1 / -1; padding:12px 16px; background:rgba(244,162,97,.06); border:1px solid rgba(244,162,97,.20); border-radius:6px; margin-top:6px; font-size:12px; color:var(--text2); line-height:1.55">
+        <strong style="color:var(--text)">Method:</strong> Market = North America Branded Charter, Business Jet excluding Ultra Long Range. Magellan figures strip out international trips each month using measured trip-level data (Jan 2025 - Apr 2026). MoM% = (current month hours - prior month hours) / prior month hours. No prior-year comparisons used.
+      </div>
+    `;
+    return;
+  }
+
   // ── Monthly hours KPIs (Jan-May, 2025 vs 2026) ─────────────────────────
   if(trendState.mode==='monthlyHrs'){
     const months=[
@@ -7055,7 +7416,7 @@ function renderTrendKpis(){
     const sumA = months.reduce((s,m)=>s+(m.a?m.a.hrs:0),0);
     const sumB = months.reduce((s,m)=>s+(m.b?m.b.hrs:0),0);
     const sumPct = sumA?(sumB-sumA)/sumA:0;
-    html2 += `<div class="trend-kpi" style="border-color:rgba(142,213,255,.35);background:rgba(142,213,255,.06)">
+    html2 += `<div class="trend-kpi" style="border-color:rgba(6,214,196,.35);background:rgba(6,214,196,.06)">
       <div class="trend-kpi-label">Total · same-window YoY</div>
       <div class="trend-kpi-val ${cls(sumPct)}">${sign(sumPct)}</div>
       <div class="trend-kpi-sub">'25: ${trendFmtVal(sumA,'hrs')} → '26: ${trendFmtVal(sumB,'hrs')} hrs</div>
@@ -7071,8 +7432,6 @@ function renderTrendKpis(){
     const ks = [
       {k:'deps',  label:'Departures',          unit:'flights'},
       {k:'hrs',   label:'Hours',               unit:'hrs'},
-      {k:'fuel',  label:'Potential Fuel',      unit:'USG'},
-      {k:'tails', label:'Active Tails',        unit:'tails'},
     ];
     document.getElementById('trendKpis').innerHTML = ks.map(({k:kk,label,unit})=>{
       const a=m25[kk], b=may26[kk];
