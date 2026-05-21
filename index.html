@@ -309,19 +309,20 @@
 
 /* ── DESIGN TOKEN OVERLAY (Manrope + Space Grotesk) ────────────────────────── */
 :root {
-  --bg: #061418;
-  --bg-2: #061418;
-  --surface: #0f2329;
-  --surface-2: #173640;
-  --border: rgba(100,180,200,.18);
-  --line: rgba(100,180,200,.10);
-  --text: #e8f4f7;
-  --text2: #aac4cd;
-  --text3: #6b8590;
-  --accent: #06d6c4;
-  --accent2: #f4a261;
-  --green: #95d44a;
-  --neg: #ef6f6c;
+  --bg: #0A1233;
+  --bg-2: #141C52;
+  --surface: #141C52;
+  --surface-2: #1F2966;
+  --border: rgba(62,135,211,.22);
+  --line: rgba(255,255,255,.06);
+  --text: #FFFFFF;
+  --text2: #C7D1E8;
+  --text3: #8896B8;
+  --accent: #3E87D3;
+  --accent2: #5BA4ED;
+  --green: #4ade80;
+  --yellow: #facc15;
+  --neg: #ef4444;
 }
 body {
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
@@ -363,7 +364,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .app{max-width:1440px;margin:0 auto;padding:20px 24px 40px}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px}
 .topbar h1{font-size:20px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}.app *::-webkit-scrollbar{width:6px;height:6px}.app *::-webkit-scrollbar-track{background:rgba(255,255,255,.02);border-radius:999px}.app *::-webkit-scrollbar-thumb{background:rgba(148,163,184,.28);border-radius:999px}.app *::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.45)}.table-wrap,.trend-values,.fuel-table-wrap,.scroll-area{scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.38) rgba(255,255,255,.02)}.signal-hero{border:1px solid rgba(56,189,248,.32);background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(129,140,248,.08));border-radius:14px;padding:18px;margin-bottom:16px;display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.signal-eyebrow{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-weight:900}.signal-title{font-size:26px;font-weight:900;letter-spacing:-.04em;margin-top:6px;line-height:1.05}.signal-sub{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.45}.signal-score{display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:12px;background:rgba(0,0,0,.18);text-align:center}.signal-score b{display:block;font-family:'JetBrains Mono',monospace;font-size:38px}.signal-score span{display:block;color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.1em}.signal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.signal-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.signal-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.signal-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.signal-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.signal-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.signal-chart-box{height:340px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018);position:relative;overflow:visible}.signal-chart-box.tall{height:390px}.signal-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.signal-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.signal-table{width:100%;border-collapse:collapse;min-width:1080px}.signal-table th,.signal-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.signal-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.signal-table td{font-family:'JetBrains Mono',monospace}.signal-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.score-pill{display:inline-block;border-radius:999px;padding:3px 8px;border:1px solid rgba(56,189,248,.25);background:rgba(56,189,248,.08);color:var(--accent);font-weight:800}.signal-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.45;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}
+.topbar .tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.04em;border:1px solid var(--border);padding:4px 10px;border-radius:99px}.app *::-webkit-scrollbar{width:6px;height:6px}.app *::-webkit-scrollbar-track{background:rgba(255,255,255,.02);border-radius:999px}.app *::-webkit-scrollbar-thumb{background:rgba(148,163,184,.28);border-radius:999px}.app *::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.45)}.table-wrap,.trend-values,.fuel-table-wrap,.scroll-area{scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.38) rgba(255,255,255,.02)}.signal-hero{border:1px solid rgba(62,135,211,.32);background:linear-gradient(135deg,rgba(62,135,211,.12),rgba(129,140,248,.08));border-radius:14px;padding:18px;margin-bottom:16px;display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.signal-eyebrow{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-weight:900}.signal-title{font-size:26px;font-weight:900;letter-spacing:-.04em;margin-top:6px;line-height:1.05}.signal-sub{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.45}.signal-score{display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:12px;background:rgba(0,0,0,.18);text-align:center}.signal-score b{display:block;font-family:'JetBrains Mono',monospace;font-size:38px}.signal-score span{display:block;color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.1em}.signal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.signal-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.signal-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.signal-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.signal-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.signal-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.signal-chart-box{height:340px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018);position:relative;overflow:visible}.signal-chart-box.tall{height:390px}.signal-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.signal-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.signal-table{width:100%;border-collapse:collapse;min-width:1080px}.signal-table th,.signal-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.signal-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.signal-table td{font-family:'JetBrains Mono',monospace}.signal-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.score-pill{display:inline-block;border-radius:999px;padding:3px 8px;border:1px solid rgba(62,135,211,.25);background:rgba(62,135,211,.08);color:var(--accent);font-weight:800}.signal-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.45;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}
 /* Market Signals layout fixes */
 #signalsTab .chart-panel{padding:20px;overflow:visible}
 #signalsTab .chart-header{margin-bottom:18px}
@@ -383,13 +384,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 #signalsTab .signal-note{margin-bottom:2px}
 @media(max-width:1200px){#signalsTab .signal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){#signalsTab .signal-grid{grid-template-columns:1fr 1fr}#signalsTab .signal-charts{grid-template-columns:1fr}#signalsTab .signal-hero{grid-template-columns:1fr}}
-@media(max-width:1100px){.signal-hero{grid-template-columns:1fr}.signal-grid{grid-template-columns:repeat(3,1fr)}.signal-charts{grid-template-columns:1fr}}@media(max-width:640px){.signal-grid{grid-template-columns:1fr 1fr}}.tabs{display:flex;gap:8px;margin:-8px 0 18px}.tab-btn{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--text2);border-radius:999px;padding:8px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;font-weight:700;cursor:pointer}.tab-btn:hover{border-color:var(--accent);color:var(--text)}.tab-btn.active{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.45);color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block;width:100%}.fuel-tab-panel{margin-top:0}.fuel-controls{margin-bottom:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);align-items:flex-end}.fuel-controls .control-group select{min-width:180px}.fuel-controls .button-lite{height:37px;margin-top:18px}.fuel-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.fuel-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.fuel-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.fuel-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.fuel-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.fuel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.fuel-chart-box{height:300px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018);position:relative;overflow:visible}.fuel-chart-box.tall{height:400px}.fuel-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.fuel-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.4;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}.fuel-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.fuel-table{width:100%;border-collapse:collapse;min-width:980px}.fuel-table th,.fuel-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.fuel-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.fuel-table td{font-family:'JetBrains Mono',monospace}.fuel-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.positive{color:#34d399}.negative{color:#fb7185}@media(max-width:1100px){.fuel-kpi-grid{grid-template-columns:repeat(3,1fr)}.fuel-grid{grid-template-columns:1fr}}@media(max-width:640px){.fuel-kpi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:1100px){.signal-hero{grid-template-columns:1fr}.signal-grid{grid-template-columns:repeat(3,1fr)}.signal-charts{grid-template-columns:1fr}}@media(max-width:640px){.signal-grid{grid-template-columns:1fr 1fr}}.tabs{display:flex;gap:8px;margin:-8px 0 18px}.tab-btn{border:1px solid var(--border);background:rgba(255,255,255,.025);color:var(--text2);border-radius:999px;padding:8px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;font-weight:700;cursor:pointer}.tab-btn:hover{border-color:var(--accent);color:var(--text)}.tab-btn.active{background:rgba(62,135,211,.12);border-color:rgba(62,135,211,.45);color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block;width:100%}.fuel-tab-panel{margin-top:0}.fuel-controls{margin-bottom:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);align-items:flex-end}.fuel-controls .control-group select{min-width:180px}.fuel-controls .button-lite{height:37px;margin-top:18px}.fuel-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.fuel-kpi{border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.025)}.fuel-kpi span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}.fuel-kpi b{display:block;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:16px}.fuel-kpi small{display:block;margin-top:2px;color:var(--text3);font-size:11px}.fuel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.fuel-chart-box{height:300px;border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(255,255,255,.018);position:relative;overflow:visible}.fuel-chart-box.tall{height:400px}.fuel-chart-title{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text2)}.fuel-note{margin-top:12px;color:var(--text3);font-size:12px;line-height:1.4;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(255,255,255,.018)}.fuel-table-wrap{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:10px}.fuel-table{width:100%;border-collapse:collapse;min-width:980px}.fuel-table th,.fuel-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}.fuel-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px}.fuel-table td{font-family:'JetBrains Mono',monospace}.fuel-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700}.positive{color:#34d399}.negative{color:#fb7185}@media(max-width:1100px){.fuel-kpi-grid{grid-template-columns:repeat(3,1fr)}.fuel-grid{grid-template-columns:1fr}}@media(max-width:640px){.fuel-kpi-grid{grid-template-columns:1fr 1fr}}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
 .control-group{display:flex;flex-direction:column;gap:4px}
 .control-group label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)}
 .control-group select,.button-lite{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-family:inherit;font-size:13px;font-weight:500;outline:none;cursor:pointer;min-width:150px}
 .button-lite{min-width:auto;align-self:flex-end;color:var(--text2)}
-.control-group select:focus,.button-lite:hover{border-color:var(--accent);box-shadow:0 0 0 2px rgba(56,189,248,.15)}
+.control-group select:focus,.button-lite:hover{border-color:var(--accent);box-shadow:0 0 0 2px rgba(62,135,211,.15)}
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
 .kpi .kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
@@ -405,8 +406,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
 .legend-dot{width:10px;height:10px;border-radius:3px}
 .hbar-row{display:grid;grid-template-columns:170px 1fr 88px;gap:12px;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s}
-.hbar-row:hover{background:rgba(56,189,248,.06)}
-.hbar-row.active{background:rgba(56,189,248,.1);border-left:3px solid var(--accent)}
+.hbar-row:hover{background:rgba(62,135,211,.06)}
+.hbar-row.active{background:rgba(62,135,211,.1);border-left:3px solid var(--accent)}
 .hbar-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hbar-rank{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);margin-right:6px;display:inline-block;width:22px}
 .hbar-track{height:28px;display:flex;border-radius:4px;overflow:hidden;background:rgba(255,255,255,.03)}
@@ -439,20 +440,20 @@ table{width:100%;border-collapse:collapse;min-width:1120px}
 th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-weight:700;padding:10px 8px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface)}
 td{padding:9px 8px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}
 td:nth-child(3){font-family:'DM Sans',sans-serif;font-weight:600}
-tr:hover td{background:rgba(56,189,248,.04)}
-tr.active-row td{background:rgba(56,189,248,.08)}
+tr:hover td{background:rgba(62,135,211,.04)}
+tr.active-row td{background:rgba(62,135,211,.08)}
 .expand-btn{width:22px;height:22px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text2);border-radius:6px;cursor:pointer;font-weight:700}
 .expand-btn:hover{color:var(--accent);border-color:var(--accent)}
-.expand-row td{background:rgba(56,189,248,.035)!important;padding:12px 16px}
+.expand-row td{background:rgba(62,135,211,.035)!important;padding:12px 16px}
 .expanded-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
 .expanded-cell{border:1px solid var(--border);border-radius:8px;padding:8px;background:rgba(255,255,255,.025)}
 .expanded-cell span{display:block;color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
 .expanded-cell b{display:block;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:12px}
 .pill{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:99px;border:1px solid}
-.pill-1{color:var(--band1);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.08)}
-.pill-2{color:var(--band2);border-color:rgba(99,102,241,.3);background:rgba(99,102,241,.08)}
-.pill-3{color:var(--band3);border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)}
-.pill-4{color:var(--band4);border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.08)}
+.pill-1{color:var(--band1);border-color:rgba(62,135,211,.3);background:rgba(62,135,211,.08)}
+.pill-2{color:var(--band2);border-color:rgba(127,178,230,.3);background:rgba(127,178,230,.08)}
+.pill-3{color:var(--band3);border-color:rgba(44,95,168,.3);background:rgba(44,95,168,.08)}
+.pill-4{color:var(--band4);border-color:rgba(212,175,106,.3);background:rgba(212,175,106,.08)}
 .scroll-area{max-height:600px;overflow-y:auto}
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-track{background:transparent}
@@ -478,10 +479,10 @@ tr.active-row td{background:rgba(56,189,248,.08)}
 .fbo-table th{text-align:left;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-size:10px;position:sticky;top:0;background:var(--surface);z-index:2}
 .fbo-table td{font-family:'JetBrains Mono',monospace}
 .fbo-table td:first-child{font-family:'DM Sans',sans-serif;font-weight:700;white-space:nowrap}
-.fbo-table tr:hover td{background:rgba(56,189,248,.04)}
+.fbo-table tr:hover td{background:rgba(62,135,211,.04)}
 .dir-pill{display:inline-block;font-size:9px;padding:2px 6px;border-radius:99px;margin-left:4px;font-weight:700}
-.dir-dep{background:rgba(56,189,248,.12);color:var(--band1);border:1px solid rgba(56,189,248,.25)}
-.dir-arr{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+.dir-dep{background:rgba(62,135,211,.12);color:var(--band1);border:1px solid rgba(62,135,211,.25)}
+.dir-arr{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}
 @media(max-width:1100px){.fbo-grid{grid-template-columns:1fr}.fbo-chart-box.wide{grid-column:span 1}.fbo-kpi-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.fbo-kpi-grid{grid-template-columns:1fr 1fr}}
 
@@ -511,8 +512,8 @@ body::before {
   content:'';
   position:fixed;top:0;left:0;width:100%;height:100%;
   background-image:
-    linear-gradient(rgba(56,189,248,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,.018) 1px, transparent 1px);
+    linear-gradient(rgba(62,135,211,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,135,211,.018) 1px, transparent 1px);
   background-size:60px 60px;
   pointer-events:none;z-index:0;
 }
@@ -520,7 +521,7 @@ body::after {
   content:'';
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(56,189,248,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(62,135,211,.06) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 80% 110%, rgba(129,140,248,.05) 0%, transparent 50%);
   pointer-events:none;z-index:0;
 }
@@ -529,18 +530,18 @@ body::after {
 /* ── Topbar ── */
 .topbar {
   padding:0 0 18px;
-  border-bottom:1px solid rgba(56,189,248,.15);
+  border-bottom:1px solid rgba(62,135,211,.15);
   margin-bottom:20px;
 }
 .topbar h1 {
   font-size:22px;font-weight:900;letter-spacing:-.04em;
   background:linear-gradient(135deg,#38bdf8 0%,#818cf8 50%,#a78bfa 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 20px rgba(56,189,248,.25));
+  filter:drop-shadow(0 0 20px rgba(62,135,211,.25));
 }
 .topbar .tag {
-  border-color:rgba(56,189,248,.2);
-  background:rgba(56,189,248,.06);
+  border-color:rgba(62,135,211,.2);
+  background:rgba(62,135,211,.06);
   color:var(--text2);
   letter-spacing:.06em;
 }
@@ -558,16 +559,16 @@ body::after {
   cursor:pointer;
 }
 .tab-btn:hover {
-  border-color:rgba(56,189,248,.3);
+  border-color:rgba(62,135,211,.3);
   color:var(--text2);
-  background:rgba(56,189,248,.06);
+  background:rgba(62,135,211,.06);
   transform:translateY(-1px);
 }
 .tab-btn.active {
-  background:rgba(56,189,248,.1);
-  border-color:rgba(56,189,248,.5);
+  background:rgba(62,135,211,.1);
+  border-color:rgba(62,135,211,.5);
   color:var(--accent);
-  box-shadow:0 0 14px rgba(56,189,248,.12), inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow:0 0 14px rgba(62,135,211,.12), inset 0 1px 0 rgba(255,255,255,.06);
 }
 
 /* ── Controls ── */
@@ -580,8 +581,8 @@ body::after {
   transition:border-color .15s, box-shadow .15s;
 }
 .control-group select:focus, .control-group select:hover {
-  border-color:rgba(56,189,248,.35);
-  box-shadow:0 0 0 3px rgba(56,189,248,.08);
+  border-color:rgba(62,135,211,.35);
+  box-shadow:0 0 0 3px rgba(62,135,211,.08);
   outline:none;
 }
 .control-group label {
@@ -603,7 +604,7 @@ body::after {
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   opacity:0;transition:opacity .18s;
 }
-.kpi:hover { transform:translateY(-2px);border-color:rgba(56,189,248,.22);box-shadow:0 8px 24px rgba(0,0,0,.25); }
+.kpi:hover { transform:translateY(-2px);border-color:rgba(62,135,211,.22);box-shadow:0 8px 24px rgba(0,0,0,.25); }
 .kpi:hover::before { opacity:1; }
 .kpi .kpi-label {
   font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
@@ -637,9 +638,9 @@ th {
   font-size:10px;font-weight:800;letter-spacing:.09em;
   background:rgba(17,24,39,.8)!important;
   color:var(--text3);
-  border-bottom:1px solid rgba(56,189,248,.1)!important;
+  border-bottom:1px solid rgba(62,135,211,.1)!important;
 }
-tr:hover td { background:rgba(56,189,248,.05)!important; }
+tr:hover td { background:rgba(62,135,211,.05)!important; }
 td { font-size:12px; }
 
 /* ── Fuel/Signal/FBO chart boxes ── */
@@ -666,7 +667,7 @@ td { font-size:12px; }
   transition:border-color .15s, background .15s;
 }
 .fuel-kpi:hover, .fleet-kpi:hover, .fbo-kpi:hover {
-  border-color:rgba(56,189,248,.2);background:rgba(56,189,248,.04);
+  border-color:rgba(62,135,211,.2);background:rgba(62,135,211,.04);
 }
 .fuel-kpi span, .signal-kpi span, .fleet-kpi span, .fbo-kpi span {
   font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);
@@ -696,7 +697,7 @@ td { font-size:12px; }
   border-radius:6px;
   transition:all .15s;
 }
-.expand-btn:hover { border-color:rgba(56,189,248,.4);color:var(--accent);background:rgba(56,189,248,.08); }
+.expand-btn:hover { border-color:rgba(62,135,211,.4);color:var(--accent);background:rgba(62,135,211,.08); }
 
 /* ── Fleet chart box wide ── */
 .fleet-chart-box.wide { height:280px; }
@@ -739,8 +740,8 @@ td { font-size:12px; }
 
 /* ── Score pills ── */
 .score-pill {
-  background:rgba(56,189,248,.1);
-  border:1px solid rgba(56,189,248,.25);
+  background:rgba(62,135,211,.1);
+  border:1px solid rgba(62,135,211,.25);
   color:var(--accent);
   border-radius:6px;
   font-size:10px;font-weight:800;
@@ -753,8 +754,8 @@ td { font-size:12px; }
 
 /* ── Signal hero card ── */
 .signal-hero {
-  border:1px solid rgba(56,189,248,.2);
-  background:linear-gradient(135deg,rgba(56,189,248,.07),rgba(129,140,248,.05));
+  border:1px solid rgba(62,135,211,.2);
+  background:linear-gradient(135deg,rgba(62,135,211,.07),rgba(129,140,248,.05));
   border-radius:14px;
 }
 
@@ -793,7 +794,7 @@ td { font-size:12px; }
   --bg-2: #051424;
   --surface: #0c1929;
   --surface-2: #122031;
-  --border: rgba(56,189,248,.1);
+  --border: rgba(62,135,211,.1);
   --text: #d4e4fa;
   --text2: #9aadcc;
   --text3: #5e788a;
@@ -807,7 +808,7 @@ td { font-size:12px; }
 body { background: #040e1c !important; }
 body::before {
   background:
-    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(56,189,248,.06), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(62,135,211,.06), transparent 55%),
     radial-gradient(ellipse 50% 40% at 90% 100%, rgba(129,140,248,.04), transparent 50%),
     #040e1c !important;
 }
@@ -816,7 +817,7 @@ body::after { display:none !important; }
 /* Topbar */
 .topbar {
   background: rgba(4,14,28,.85) !important;
-  border-bottom: 1px solid rgba(56,189,248,.12) !important;
+  border-bottom: 1px solid rgba(62,135,211,.12) !important;
   padding: 14px 24px !important;
   backdrop-filter: blur(12px) !important;
 }
@@ -833,7 +834,7 @@ body::after { display:none !important; }
 /* Tabs */
 .tabs {
   background: rgba(4,14,28,.85) !important;
-  border-color: rgba(56,189,248,.1) !important;
+  border-color: rgba(62,135,211,.1) !important;
   backdrop-filter: blur(8px) !important;
   border-radius:0 !important;
   width:100%;
@@ -864,22 +865,22 @@ body::after { display:none !important; }
 /* Cards / chart panels */
 .chart-panel, .table-panel {
   background: var(--surface) !important;
-  border: 1px solid rgba(56,189,248,.1) !important;
+  border: 1px solid rgba(62,135,211,.1) !important;
   border-radius:12px !important;
   backdrop-filter: none !important;
 }
-.chart-panel:hover, .detail-card:hover { border-color: rgba(56,189,248,.2) !important; }
+.chart-panel:hover, .detail-card:hover { border-color: rgba(62,135,211,.2) !important; }
 
 /* KPI tiles */
 .kpi {
   background: var(--surface) !important;
-  border: 1px solid rgba(56,189,248,.1) !important;
+  border: 1px solid rgba(62,135,211,.1) !important;
   border-radius:10px !important;
   padding:16px !important;
   min-height:96px !important;
   transition: border-color .15s, transform .15s !important;
 }
-.kpi:hover { border-color: rgba(56,189,248,.25) !important; transform: translateY(-1px) !important; }
+.kpi:hover { border-color: rgba(62,135,211,.25) !important; transform: translateY(-1px) !important; }
 .kpi::before { display:none !important; }
 .kpi .kpi-label {
   font-size:10px !important;
@@ -908,23 +909,23 @@ body::after { display:none !important; }
 /* Small sub-KPI cards */
 .fuel-kpi, .signal-kpi, .fleet-kpi, .fbo-kpi {
   background: var(--surface) !important;
-  border-color: rgba(56,189,248,.1) !important;
+  border-color: rgba(62,135,211,.1) !important;
   border-radius:8px !important;
 }
 .fuel-kpi:hover, .fleet-kpi:hover, .fbo-kpi:hover {
-  border-color:rgba(56,189,248,.22) !important;
+  border-color:rgba(62,135,211,.22) !important;
 }
 
 /* Chart boxes */
 .fuel-chart-box, .signal-chart-box, .fbo-chart-box, .fleet-chart-box {
   background: var(--surface) !important;
-  border-color: rgba(56,189,248,.09) !important;
+  border-color: rgba(62,135,211,.09) !important;
   border-radius:10px !important;
 }
 
 /* Tables */
 .table-wrap, .fbo-table-wrap, .fleet-table-wrap {
-  border: 1px solid rgba(56,189,248,.1) !important;
+  border: 1px solid rgba(62,135,211,.1) !important;
   border-radius:10px !important;
 }
 th {
@@ -933,13 +934,13 @@ th {
   font-size:10.5px !important;
   letter-spacing:.06em !important;
   font-weight:700 !important;
-  border-bottom: 1px solid rgba(56,189,248,.12) !important;
+  border-bottom: 1px solid rgba(62,135,211,.12) !important;
 }
 td { 
   font-size:13px !important;
-  border-bottom-color: rgba(56,189,248,.06) !important;
+  border-bottom-color: rgba(62,135,211,.06) !important;
 }
-tr:hover td { background: rgba(56,189,248,.04) !important; }
+tr:hover td { background: rgba(62,135,211,.04) !important; }
 
 /* Controls */
 .controls { gap:12px !important; }
@@ -951,18 +952,18 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
 }
 .control-group select {
   background: var(--surface) !important;
-  border-color: rgba(56,189,248,.15) !important;
+  border-color: rgba(62,135,211,.15) !important;
   border-radius:8px !important;
   color: var(--text) !important;
   font-size:13px !important;
   padding:7px 28px 7px 10px !important;
 }
-.control-group select:focus { border-color: rgba(56,189,248,.4) !important; }
+.control-group select:focus { border-color: rgba(62,135,211,.4) !important; }
 
 /* Detail sidebar cards */
 .detail-card {
   background: var(--surface) !important;
-  border-color: rgba(56,189,248,.1) !important;
+  border-color: rgba(62,135,211,.1) !important;
   border-radius:10px !important;
 }
 .dc-label {
@@ -975,15 +976,15 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
 
 /* Score pill */
 .score-pill {
-  background:rgba(56,189,248,.1) !important;
-  border:1px solid rgba(56,189,248,.25) !important;
+  background:rgba(62,135,211,.1) !important;
+  border:1px solid rgba(62,135,211,.25) !important;
   border-radius:6px !important;
 }
 
 /* Signal hero */
 .signal-hero {
   border-left:3px solid var(--green) !important;
-  background: linear-gradient(135deg, rgba(52,211,153,.06), rgba(56,189,248,.04)) !important;
+  background: linear-gradient(135deg, rgba(74,222,128,.06), rgba(62,135,211,.04)) !important;
   border-radius:10px !important;
 }
 /* ── END DESIGN ──────────────────────────────────────────────────────────── */
@@ -1122,14 +1123,590 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
 .trend-paced{font-size:11px;margin-left:6px;opacity:.85}
 .trend-pending{color:var(--text3);font-style:italic}
 
+
+/* ── Headline executive KPI strip ── */
+.headline-kpi {
+  margin: 18px 0 24px;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+}
+.headline-kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
+  border-radius: 14px 0 0 14px;
+}
+.headline-kpi-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.headline-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1300px) { .headline-kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+.hk-card {
+  background: rgba(10,18,51,.5);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.hk-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+.hk-card.hk-good {
+  border-left: 3px solid var(--green);
+  background: linear-gradient(135deg, rgba(74,222,128,.06) 0%, rgba(10,18,51,.5) 100%);
+}
+.hk-card.hk-bad {
+  border-left: 3px solid var(--neg);
+  background: linear-gradient(135deg, rgba(239,68,68,.06) 0%, rgba(10,18,51,.5) 100%);
+}
+.hk-card.hk-neutral {
+  border-left: 3px solid var(--yellow);
+  background: linear-gradient(135deg, rgba(250,204,21,.05) 0%, rgba(10,18,51,.5) 100%);
+}
+.hk-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.hk-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hk-card.hk-good .hk-val { color: var(--green); }
+.hk-card.hk-bad  .hk-val { color: var(--neg); }
+.hk-card.hk-neutral .hk-val { color: var(--text); font-size: 20px; }
+.hk-sub {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* ── OVERVIEW TAB ── */
+#overviewTab {
+  padding: 28px 32px 40px;
+}
+.overview-hero {
+  margin-bottom: 32px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.overview-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
+}
+.overview-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.overview-headline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.overview-deck {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.55;
+  max-width: 880px;
+}
+.overview-section {
+  margin-bottom: 28px;
+}
+.overview-section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.overview-grid {
+  display: grid;
+  gap: 16px;
+}
+.overview-grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1100px) { .overview-grid-3 { grid-template-columns: 1fr; } }
+.ov-card {
+  background: rgba(10,18,51,.6);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+.ov-card:hover {
+  transform: translateY(-2px);
+}
+.ov-card.ov-good {
+  border-left: 4px solid var(--green);
+  background: linear-gradient(135deg, rgba(74,222,128,.08) 0%, rgba(10,18,51,.6) 100%);
+}
+.ov-card.ov-bad {
+  border-left: 4px solid var(--neg);
+  background: linear-gradient(135deg, rgba(239,68,68,.08) 0%, rgba(10,18,51,.6) 100%);
+}
+.ov-card.ov-info {
+  border-left: 4px solid var(--accent);
+  background: linear-gradient(135deg, rgba(62,135,211,.08) 0%, rgba(10,18,51,.6) 100%);
+}
+.ov-card-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.ov-card-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin-bottom: 10px;
+}
+.ov-card-val.ov-val-md {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+.ov-card.ov-good .ov-card-val { color: var(--green); }
+.ov-card.ov-bad .ov-card-val { color: var(--neg); }
+.ov-card.ov-info .ov-card-val { color: var(--text); }
+.ov-card-sub {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.45;
+}
+.overview-footnote {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.6;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+/* Market Trend pinned headline */
+.trend-pinned-headline {
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(62,135,211,.10) 0%, rgba(20,28,82,.6) 100%);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+}
+.tph-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.tph-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+.tph-stat {
+  display: flex;
+  flex-direction: column;
+}
+.tph-stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.tph-stat.tph-good .tph-stat-val { color: var(--green); }
+.tph-stat.tph-bad .tph-stat-val  { color: var(--neg); }
+.tph-stat-lbl {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* ── UNIFIED TAB HERO (for all tabs) ── */
+.tab-hero {
+  margin-bottom: 24px;
+  padding: 22px 28px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.tab-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
+}
+.tab-hero-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.tab-hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.tab-hero-deck {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.5;
+  max-width: 920px;
+}
+.tab-section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 20px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Unified controls panel styling */
+.controls {
+  margin-bottom: 16px !important;
+  padding: 16px 18px !important;
+  background: rgba(20,28,82,.5) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.controls .control-group label {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 0.10em !important;
+  color: var(--text3) !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  margin-bottom: 5px !important;
+  display: block !important;
+}
+.controls select, .controls input {
+  background: rgba(10,18,51,.7) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  padding: 8px 12px !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13px !important;
+  min-width: 160px;
+}
+.controls select:focus, .controls input:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+}
+.button-lite {
+  background: rgba(62,135,211,.15) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--text) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.button-lite:hover {
+  background: rgba(62,135,211,.28) !important;
+}
+
+/* Chart panels — unified */
+.chart-panel {
+  background: rgba(20,28,82,.4) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  padding: 22px 24px !important;
+  margin-bottom: 18px !important;
+}
+.chart-header {
+  margin-bottom: 16px !important;
+}
+.chart-title {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 4px !important;
+}
+.chart-subtitle {
+  font-size: 13px !important;
+  color: var(--text2) !important;
+  line-height: 1.5 !important;
+}
+
+/* Unify all KPI cards across the dashboard */
+.kpi-row, .fuel-kpi-grid, .signal-grid, .fleet-kpi-grid, .trend-kpi-grid, #trendKpis {
+  display: grid !important;
+  gap: 12px !important;
+  margin-bottom: 18px !important;
+}
+.kpi-row { grid-template-columns: repeat(4, 1fr) !important; }
+.fuel-kpi-grid, .fleet-kpi-grid { grid-template-columns: repeat(5, 1fr) !important; }
+.signal-grid { grid-template-columns: repeat(3, 1fr) !important; }
+#trendKpis { grid-template-columns: repeat(4, 1fr) !important; }
+@media (max-width: 1200px) {
+  .kpi-row, .fuel-kpi-grid, .signal-grid, .fleet-kpi-grid, #trendKpis {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+.kpi, .fuel-kpi, .signal-kpi, .fleet-kpi, .trend-kpi {
+  background: rgba(10,18,51,.6) !important;
+  border: 1px solid var(--border) !important;
+  border-left: 4px solid var(--accent) !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  transition: transform 0.15s ease;
+}
+.kpi:hover, .fuel-kpi:hover, .signal-kpi:hover, .fleet-kpi:hover, .trend-kpi:hover {
+  transform: translateY(-1px);
+}
+.kpi span, .fuel-kpi span, .signal-kpi span, .fleet-kpi span,
+.trend-kpi-label {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 0.10em !important;
+  color: var(--text3) !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+}
+.kpi b, .fuel-kpi b, .signal-kpi b, .fleet-kpi b,
+.trend-kpi-val {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--text) !important;
+  display: block !important;
+  margin-top: 0 !important;
+  line-height: 1.1 !important;
+}
+.kpi small, .fuel-kpi small, .signal-kpi small, .fleet-kpi small,
+.trend-kpi-sub {
+  font-size: 11px !important;
+  color: var(--text2) !important;
+  display: block !important;
+  margin-top: 4px !important;
+  line-height: 1.4 !important;
+}
+
+/* Positive/negative KPI variants */
+.kpi.positive, .kpi.up, .kpi.good, .fuel-kpi.positive, .signal-kpi.positive, .fleet-kpi.positive,
+.trend-kpi.positive {
+  border-left-color: var(--green) !important;
+  background: linear-gradient(135deg, rgba(74,222,128,.06) 0%, rgba(10,18,51,.6) 100%) !important;
+}
+.kpi.positive b, .kpi.up b, .kpi.good b, .fuel-kpi.positive b, .signal-kpi.positive b, .fleet-kpi.positive b,
+.trend-kpi.positive .trend-kpi-val {
+  color: var(--green) !important;
+}
+.kpi.negative, .kpi.down, .kpi.bad, .fuel-kpi.negative, .signal-kpi.negative, .fleet-kpi.negative,
+.trend-kpi.negative {
+  border-left-color: var(--neg) !important;
+  background: linear-gradient(135deg, rgba(239,68,68,.06) 0%, rgba(10,18,51,.6) 100%) !important;
+}
+.kpi.negative b, .kpi.down b, .kpi.bad b, .fuel-kpi.negative b, .signal-kpi.negative b, .fleet-kpi.negative b,
+.trend-kpi.negative .trend-kpi-val {
+  color: var(--neg) !important;
+}
+
+/* Tab buttons — make consistent with new palette */
+.tabs {
+  display: flex !important;
+  gap: 8px !important;
+  margin: 0 0 24px !important;
+  padding: 6px !important;
+  background: rgba(10,18,51,.6) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+}
+.tab-btn {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: var(--text2) !important;
+  border-radius: 8px !important;
+  padding: 10px 18px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  letter-spacing: 0.01em !important;
+}
+.tab-btn:hover {
+  background: rgba(62,135,211,.10) !important;
+  color: var(--text) !important;
+}
+.tab-btn.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: white !important;
+}
+
+/* Topbar */
+.topbar {
+  margin-bottom: 20px !important;
+  padding-bottom: 18px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.topbar h1 {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  letter-spacing: -0.02em !important;
+  display: inline-block;
+}
+
+/* Tables */
+table.fuel-table th, table.fuel-table td,
+.main table th, .main table td {
+  border-color: rgba(62,135,211,.08) !important;
+}
+.fuel-table th, .main table th {
+  color: var(--text3) !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: 0.10em !important;
+}
+
+/* Charts boxes */
+.fuel-chart-box, .signal-chart-box, .fleet-chart-box {
+  background: rgba(20,28,82,.3) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  padding: 14px !important;
+}
+.fuel-chart-title, .signal-chart-title, .fleet-chart-title {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  margin-bottom: 8px !important;
+}
+
+/* Signal hero */
+.signal-hero {
+  background: linear-gradient(135deg, rgba(62,135,211,.10) 0%, rgba(20,28,82,.6) 100%) !important;
+  border: 1px solid var(--border) !important;
+  border-left: 4px solid var(--accent) !important;
+  border-radius: 12px !important;
+  padding: 18px 22px !important;
+  margin-bottom: 16px !important;
+}
+.signal-eyebrow {
+  color: var(--accent) !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+.signal-title {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 22px !important;
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  margin-top: 6px !important;
+}
+.signal-score b {
+  color: var(--accent) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Notes/footnotes */
+.fuel-note {
+  background: rgba(10,18,51,.6) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  color: var(--text2) !important;
+}
+
+/* App container max width — leave room */
+.app {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 32px 60px;
+}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="topbar"><h1>Market Data</h1><span class="brand-sub" style="font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--text3);margin-left:12px">BRANDED CHARTER &nbsp;·&nbsp; US DOMESTIC &nbsp;·&nbsp; JAN–APR 2026</span></div>
-
   <div class="tabs">
-    <button class="tab-btn active" data-tab="dashboard">Operators</button>
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="dashboard">Operators</button>
     <button class="tab-btn" data-tab="fuel">Fuel Intelligence</button>
     <button class="tab-btn" data-tab="signals">Market Signals</button>
     <button class="tab-btn" data-tab="airport">Airport Intelligence</button>
@@ -1139,7 +1716,92 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
 
     
 
-<div id="dashboardTab" class="tab-panel active">
+
+
+  <!-- ── OVERVIEW TAB ── -->
+  <div id="overviewTab" class="tab-panel active">
+    <div class="overview-hero">
+      <div class="overview-eyebrow">EXECUTIVE SUMMARY · JAN–APR 2026</div>
+      <h2 class="overview-headline">Magellan is outpacing a contracting market</h2>
+      <p class="overview-deck">Search demand for charter is down 55% YoY and the broader North America charter market has contracted 4.8% YTD. Despite the headwinds, Magellan grew flight hours 31% and revenue 29% over the same window.</p>
+    </div>
+
+    <!-- Section 1: Magellan Performance -->
+    <section class="overview-section">
+      <div class="overview-section-label">MAGELLAN · YEAR-TO-DATE</div>
+      <div class="overview-grid overview-grid-3">
+        <div class="ov-card ov-good">
+          <div class="ov-card-label">Flight Hours Growth</div>
+          <div class="ov-card-val">+31.3%</div>
+          <div class="ov-card-sub">1,350 → 1,773 NOAM hrs · vs Jan–Apr 2025</div>
+        </div>
+        <div class="ov-card ov-good">
+          <div class="ov-card-label">Revenue Growth</div>
+          <div class="ov-card-val">+28.8%</div>
+          <div class="ov-card-sub">$15.98M → $20.58M · $4.6M added YoY</div>
+        </div>
+        <div class="ov-card ov-good">
+          <div class="ov-card-label">Outperformance Gap</div>
+          <div class="ov-card-val">+36 pts</div>
+          <div class="ov-card-sub">Magellan hours growth minus market</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Market Context -->
+    <section class="overview-section">
+      <div class="overview-section-label">MARKET CONTEXT · CHARTER DEMAND</div>
+      <div class="overview-grid overview-grid-3">
+        <div class="ov-card ov-bad">
+          <div class="ov-card-label">Market Hours YTD</div>
+          <div class="ov-card-val">−4.8%</div>
+          <div class="ov-card-sub">NOAM Branded Charter · WingX</div>
+        </div>
+        <div class="ov-card ov-bad">
+          <div class="ov-card-label">May 1–19 Market YoY</div>
+          <div class="ov-card-val">−10.4%</div>
+          <div class="ov-card-sub">35,987 → 32,252 hrs · equal windows</div>
+        </div>
+        <div class="ov-card ov-bad">
+          <div class="ov-card-label">Charter Search Demand</div>
+          <div class="ov-card-val">−55%</div>
+          <div class="ov-card-sub">Google Trends · YoY</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Highlights -->
+    <section class="overview-section">
+      <div class="overview-section-label">HIGHLIGHTS</div>
+      <div class="overview-grid overview-grid-3">
+        <div class="ov-card ov-good">
+          <div class="ov-card-label">Best Month</div>
+          <div class="ov-card-val ov-val-md">March 2026</div>
+          <div class="ov-card-sub">620 hrs · $6.94M · +24 pts vs market</div>
+        </div>
+        <div class="ov-card ov-info">
+          <div class="ov-card-label">Top Competitor (NOAM)</div>
+          <div class="ov-card-val ov-val-md">flyExclusive</div>
+          <div class="ov-card-sub">6,257 hrs · April 2026</div>
+        </div>
+        <div class="ov-card ov-info">
+          <div class="ov-card-label">Top Aircraft Flown</div>
+          <div class="ov-card-val ov-val-md">Super Mid</div>
+          <div class="ov-card-sub">228 hrs · 49% of April mix</div>
+        </div>
+      </div>
+    </section>
+
+    <p class="overview-footnote">Sources: Magellan internal flight records (international stripped to match NOAM scope). WingX (NOAM Branded Charter, Business Jet excl. Ultra Long Range). Google Trends (charter search volume). All comparisons Jan–Apr 2026 vs Jan–Apr 2025 unless noted.</p>
+  </div>
+
+<div id="dashboardTab" class="tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">OPERATORS · COMPETITIVE INTELLIGENCE</div>
+      <div class="tab-hero-title">Charter Operator Landscape</div>
+      <div class="tab-hero-deck">Every NOAM Branded Charter operator ranked by hours, departures, fuel, and YoY momentum. Use the filters below to drill into a specific period, scope, or hour band.</div>
+    </div>
 
   <div class="controls">
     <div class="control-group"><label>Time View</label><select id="periodMode"><option value="historical">All Historical</option><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option></select></div>
@@ -1231,6 +1893,13 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
   </div>
 
   <div id="fuelTab" class="tab-panel fuel-tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">FUEL INTELLIGENCE · DEMAND INDEX</div>
+      <div class="tab-hero-title" id="fuelMainTitle">Fuel Consumption &amp; Market Skew</div>
+      <div class="tab-hero-deck" id="fuelMainSub">Potential fuel demand (USG), per-hour and per-departure intensity, and operator-level fuel share vs hours share to flag pricing inefficiencies.</div>
+    </div>
+
     <div class="controls fuel-controls">
       <div class="control-group"><label>Fuel Period</label><select id="fuelPeriodSelect"></select></div>
       <div class="control-group"><label>Fuel Operator</label><select id="fuelOperatorSelect"></select></div>
@@ -1239,12 +1908,6 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
     </div>
 
     <div class="chart-panel">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title" id="fuelMainTitle">Fuel Intelligence</div>
-          <div class="chart-subtitle" id="fuelMainSub">Potential Fuel (USG), demand intensity, and market skew.</div>
-        </div>
-      </div>
 
       <div class="fuel-kpi-grid" id="fuelKpis"></div>
 
@@ -1282,13 +1945,14 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
   </div>
 
   <div id="signalsTab" class="tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">MARKET SIGNALS · TARGETING MODEL</div>
+      <div class="tab-hero-title">Demand Signals & Operator Movers</div>
+      <div class="tab-hero-deck">Composite scoring across April 2026 pacing, month-over-month momentum, year-over-year confirmation, fuel intensity, and concentration — surfacing the most actionable opportunities.</div>
+    </div>
+
     <div class="chart-panel">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Market Signals + Targeting Model</div>
-          <div class="chart-subtitle">Directional targeting logic using April 2026 pacing, MoM momentum, YoY confirmation, fuel intensity, and concentration.</div>
-        </div>
-      </div>
 
       <div class="signal-hero">
         <div>
@@ -1336,13 +2000,14 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
     </div>
   </div>
   <div id="airportTab" class="tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">AIRPORT INTELLIGENCE · FBO ACTIVITY</div>
+      <div class="tab-hero-title">Departure & Arrival Activity by Airport</div>
+      <div class="tab-hero-deck">Fuel demand, hours flown, and momentum tracked at the airport level across all hour bands — surfacing the highest-leverage origins and destinations.</div>
+    </div>
+
     <div class="chart-panel">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Airport Intelligence</div>
-          <div class="chart-subtitle">Departure and arrival activity by airport — fuel demand, hours, and momentum across all hour bands.</div>
-        </div>
-      </div>
 
       <div class="fbo-controls controls" id="fboControls">
         <div class="control-group"><label>Time View</label><select id="fboPeriodMode">
@@ -1412,13 +2077,14 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
   </div>
 
   <div id="fleetTab" class="tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">FLEET MIX · AIRCRAFT INTELLIGENCE</div>
+      <div class="tab-hero-title">Aircraft Segment & Mission Profile</div>
+      <div class="tab-hero-deck">Breakdown of how each jet category flies — mission profile, fuel demand, departures, and momentum over time. Filter by period and metric to spot category-level shifts.</div>
+    </div>
+
     <div class="chart-panel">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Fleet Mix Intelligence</div>
-          <div class="chart-subtitle">Aircraft segment breakdown by mission type — how each jet type flies, its fuel profile, and momentum over time.</div>
-        </div>
-      </div>
 
       <div class="controls" style="margin-bottom:16px">
         <div class="control-group"><label>Period</label><select id="fleetPeriod">
@@ -1486,12 +2152,23 @@ tr:hover td { background: rgba(56,189,248,.04) !important; }
 
 
   <div id="trendTab" class="tab-panel">
+
+    <!-- Pinned headline for Market Trend tab -->
+    <div class="trend-pinned-headline">
+      <div class="tph-eyebrow">YTD Jan–Apr 2026 · Magellan vs Market</div>
+      <div class="tph-stats">
+        <div class="tph-stat tph-good"><span class="tph-stat-val">+31.3%</span><span class="tph-stat-lbl">Magellan hours</span></div>
+        <div class="tph-stat tph-bad"><span class="tph-stat-val">−4.8%</span><span class="tph-stat-lbl">Market hours</span></div>
+        <div class="tph-stat tph-good"><span class="tph-stat-val">+36 pts</span><span class="tph-stat-lbl">Gap</span></div>
+        <div class="tph-stat tph-good"><span class="tph-stat-val">+28.8%</span><span class="tph-stat-lbl">Magellan revenue</span></div>
+      </div>
+    </div>
+
     <div class="chart-panel">
-      <div class="chart-header">
-        <div>
-          <div class="chart-title">Market Trend — Charter Volume</div>
-          <div class="chart-subtitle">North America Branded Charter · Business Jet (excl. ULR) · Jan 2025 - May 19, 2026 · Magellan stripped of international flights to match market scope</div>
-        </div>
+
+      <div style="margin-bottom: 14px">
+        <div class="chart-title">Market Trend — Charter Volume</div>
+        <div class="chart-subtitle">North America Branded Charter · Business Jet (excl. ULR) · Jan 2025 – May 19, 2026 · Magellan stripped of international flights to match market scope</div>
       </div>
 
       <div class="controls" style="margin-top:10px;display:flex;gap:14px;flex-wrap:wrap">
@@ -5000,10 +5677,10 @@ const rawData = RAW_ROWS.map(r => ({
 const JETNET_OPERATORS = {"ATI Jet Inc":{"jetnet":"ATI Jet, Inc.","country":"United States","compId":"6206","operating":26,"leased":0,"fleet":26},"Air 7":{"jetnet":"Air 7, LLC","country":"United States","compId":"339237","operating":14,"leased":1,"fleet":15},"Air X Charter":{"jetnet":"Air X Charter, Ltd.","country":"Malta","compId":"337562","operating":19,"leased":12,"fleet":31},"Citation X Parts LLC":{"jetnet":"Citation X Parts, LLC","country":"United States","compId":"502381","operating":14,"leased":0,"fleet":14},"Clay Lacy Aviation Inc":{"jetnet":"Clay Lacy Aviation, Inc.","country":"United States","compId":"3829","operating":33,"leased":2,"fleet":35},"Club Jet":{"jetnet":"Club Jet","country":"United States","compId":"265334","operating":18,"leased":1,"fleet":19},"Corporate Air LLC":{"jetnet":"Corporate Air, Inc.","country":"United States","compId":"4464","operating":32,"leased":30,"fleet":62},"Davinci Jets LLC":{"jetnet":"Davinci Jets, LLC","country":"United States","compId":"237909","operating":15,"leased":0,"fleet":15},"Elite Air":{"jetnet":"Elite Air, Inc.","country":"United States","compId":"134025","operating":19,"leased":1,"fleet":20},"FlyUSA Inc":{"jetnet":"FlyUSA, Inc.","country":"United States","compId":"466469","operating":21,"leased":0,"fleet":21},"Jet Access Aviation":{"jetnet":"Jet Access","country":"United States","compId":"367663","operating":13,"leased":0,"fleet":13},"Journey Aviation":{"jetnet":"Journey Aviation, LLC","country":"United States","compId":"348031","operating":13,"leased":3,"fleet":16},"Kalitta Charters":{"jetnet":"Kalitta Charters, LLC","country":"United States","compId":"14167","operating":44,"leased":0,"fleet":44},"Latitude 33 Aviation":{"jetnet":"Latitude 33 Aviation, LLC","country":"United States","compId":"313796","operating":27,"leased":0,"fleet":27},"Nicholas Air":{"jetnet":"Nicholas Services, LLC","country":"United States","compId":"317024","operating":29,"leased":0,"fleet":29},"Paradigm Jet Management":{"jetnet":"Paradigm Jet Management, Inc.","country":"United States","compId":"13666","operating":16,"leased":2,"fleet":18},"Pegasus Elite Aviation":{"jetnet":"Pegasus Elite Aviation, Inc.","country":"United States","compId":"312159","operating":16,"leased":10,"fleet":26},"Pentastar Aviation":{"jetnet":"Pentastar Aviation","country":"United States","compId":"14007","operating":22,"leased":1,"fleet":23},"Planet Nine Private Air":{"jetnet":"Planet Nine Private Air, LLC","country":"United States","compId":"416617","operating":14,"leased":2,"fleet":16},"Secure Air Charter":{"jetnet":"Secure Air Charter, LLC","country":"United States","compId":"167002","operating":14,"leased":0,"fleet":14},"Silverhawk Aviation Inc":{"jetnet":"Silverhawk Aviation, Inc.","country":"United States","compId":"242917","operating":16,"leased":1,"fleet":17},"Sky Quest":{"jetnet":"Sky Quest, LLC","country":"United States","compId":"154060","operating":17,"leased":0,"fleet":17},"Talon Air":{"jetnet":"Talon Air, LLC","country":"United States","compId":"149587","operating":27,"leased":0,"fleet":27},"Thrive Aviation":{"jetnet":"Thrive Aviation","country":"United States","compId":"52","operating":21,"leased":2,"fleet":23},"Ventura Air Services":{"jetnet":"Ventura Air Services, Inc.","country":"United States","compId":"186897","operating":14,"leased":1,"fleet":15},"Vista America":{"jetnet":"VistaJet Limited","country":"Malta","compId":"326496","operating":102,"leased":4,"fleet":106},"Wheels Up LLC":{"jetnet":"Wheels Up","country":"United States","compId":"340411","operating":14,"leased":1,"fleet":15},"Wheels Up Private Jets":{"jetnet":"Wheels Up Private Jets, LLC","country":"United States","compId":"22994","operating":74,"leased":8,"fleet":82},"flyExclusive":{"jetnet":"Exclusive Jets, LLC","country":"United States","compId":"373567","operating":71,"leased":15,"fleet":86}};
 
 const BANDS=[
-  {key:'under2',label:'<2h',full:'Under 2h',color:'#38bdf8',pillClass:'pill-1'},
-  {key:'b23',label:'2-3h',full:'2–3h',color:'#6366f1',pillClass:'pill-2'},
-  {key:'b34',label:'3-4h',full:'3–4h',color:'#a78bfa',pillClass:'pill-3'},
-  {key:'b4',label:'4h+',full:'4h+',color:'#f472b6',pillClass:'pill-4'}
+  {key:'under2',label:'<2h',full:'Under 2h',color:'#3E87D3',pillClass:'pill-1'},
+  {key:'b23',label:'2-3h',full:'2–3h',color:'#7FB2E6',pillClass:'pill-2'},
+  {key:'b34',label:'3-4h',full:'3–4h',color:'#2C5FA8',pillClass:'pill-3'},
+  {key:'b4',label:'4h+',full:'4h+',color:'#D4AF6A',pillClass:'pill-4'}
 ];
 
 const fmt=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0});
@@ -5368,7 +6045,7 @@ function renderDetail(source,view){
   donutChart=new Chart(document.getElementById('donutChart'),{
     type:'doughnut',
     data:{labels:BANDS.map(b=>b.full),datasets:[{data:BANDS.map(b=>selected[b.key]),backgroundColor:BANDS.map(b=>b.color),borderWidth:0,hoverOffset:6}]},
-    options:{cutout:'72%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.label}: ${fmt1(c.parsed)} hrs`}}}}
+    options:{cutout:'72%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`${c.label}: ${fmt1(c.parsed)} hrs`}}}}
   });
 }
 
@@ -5396,7 +6073,7 @@ function renderMarketBreakdown(view){
     options:{
       plugins:{
         legend:{display:false},
-        tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{
+        tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>{
           const total=c.dataset.data.reduce((s,v)=>s+v,0);
           const share=total?c.parsed/total:0;
           return `${c.label}: ${fmt1(c.parsed)} hrs (${pct(share)})`;
@@ -5449,7 +6126,7 @@ function renderTop5Trend(view){
           mode:'index',
           intersect:false,
           backgroundColor:'#111827',
-          borderColor:'rgba(56,189,248,.3)',
+          borderColor:'rgba(62,135,211,.3)',
           borderWidth:1,
           padding:12,
           callbacks:{
@@ -5601,8 +6278,8 @@ function renderFuelTab(){
   if(fuelRankChart) fuelRankChart.destroy();
   fuelRankChart=new Chart(document.getElementById('fuelRankChart'),{
     type:'bar',
-    data:{labels:ranked.map(o=>o.operator.length>20?o.operator.slice(0,20)+'…':o.operator),datasets:[{label:fuelMetricLabel(metric),data:ranked.map(o=>fuelRankValue(o,metric)),backgroundColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#fb718577':'#38bdf877'),borderColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#fb7185':'#38bdf8'),borderWidth:1.5,borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{if(metric==='skew')return `Skew: ${signedPct(c.parsed.x)}`;if(metric==='intensity')return `Index: ${fmt1(c.parsed.x)}x`;if(metric==='distance')return `${fmt1(c.parsed.x)} USG / est. NM`;if(metric==='fleet')return `${fmt(c.parsed.x)} USG / aircraft`;return `${fmt(c.parsed.x)} USG / departure`;}}}},scales:{x:{beginAtZero:metric!=='skew',ticks:{callback:v=>metric==='skew'?signedPct(v):Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
+    data:{labels:ranked.map(o=>o.operator.length>20?o.operator.slice(0,20)+'…':o.operator),datasets:[{label:fuelMetricLabel(metric),data:ranked.map(o=>fuelRankValue(o,metric)),backgroundColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#ef444477':'#3E87D377'),borderColor:ranked.map(o=>metric==='skew'&&o.fuelSkew<0?'#ef4444':'#3E87D3'),borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>{if(metric==='skew')return `Skew: ${signedPct(c.parsed.x)}`;if(metric==='intensity')return `Index: ${fmt1(c.parsed.x)}x`;if(metric==='distance')return `${fmt1(c.parsed.x)} USG / est. NM`;if(metric==='fleet')return `${fmt(c.parsed.x)} USG / aircraft`;return `${fmt(c.parsed.x)} USG / departure`;}}}},scales:{x:{beginAtZero:metric!=='skew',ticks:{callback:v=>metric==='skew'?signedPct(v):Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
   });
 
   const monthly=months.map(m=>{
@@ -5620,16 +6297,16 @@ function renderFuelTab(){
   if(fuelTrendChart) fuelTrendChart.destroy();
   fuelTrendChart=new Chart(document.getElementById('fuelTrendChart'),{
     type:'line',
-    data:{labels:monthly.map(d=>d.label),datasets:[{label:'Fuel / Hour',data:monthly.map(d=>d.fuelPerHour),borderColor:'#38bdf8',backgroundColor:'#38bdf833',pointRadius:3,tension:.3},{label:'Fuel / Departure',data:monthly.map(d=>d.fuelPerDeparture),borderColor:'#f472b6',backgroundColor:'#f472b633',pointRadius:3,tension:.3}]},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${fmt1(c.parsed.y)}`}}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'}},y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}}}}
+    data:{labels:monthly.map(d=>d.label),datasets:[{label:'Fuel / Hour',data:monthly.map(d=>d.fuelPerHour),borderColor:'#3E87D3',backgroundColor:'#3E87D333',pointRadius:3,tension:.3},{label:'Fuel / Departure',data:monthly.map(d=>d.fuelPerDeparture),borderColor:'#D4AF6A',backgroundColor:'#D4AF6A33',pointRadius:3,tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${fmt1(c.parsed.y)}`}}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'}},y:{beginAtZero:true,ticks:{callback:v=>Number(v).toLocaleString()},grid:{color:'rgba(255,255,255,.06)'}}}}
   });
 
   const shareTop=[...metrics].sort((a,b)=>b.fuelShare-a.fuelShare).slice(0,10);
   if(fuelShareChart) fuelShareChart.destroy();
   fuelShareChart=new Chart(document.getElementById('fuelShareChart'),{
     type:'bar',
-    data:{labels:shareTop.map(o=>o.operator.split(' ')[0].slice(0,10)),datasets:[{label:'Hours Share',data:shareTop.map(o=>o.hoursShare),backgroundColor:'#6366f188',borderColor:'#6366f1',borderWidth:1.5,borderRadius:4},{label:'Fuel Share',data:shareTop.map(o=>o.fuelShare),backgroundColor:'#38bdf888',borderColor:'#38bdf8',borderWidth:1.5,borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${pct(c.parsed.y)}`}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>pct(v)},grid:{color:'rgba(255,255,255,.06)'}}}}
+    data:{labels:shareTop.map(o=>o.operator.split(' ')[0].slice(0,10)),datasets:[{label:'Hours Share',data:shareTop.map(o=>o.hoursShare),backgroundColor:'#7FB2E688',borderColor:'#7FB2E6',borderWidth:1.5,borderRadius:4},{label:'Fuel Share',data:shareTop.map(o=>o.fuelShare),backgroundColor:'#3E87D388',borderColor:'#3E87D3',borderWidth:1.5,borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${pct(c.parsed.y)}`}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>pct(v)},grid:{color:'rgba(255,255,255,.06)'}}}}
   });
 
   const bandFuel=BANDS.map(b=>view.reduce((s,o)=>s+((o.fuel||0)*(o.total?((o[b.key]||0)/o.total):0)),0));
@@ -5637,7 +6314,7 @@ function renderFuelTab(){
   fuelBandChart=new Chart(document.getElementById('fuelBandChart'),{
     type:'doughnut',
     data:{labels:BANDS.map(b=>b.full),datasets:[{data:bandFuel,backgroundColor:BANDS.map(b=>b.color),borderColor:'#111827',borderWidth:2,hoverOffset:8}]},
-    options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>{const total=c.dataset.data.reduce((s,v)=>s+v,0);return `${c.label}: ${fmt(c.parsed)} est. USG (${pct(total?c.parsed/total:0)})`;}}}}}
+    options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>{const total=c.dataset.data.reduce((s,v)=>s+v,0);return `${c.label}: ${fmt(c.parsed)} est. USG (${pct(total?c.parsed/total:0)})`;}}}}}
   });
 
   document.getElementById('fuelTableBody').innerHTML=[...metrics].sort((a,b)=>b.fuelSkew-a.fuelSkew).slice(0,30).map(o=>`
@@ -5838,7 +6515,7 @@ function renderSignalsTab(){
   signalScoreChart=new Chart(document.getElementById('signalScoreChart'),{
     type:'bar',
     data:{labels:model.map(r=>r.full),datasets:[{label:'Target Score',data:model.map(r=>r.score),backgroundColor:model.map(r=>r.color+'99'),borderColor:model.map(r=>r.color),borderWidth:1.5,borderRadius:5}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`Score: ${Math.round(c.parsed.y)} / 100`}}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(255,255,255,.06)'}},x:{grid:{display:false}}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`Score: ${Math.round(c.parsed.y)} / 100`}}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(255,255,255,.06)'}},x:{grid:{display:false}}}}
   });
 
   if(signalShareChart) signalShareChart.destroy();
@@ -5855,14 +6532,14 @@ function renderSignalsTab(){
       pointRadius:3,
       tension:.3
     }))},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${pct(c.parsed.y)}`}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>pct(v)},grid:{color:'rgba(255,255,255,.06)'}},x:{grid:{color:'rgba(255,255,255,.04)'}}}}
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`${c.dataset.label}: ${pct(c.parsed.y)}`}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>pct(v)},grid:{color:'rgba(255,255,255,.06)'}},x:{grid:{color:'rgba(255,255,255,.04)'}}}}
   });
 
   if(operatorMoverChart) operatorMoverChart.destroy();
   operatorMoverChart=new Chart(document.getElementById('operatorMoverChart'),{
     type:'bar',
-    data:{labels:movers.map(o=>o.operator.length>18?o.operator.slice(0,18)+'…':o.operator),datasets:[{label:'Share Delta',data:movers.map(o=>o.delta),backgroundColor:movers.map(o=>o.delta>=0?'#34d39988':'#fb718588'),borderColor:movers.map(o=>o.delta>=0?'#34d399':'#fb7185'),borderWidth:1.5,borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,callbacks:{label:c=>`Share delta: ${signedPct(c.parsed.x)}`}}},scales:{x:{ticks:{callback:v=>signedPct(v)},grid:{color:'rgba(255,255,255,.06)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
+    data:{labels:movers.map(o=>o.operator.length>18?o.operator.slice(0,18)+'…':o.operator),datasets:[{label:'Share Delta',data:movers.map(o=>o.delta),backgroundColor:movers.map(o=>o.delta>=0?'#4ade8088':'#ef444488'),borderColor:movers.map(o=>o.delta>=0?'#4ade80':'#ef4444'),borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,callbacks:{label:c=>`Share delta: ${signedPct(c.parsed.x)}`}}},scales:{x:{ticks:{callback:v=>signedPct(v)},grid:{color:'rgba(255,255,255,.06)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
   });
 
   const intensityRows=months.map(m=>{
@@ -5873,10 +6550,10 @@ function renderSignalsTab(){
   missionIntensityChart=new Chart(document.getElementById('missionIntensityChart'),{
     type:'line',
     data:{labels:intensityRows.map(d=>d.label),datasets:[
-      {label:'Fuel / Hour',data:intensityRows.map(d=>d.fuelPerHour),borderColor:'#38bdf8',backgroundColor:'#38bdf833',pointRadius:3,tension:.3,yAxisID:'y'},
-      {label:'Hours / Departure',data:intensityRows.map(d=>d.hoursPerDeparture),borderColor:'#f472b6',backgroundColor:'#f472b633',pointRadius:3,tension:.3,yAxisID:'y1'}
+      {label:'Fuel / Hour',data:intensityRows.map(d=>d.fuelPerHour),borderColor:'#3E87D3',backgroundColor:'#3E87D333',pointRadius:3,tension:.3,yAxisID:'y'},
+      {label:'Hours / Departure',data:intensityRows.map(d=>d.hoursPerDeparture),borderColor:'#D4AF6A',backgroundColor:'#D4AF6A33',pointRadius:3,tension:.3,yAxisID:'y1'}
     ]},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1}},scales:{y:{beginAtZero:true,position:'left',grid:{color:'rgba(255,255,255,.06)'}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false}},x:{grid:{color:'rgba(255,255,255,.04)'}}}}
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1'}},tooltip:{backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1}},scales:{y:{beginAtZero:true,position:'left',grid:{color:'rgba(255,255,255,.06)'}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false}},x:{grid:{color:'rgba(255,255,255,.04)'}}}}
   });
 
   document.getElementById('signalBandTable').innerHTML=model.map(r=>`
@@ -6050,7 +6727,7 @@ function airportType(depFuel, arrFuel){
   const depShare=total>0?depFuel/total:0.5;
   if(depShare>0.55) return{label:'ORIGIN',cls:'positive'};
   if(depShare<0.45) return{label:'DEST',cls:'negative'};
-  return{label:'HUB',cls:'',color:'#fbbf24'};
+  return{label:'HUB',cls:'',color:'#D4AF6A'};
 }
 
 function renderFboTab(){
@@ -6120,8 +6797,8 @@ function renderFboTab(){
     const dF=depMap.get(r.airport)||0;
     const aF=arrMap.get(r.airport)||0;
     const t=airportType(dF,aF);
-    if(t.label==='ORIGIN') return 'rgba(56,189,248,.78)';
-    if(t.label==='DEST') return 'rgba(244,114,182,.78)';
+    if(t.label==='ORIGIN') return 'rgba(62,135,211,.78)';
+    if(t.label==='DEST') return 'rgba(212,175,106,.78)';
     return 'rgba(129,140,248,.78)';
   });
 
@@ -6150,7 +6827,7 @@ function renderFboTab(){
   const top5names=byAirport.slice(0,5).map(r=>r.airport.split(',')[0].trim());
   const months=['2026-01','2026-02','2026-03','2026-04','2026-05'];
   const mLabels=['Jan','Feb','Mar','Apr'];
-  const tColors=['#38bdf8','#34d399','#a78bfa','#f472b6','#fbbf24'];
+  const tColors=['#3E87D3','#4ade80','#2C5FA8','#D4AF6A','#D4AF6A'];
   const tDatasets=top5names.map((name,i)=>{
     const data=months.map(mo=>{
       const mRows=fboRawData.filter(r=>r.month===mo && r.dir==='dep' && r.airport.startsWith(name.split(' ')[0]));
@@ -6184,10 +6861,10 @@ function renderFboTab(){
     data:{
       labels:bLabels,
       datasets:[
-        {label:'<2h',data:top15.map(r=>Math.round(r.under2)),backgroundColor:'rgba(56,189,248,.8)',stack:'s'},
-        {label:'2-3h',data:top15.map(r=>Math.round(r.b23)),backgroundColor:'rgba(99,102,241,.8)',stack:'s'},
-        {label:'3-4h',data:top15.map(r=>Math.round(r.b34)),backgroundColor:'rgba(167,139,250,.8)',stack:'s'},
-        {label:'4h+',data:top15.map(r=>Math.round(r.b4)),backgroundColor:'rgba(244,114,182,.8)',stack:'s'},
+        {label:'<2h',data:top15.map(r=>Math.round(r.under2)),backgroundColor:'rgba(62,135,211,.8)',stack:'s'},
+        {label:'2-3h',data:top15.map(r=>Math.round(r.b23)),backgroundColor:'rgba(127,178,230,.8)',stack:'s'},
+        {label:'3-4h',data:top15.map(r=>Math.round(r.b34)),backgroundColor:'rgba(44,95,168,.8)',stack:'s'},
+        {label:'4h+',data:top15.map(r=>Math.round(r.b4)),backgroundColor:'rgba(212,175,106,.8)',stack:'s'},
       ]
     },
     options:{
@@ -6207,7 +6884,7 @@ function renderFboTab(){
   tbody.innerHTML=byAirport.slice(0,75).map((r,i)=>{
     const dF=depMap.get(r.airport)||0;
     const t=airportType(dF,0);
-    const typeStr=t.label==='—'?'—':`<span style="font-size:9px;font-weight:700;color:${t.label==='ORIGIN'?'var(--accent)':t.label==='DEST'?'#f472b6':'#fbbf24'}">${t.label}</span>`;
+    const typeStr=t.label==='—'?'—':`<span style="font-size:9px;font-weight:700;color:${t.label==='ORIGIN'?'var(--accent)':t.label==='DEST'?'#D4AF6A':'#D4AF6A'}">${t.label}</span>`;
     return `<tr>
       <td>${i+1}</td>
       <td>${r.airport}</td>
@@ -6235,11 +6912,11 @@ const acftRaw = ACFT_ROWS.map(r=>({
 }));
 
 const SEG_COLORS = {
-  'Light Jet':'#38bdf8',
-  'Super Light Jet':'#34d399',
-  'Midsize Jet':'#a78bfa',
-  'Super Midsize Jet':'#fbbf24',
-  'Heavy Jet':'#f472b6',
+  'Light Jet':'#3E87D3',
+  'Super Light Jet':'#4ade80',
+  'Midsize Jet':'#2C5FA8',
+  'Super Midsize Jet':'#D4AF6A',
+  'Heavy Jet':'#D4AF6A',
   'Very Light Jet':'#64748b',
   'Entry Level Jet':'#94a3b8',
   'Airliner/Bizliner(Jet)':'#475569'
@@ -6311,7 +6988,7 @@ function renderFleetTab(){
   const spct=n=>n==null?'—':(n>=0?'<span class="positive">+':'<span class="negative">')+(n*100).toFixed(1)+'%</span>';
   const BAND_KEYS=['under2','b23','b34','b4'];
   const BAND_LABELS=['<2h','2-3h','3-4h','4h+'];
-  const BAND_COLORS=['rgba(56,189,248,.8)','rgba(99,102,241,.8)','rgba(167,139,250,.8)','rgba(244,114,182,.8)'];
+  const BAND_COLORS=['rgba(62,135,211,.8)','rgba(127,178,230,.8)','rgba(44,95,168,.8)','rgba(212,175,106,.8)'];
 
   // Aggregate by segment
   const segMap = new Map();
@@ -6516,8 +7193,8 @@ function renderOverviewTab(){
     <div class="kpi"><div class="kpi-label">Departures</div><div class="kpi-val">${fmtK(totDeps)}</div><div class="kpi-sub">total flights</div></div>
     <div class="kpi"><div class="kpi-label">Market Leader</div><div class="kpi-val" style="font-size:16px;letter-spacing:-.02em">${agg[0]?.operator.split(' ')[0]||'—'}</div><div class="kpi-sub">${(leaderShare*100).toFixed(1)}% of market hours</div></div>
     <div class="kpi"><div class="kpi-label">Top Band</div><div class="kpi-val" style="font-size:16px;color:${topBand.color}">${topBand.full}</div><div class="kpi-sub">${totHrs?(topBand.hrs/totHrs*100).toFixed(1)+'% of hours':'—'}</div></div>
-    <div class="kpi"><div class="kpi-label">MoM Change</div><div class="kpi-val" style="color:${momPct===null?'var(--text2)':momPct>=0?'var(--green)':'#fb7185'}">${momPct===null?'—':(momPct>=0?'+':'')+(momPct*100).toFixed(1)+'%'}</div><div class="kpi-sub">${momPct===null?'select a single month':momLabel+' · period-over-period'}</div></div>
-    <div class="kpi"><div class="kpi-label">YoY Growth</div><div class="kpi-val" style="color:${avgYoY>=0?'var(--green)':'#fb7185'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</div><div class="kpi-sub">${mths.length===1?monthLabel(mths[0]):mths.length+' periods'} vs same period prior year · weighted by hours</div></div>`;
+    <div class="kpi"><div class="kpi-label">MoM Change</div><div class="kpi-val" style="color:${momPct===null?'var(--text2)':momPct>=0?'var(--green)':'#ef4444'}">${momPct===null?'—':(momPct>=0?'+':'')+(momPct*100).toFixed(1)+'%'}</div><div class="kpi-sub">${momPct===null?'select a single month':momLabel+' · period-over-period'}</div></div>
+    <div class="kpi"><div class="kpi-label">YoY Growth</div><div class="kpi-val" style="color:${avgYoY>=0?'var(--green)':'#ef4444'}">${avgYoY>=0?'+':''}${(avgYoY*100).toFixed(1)}%</div><div class="kpi-sub">${mths.length===1?monthLabel(mths[0]):mths.length+' periods'} vs same period prior year · weighted by hours</div></div>`;
 
   // Band trend — always all 4 months
   if(ovBandChart) ovBandChart.destroy();
@@ -6532,7 +7209,7 @@ function renderOverviewTab(){
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       layout:{padding:{bottom:10,top:4}},
       plugins:{legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1',font:{size:11},padding:14}},
-        tooltip:{mode:'index',intersect:false,backgroundColor:'#111827',borderColor:'rgba(56,189,248,.3)',borderWidth:1,padding:12,
+        tooltip:{mode:'index',intersect:false,backgroundColor:'#111827',borderColor:'rgba(62,135,211,.3)',borderWidth:1,padding:12,
           callbacks:{title:i=>i.length?i[0].label:'',label:c=>`${c.dataset.label}: ${Math.round(c.parsed.y).toLocaleString()} hrs`}}},
       scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#94a3b8'}},
         y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#94a3b8',callback:v=>Number(v).toLocaleString()},beginAtZero:true}}}
@@ -6789,16 +7466,16 @@ function renderTrendTab(){
       {
         label:`Range A: ${trendMonthLabel(rangeA[0].mo)} - ${trendMonthLabel(rangeA[rangeA.length-1].mo)}`,
         data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeA[i],k)),
-        borderColor:'#06d6c4', backgroundColor:'rgba(6,214,196,.12)',
+        borderColor:'#3E87D3', backgroundColor:'rgba(62,135,211,.12)',
         tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, spanGaps:false,
-        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeA[i]&&rangeA[i].partial)?'#f4a261':'#06d6c4'),
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeA[i]&&rangeA[i].partial)?'#5BA4ED':'#3E87D3'),
       },
       {
         label:`Range B: ${trendMonthLabel(rangeB[0].mo)} - ${trendMonthLabel(rangeB[rangeB.length-1].mo)}`,
         data:Array.from({length:maxLen},(_,i)=>pluckVal(rangeB[i],k)),
-        borderColor:'#f4a261', backgroundColor:'rgba(244,162,97,.12)',
+        borderColor:'#5BA4ED', backgroundColor:'rgba(91,164,237,.12)',
         tension:0.30, fill:false, pointRadius:5, pointHoverRadius:7, borderWidth:2.5, borderDash:[4,3], spanGaps:false,
-        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeB[i]&&rangeB[i].partial)?'#f4a261':'#f4a261'),
+        pointBackgroundColor:Array.from({length:maxLen},(_,i)=>(rangeB[i]&&rangeB[i].partial)?'#5BA4ED':'#5BA4ED'),
       }
     ];
     // Note text
@@ -6808,8 +7485,8 @@ function renderTrendTab(){
       const partials = [...rangeA,...rangeB].filter(r=>r&&r.partial).map(r=>`${trendMonthLabel(r.mo)} (${r.partial}d of ${r.monthDays})`);
       noteEl.innerHTML = [
         `Range A: ${rangeA.length} months · Range B: ${rangeB.length} months`,
-        lenMismatch?'<span style="color:#f4a261">⚠ Ranges have different lengths — totals compared raw</span>':'',
-        partials.length?`<span style="color:#f4a261">MTD: ${partials.join(', ')}</span>`:''
+        lenMismatch?'<span style="color:#5BA4ED">⚠ Ranges have different lengths — totals compared raw</span>':'',
+        partials.length?`<span style="color:#5BA4ED">MTD: ${partials.join(', ')}</span>`:''
       ].filter(Boolean).join(' · ');
     }  } else if(mode==='may1to19'){
     // Direct same-window comparison — no pacing required
@@ -6821,8 +7498,8 @@ function renderTrendTab(){
       {
         label:'May 1-19, 2025 (actual)',
         data:keys.map(kk => m25[kk]),
-        backgroundColor:'rgba(6,214,196,.55)',
-        borderColor:'#06d6c4',
+        backgroundColor:'rgba(62,135,211,.55)',
+        borderColor:'#3E87D3',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6831,8 +7508,8 @@ function renderTrendTab(){
       {
         label:'May 1-19, 2026 (actual)',
         data:keys.map(kk => may26[kk]),
-        backgroundColor:'rgba(244,162,97,.55)',
-        borderColor:'#f4a261',
+        backgroundColor:'rgba(91,164,237,.55)',
+        borderColor:'#5BA4ED',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6865,8 +7542,8 @@ function renderTrendTab(){
       {
         label:'2025 (hours)',
         data:v25,
-        backgroundColor:'rgba(6,214,196,.55)',
-        borderColor:'#06d6c4',
+        backgroundColor:'rgba(62,135,211,.55)',
+        borderColor:'#3E87D3',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6876,8 +7553,8 @@ function renderTrendTab(){
       {
         label:'2026 (hours)',
         data:v26,
-        backgroundColor:'rgba(244,162,97,.55)',
-        borderColor:'#f4a261',
+        backgroundColor:'rgba(91,164,237,.55)',
+        borderColor:'#5BA4ED',
         borderWidth:1.5,
         borderRadius:6,
         type:'bar',
@@ -6928,29 +7605,29 @@ function renderTrendTab(){
       {
         label: 'Magellan MoM (NOAM only)',
         data: series.map(s => s.mag),
-        borderColor: '#06d6c4',
-        backgroundColor: 'rgba(6,214,196,.12)',
+        borderColor: '#3E87D3',
+        backgroundColor: 'rgba(62,135,211,.12)',
         borderWidth: 3,
         tension: 0.35,
         fill: false,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointBackgroundColor: '#06d6c4',
-        pointBorderColor: '#06d6c4',
+        pointBackgroundColor: '#3E87D3',
+        pointBorderColor: '#3E87D3',
         type: 'line'
       },
       {
         label: 'Market MoM (NOAM)',
         data: series.map(s => s.mkt),
-        borderColor: '#f4a261',
-        backgroundColor: 'rgba(244,162,97,.08)',
+        borderColor: '#5BA4ED',
+        backgroundColor: 'rgba(91,164,237,.08)',
         borderWidth: 3,
         tension: 0.35,
         fill: false,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointBackgroundColor: '#f4a261',
-        pointBorderColor: '#f4a261',
+        pointBackgroundColor: '#5BA4ED',
+        pointBorderColor: '#5BA4ED',
         borderDash: [4,3],
         type: 'line'
       }
@@ -6960,11 +7637,11 @@ function renderTrendTab(){
     const series = MAGELLAN_BLOCK_HOURS;
     labels = series.map(s => trendMonthLabel(s.mo) + (s.forecast?' *':''));
     const cats = [
-      {key:'light',     label:'Light Jet',   color:'#06d6c4'},
-      {key:'mid',       label:'Mid Jet',     color:'#f4a261'},
-      {key:'superMid',  label:'Super Mid',   color:'#95d44a'},
-      {key:'heavy',     label:'Heavy Jet',   color:'#ef6f6c'},
-      {key:'turboProp', label:'Turboprop',   color:'#5eead4'},
+      {key:'light',     label:'Light Jet',   color:'#7FB2E6'},
+      {key:'mid',       label:'Mid Jet',     color:'#3E87D3'},
+      {key:'superMid',  label:'Super Mid',   color:'#2C5FA8'},
+      {key:'heavy',     label:'Heavy Jet',   color:'#D4AF6A'},
+      {key:'turboProp', label:'Turboprop',   color:'#94A3B8'},
     ];
     datasets = cats.map(c => ({
       label: c.label,
@@ -6991,14 +7668,14 @@ function renderTrendTab(){
       {
         label: trendMetricLabel(k) + ' (full months)',
         data: lineSeries,
-        borderColor: '#06d6c4',
-        backgroundColor: 'rgba(6,214,196,.10)',
+        borderColor: '#3E87D3',
+        backgroundColor: 'rgba(62,135,211,.10)',
         tension: 0.30,
         fill: true,
         pointRadius: 5,
         pointHoverRadius: 8,
-        pointBackgroundColor: '#06d6c4',
-        pointBorderColor: '#06d6c4',
+        pointBackgroundColor: '#3E87D3',
+        pointBorderColor: '#3E87D3',
         borderWidth: 2.5,
         spanGaps: false
       },
@@ -7009,8 +7686,8 @@ function renderTrendTab(){
         backgroundColor: 'transparent',
         pointRadius: 8,
         pointHoverRadius: 10,
-        pointBackgroundColor: '#f4a261',
-        pointBorderColor: '#f4a261',
+        pointBackgroundColor: '#5BA4ED',
+        pointBorderColor: '#5BA4ED',
         borderWidth: 0,
         showLine: false,
         spanGaps: false
@@ -7042,7 +7719,7 @@ function renderTrendTab(){
           if (!p0a || !p0b || !p1a || !p1b) continue;
           const magAvg = (series[i].mag + series[i+1].mag) / 2;
           const mktAvg = (series[i].mkt + series[i+1].mkt) / 2;
-          ctx.fillStyle = magAvg > mktAvg ? 'rgba(132,204,22,.10)' : 'rgba(239,111,108,.10)';
+          ctx.fillStyle = magAvg > mktAvg ? 'rgba(132,204,22,.10)' : 'rgba(239,68,68,.10)';
           ctx.beginPath();
           ctx.moveTo(p0a.x, p0a.y);
           ctx.lineTo(p0b.x, p0b.y);
@@ -7105,7 +7782,7 @@ function renderTrendTab(){
         const topY = Math.min(b25.y, b26.y) - 8;
         const unit = (trendState.mode==='magVsMarket') ? ' pts' : '%';
         const txt = (pct>=0?'+':'') + pct.toFixed(1) + unit;
-        const color = pct>=0 ? '#84cc16' : '#ef6f6c';
+        const color = pct>=0 ? '#84cc16' : '#ef4444';
         const w = ctx.measureText(txt).width + 10;
         const h = 16;
         ctx.fillStyle = 'rgba(13, 20, 25, .92)';
@@ -7154,7 +7831,7 @@ function renderTrendTab(){
       plugins:{
         legend:{position:'bottom',labels:{boxWidth:10,color:'#cbd5e1',font:{size:11},padding:14}},
         tooltip:{
-          backgroundColor:'#111827', borderColor:'rgba(56,189,248,.3)', borderWidth:1, padding:12,
+          backgroundColor:'#111827', borderColor:'rgba(62,135,211,.3)', borderWidth:1, padding:12,
           callbacks:{
             label:c=>{
               if(c.parsed.y===null||c.parsed.y===undefined) return c.dataset.label+': —';
@@ -7254,11 +7931,11 @@ function renderTrendKpis(){
     const last = acts[acts.length-1];
     const prev = acts[acts.length-2];
     const cats = [
-      {key:'light',     label:'Light Jet',   color:'#06d6c4'},
-      {key:'mid',       label:'Mid Jet',     color:'#f4a261'},
-      {key:'superMid',  label:'Super Mid',   color:'#95d44a'},
-      {key:'heavy',     label:'Heavy Jet',   color:'#f4a261'},
-      {key:'turboProp', label:'Turboprop',   color:'#5eead4'},
+      {key:'light',     label:'Light Jet',   color:'#7FB2E6'},
+      {key:'mid',       label:'Mid Jet',     color:'#3E87D3'},
+      {key:'superMid',  label:'Super Mid',   color:'#2C5FA8'},
+      {key:'heavy',     label:'Heavy Jet',   color:'#D4AF6A'},
+      {key:'turboProp', label:'Turboprop',   color:'#94A3B8'},
     ];
     const totLast = cats.reduce((s,c)=>s+(last[c.key]||0),0);
 
@@ -7351,8 +8028,11 @@ function renderTrendKpis(){
     // Aggregates
     const wins = series.filter(s => s.mag > s.mkt).length;
     const losses = series.length - wins;
-    const avgMag = series.reduce((s,p)=>s+p.mag,0) / series.length;
-    const avgMkt = series.reduce((s,p)=>s+p.mkt,0) / series.length;
+    // Geometric mean (compound monthly growth rate) — correct for sequential growth rates.
+    // Arithmetic mean systematically overstates volatile series.
+    const geomean = arr => (Math.pow(arr.reduce((acc,r) => acc * (1 + r/100), 1), 1/arr.length) - 1) * 100;
+    const avgMag = geomean(series.map(p => p.mag));
+    const avgMkt = geomean(series.map(p => p.mkt));
     const avgGap = avgMag - avgMkt;
 
     // Most recent month
@@ -7360,32 +8040,32 @@ function renderTrendKpis(){
     const lastLabel = trendMonthLabel(last.mo);
 
     document.getElementById('trendKpis').innerHTML = `
-      <div style="grid-column: 1 / -1; padding:14px 18px; background:rgba(6,214,196,.10); border-left: 3px solid #06d6c4; border-radius:6px; margin-bottom:4px; font-size:14px; color:var(--text); line-height:1.55">
+      <div style="grid-column: 1 / -1; padding:14px 18px; background:rgba(62,135,211,.10); border-left: 3px solid #3E87D3; border-radius:6px; margin-bottom:4px; font-size:14px; color:var(--text); line-height:1.55">
         <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">How to read this</div>
-        Each point on the chart is one month's growth vs the prior month. <strong style="color:#06d6c4">Teal = Magellan</strong> (North America flights only — international stripped). <strong style="color:#f4a261">Gold = NOAM charter market.</strong> The bold white line is zero — above means we grew month-over-month, below means we shrank. The shaded area between the lines shows the gap: <span style="color:#84cc16">green when Magellan outpaced market</span>, <span style="color:#ef6f6c">coral when market outpaced Magellan</span>.
+        Each point on the chart is one month's growth vs the prior month. <strong style="color:#3E87D3">Teal = Magellan</strong> (North America flights only — international stripped). <strong style="color:#5BA4ED">Gold = NOAM charter market.</strong> The bold white line is zero — above means we grew month-over-month, below means we shrank. The shaded area between the lines shows the gap: <span style="color:#84cc16">green when Magellan outpaced market</span>, <span style="color:#ef4444">coral when market outpaced Magellan</span>.
       </div>
-      <div class="trend-kpi" style="border-color:rgba(6,214,196,.45);background:rgba(6,214,196,.08)">
-        <div class="trend-kpi-label">Avg Magellan MoM growth</div>
+      <div class="trend-kpi" style="border-color:rgba(62,135,211,.45);background:rgba(62,135,211,.08)">
+        <div class="trend-kpi-label">Magellan compound monthly growth</div>
         <div class="trend-kpi-val ${cls(avgMag/100)}">${avgMag>=0?'+':''}${avgMag.toFixed(1)}%</div>
-        <div class="trend-kpi-sub">Average across ${series.length} months (Feb '25 - Apr '26)</div>
+        <div class="trend-kpi-sub">Geometric mean across ${series.length} months · Feb '25 - Apr '26</div>
       </div>
-      <div class="trend-kpi" style="border-color:rgba(244,162,97,.45);background:rgba(244,162,97,.08)">
-        <div class="trend-kpi-label">Avg Market MoM growth</div>
+      <div class="trend-kpi" style="border-color:rgba(91,164,237,.45);background:rgba(91,164,237,.08)">
+        <div class="trend-kpi-label">Market compound monthly growth</div>
         <div class="trend-kpi-val ${cls(avgMkt/100)}">${avgMkt>=0?'+':''}${avgMkt.toFixed(1)}%</div>
-        <div class="trend-kpi-sub">Average across ${series.length} months</div>
+        <div class="trend-kpi-sub">Geometric mean across ${series.length} months</div>
       </div>
-      <div class="trend-kpi" style="border-color:rgba(149,212,74,.5);background:rgba(149,212,74,.10)">
-        <div class="trend-kpi-label">Avg outperformance per month</div>
+      <div class="trend-kpi" style="border-color:rgba(74,222,128,.5);background:rgba(74,222,128,.10)">
+        <div class="trend-kpi-label">Compound monthly outperformance</div>
         <div class="trend-kpi-val ${cls(avgGap/100)}">${avgGap>=0?'+':''}${avgGap.toFixed(1)} pts</div>
-        <div class="trend-kpi-sub">Magellan MoM minus market MoM</div>
+        <div class="trend-kpi-sub">Magellan compound growth minus market compound growth</div>
       </div>
       <div class="trend-kpi">
         <div class="trend-kpi-label">Months we outpaced</div>
         <div class="trend-kpi-val">${wins} / ${series.length}</div>
         <div class="trend-kpi-sub">${lastLabel} latest: Mag ${last.mag>=0?'+':''}${last.mag.toFixed(1)}% · Mkt ${last.mkt>=0?'+':''}${last.mkt.toFixed(1)}%</div>
       </div>
-      <div style="grid-column: 1 / -1; padding:12px 16px; background:rgba(244,162,97,.06); border:1px solid rgba(244,162,97,.20); border-radius:6px; margin-top:6px; font-size:12px; color:var(--text2); line-height:1.55">
-        <strong style="color:var(--text)">Method:</strong> Market = North America Branded Charter, Business Jet excluding Ultra Long Range. Magellan figures strip out international trips each month using measured trip-level data (Jan 2025 - Apr 2026). MoM% = (current month hours - prior month hours) / prior month hours. No prior-year comparisons used.
+      <div style="grid-column: 1 / -1; padding:12px 16px; background:rgba(91,164,237,.06); border:1px solid rgba(91,164,237,.20); border-radius:6px; margin-top:6px; font-size:12px; color:var(--text2); line-height:1.55">
+        <strong style="color:var(--text)">Method:</strong> Market = North America Branded Charter, Business Jet excluding Ultra Long Range. Magellan figures strip out international trips each month using measured trip-level data (Jan 2025 - Apr 2026). MoM% = (current month hours - prior month hours) / prior month hours. Averages use geometric mean (compound monthly growth rate) — correct for sequential growth rates. No prior-year comparisons used.
       </div>
     `;
     return;
@@ -7416,7 +8096,7 @@ function renderTrendKpis(){
     const sumA = months.reduce((s,m)=>s+(m.a?m.a.hrs:0),0);
     const sumB = months.reduce((s,m)=>s+(m.b?m.b.hrs:0),0);
     const sumPct = sumA?(sumB-sumA)/sumA:0;
-    html2 += `<div class="trend-kpi" style="border-color:rgba(6,214,196,.35);background:rgba(6,214,196,.06)">
+    html2 += `<div class="trend-kpi" style="border-color:rgba(62,135,211,.35);background:rgba(62,135,211,.06)">
       <div class="trend-kpi-label">Total · same-window YoY</div>
       <div class="trend-kpi-val ${cls(sumPct)}">${sign(sumPct)}</div>
       <div class="trend-kpi-sub">'25: ${trendFmtVal(sumA,'hrs')} → '26: ${trendFmtVal(sumB,'hrs')} hrs</div>
