@@ -1699,6 +1699,256 @@ table.fuel-table th, table.fuel-table td,
   margin: 0 auto;
   padding: 24px 32px 60px;
 }
+
+/* ── SEASONALITY TAB ── */
+.slider-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 900px) { .slider-grid { grid-template-columns: 1fr; } }
+.slider-cell {
+  background: rgba(10,18,51,.5);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.slider-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  color: var(--text3);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.slider-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.slider-cell input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: rgba(62,135,211,.15);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.slider-cell input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(62,135,211,.5);
+}
+.slider-cell input[type="range"]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+.slider-context {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+.scenario-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.scenario-pill {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(10,18,51,.5);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.scenario-pill:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.scenario-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ── HELP ICON + TOOLTIP SYSTEM ── */
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(62,135,211,.18);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 6px;
+  position: relative;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background 0.15s ease;
+  vertical-align: middle;
+}
+.help-icon:hover {
+  background: var(--accent);
+  color: white;
+}
+.help-icon::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  color: #1f2937;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'DM Sans', sans-serif;
+  white-space: normal;
+  width: 260px;
+  text-align: left;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 1000;
+  letter-spacing: 0;
+}
+.help-icon::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border: 6px solid transparent;
+  border-top-color: #FFFFFF;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 1000;
+}
+.help-icon:hover::after,
+.help-icon:hover::before {
+  opacity: 1;
+}
+
+/* Suggested view buttons */
+.suggested-views {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  background: rgba(62,135,211,.06);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.suggested-views-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: 4px;
+  align-self: center;
+  padding-right: 8px;
+  border-right: 1px solid var(--border);
+}
+.sv-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(10,18,51,.5);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sv-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Advanced controls collapse */
+.advanced-toggle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: var(--text3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+.advanced-toggle:hover { color: var(--accent); }
+.advanced-toggle .chevron {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+.advanced-toggle.expanded .chevron { transform: rotate(90deg); }
+.advanced-controls {
+  display: none;
+}
+.advanced-controls.expanded {
+  display: block;
+}
+
+/* What this means callout */
+.view-explainer {
+  font-size: 13px;
+  color: var(--text2);
+  padding: 12px 14px;
+  background: rgba(62,135,211,.04);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.view-explainer strong {
+  color: var(--text);
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -1712,6 +1962,7 @@ table.fuel-table th, table.fuel-table td,
     <button class="tab-btn" data-tab="airport">Airport Intelligence</button>
     <button class="tab-btn" data-tab="fleet">Fleet Mix</button>
     <button class="tab-btn" data-tab="trend">Market Trend</button>
+    <button class="tab-btn" data-tab="seasonality">Seasonality &amp; Projection</button>
   </div>
 
     
@@ -1731,17 +1982,17 @@ table.fuel-table th, table.fuel-table td,
       <div class="overview-section-label">MAGELLAN · YEAR-TO-DATE</div>
       <div class="overview-grid overview-grid-3">
         <div class="ov-card ov-good">
-          <div class="ov-card-label">Flight Hours Growth</div>
+          <div class="ov-card-label">Flight Hours Growth <span class="help-icon" data-tip="How much Magellan grew in total flight hours, Jan-Apr 2026 vs the same window in 2025. International flights stripped out to match the market comparison (North America only).">?</span></div>
           <div class="ov-card-val">+31.3%</div>
           <div class="ov-card-sub">1,350 → 1,773 NOAM hrs · vs Jan–Apr 2025</div>
         </div>
         <div class="ov-card ov-good">
-          <div class="ov-card-label">Revenue Growth</div>
+          <div class="ov-card-label">Revenue Growth <span class="help-icon" data-tip="Total Magellan revenue Jan-Apr 2026 vs the same window in 2025. Source: Magellan trip-level data.">?</span></div>
           <div class="ov-card-val">+28.8%</div>
           <div class="ov-card-sub">$15.98M → $20.58M · $4.6M added YoY</div>
         </div>
         <div class="ov-card ov-good">
-          <div class="ov-card-label">Outperformance Gap</div>
+          <div class="ov-card-label">Outperformance Gap <span class="help-icon" data-tip="The difference between Magellan growth (+31.3%) and the broader charter market change (-4.8%). Expressed in percentage points, not percent. Bigger gap = bigger competitive win.">?</span></div>
           <div class="ov-card-val">+36 pts</div>
           <div class="ov-card-sub">Magellan hours growth minus market</div>
         </div>
@@ -1753,17 +2004,17 @@ table.fuel-table th, table.fuel-table td,
       <div class="overview-section-label">MARKET CONTEXT · CHARTER DEMAND</div>
       <div class="overview-grid overview-grid-3">
         <div class="ov-card ov-bad">
-          <div class="ov-card-label">Market Hours YTD</div>
+          <div class="ov-card-label">Market Hours YTD <span class="help-icon" data-tip="How much the entire North American charter market shrank, Jan-Apr 2026 vs 2025. Source: WingX (Branded Charter Business Jet excluding Ultra Long Range).">?</span></div>
           <div class="ov-card-val">−4.8%</div>
           <div class="ov-card-sub">NOAM Branded Charter · WingX</div>
         </div>
         <div class="ov-card ov-bad">
-          <div class="ov-card-label">May 1–19 Market YoY</div>
+          <div class="ov-card-label">May 1–19 Market YoY <span class="help-icon" data-tip="A look at May so far: comparing the first 19 days of May 2026 against the first 19 days of May 2025. Equal-window comparison so it is apples-to-apples, not partial vs full.">?</span></div>
           <div class="ov-card-val">−10.4%</div>
           <div class="ov-card-sub">35,987 → 32,252 hrs · equal windows</div>
         </div>
         <div class="ov-card ov-bad">
-          <div class="ov-card-label">Charter Search Demand</div>
+          <div class="ov-card-label">Charter Search Demand <span class="help-icon" data-tip="Year-over-year change in consumer Google search interest for private jet charter terms. Down 55% indicates a sharp drop in upper-funnel demand interest.">?</span></div>
           <div class="ov-card-val">−55%</div>
           <div class="ov-card-sub">Google Trends · YoY</div>
         </div>
@@ -1775,17 +2026,17 @@ table.fuel-table th, table.fuel-table td,
       <div class="overview-section-label">HIGHLIGHTS</div>
       <div class="overview-grid overview-grid-3">
         <div class="ov-card ov-good">
-          <div class="ov-card-label">Best Month</div>
+          <div class="ov-card-label">Best Month <span class="help-icon" data-tip="Magellan strongest month of 2026 so far. March 2026 set the record for hours flown (620) and was the second-highest revenue month ($6.94M).">?</span></div>
           <div class="ov-card-val ov-val-md">March 2026</div>
           <div class="ov-card-sub">620 hrs · $6.94M · +24 pts vs market</div>
         </div>
         <div class="ov-card ov-info">
-          <div class="ov-card-label">Top Competitor (NOAM)</div>
+          <div class="ov-card-label">Top Competitor (NOAM) <span class="help-icon" data-tip="The largest Branded Charter operator in North America by hours flown in April 2026. flyExclusive is roughly 2.5x larger than the next competitor (Vista America).">?</span></div>
           <div class="ov-card-val ov-val-md">flyExclusive</div>
           <div class="ov-card-sub">6,257 hrs · April 2026</div>
         </div>
         <div class="ov-card ov-info">
-          <div class="ov-card-label">Top Aircraft Flown</div>
+          <div class="ov-card-label">Top Aircraft Flown <span class="help-icon" data-tip="Magellan most-flown aircraft category in April 2026, with absolute hours and share of the month total.">?</span></div>
           <div class="ov-card-val ov-val-md">Super Mid</div>
           <div class="ov-card-sub">228 hrs · 49% of April mix</div>
         </div>
@@ -2208,6 +2459,177 @@ table.fuel-table th, table.fuel-table td,
         <table class="trend-table" id="trendTable"></table>
       </div>
     </div>
+  </div>
+
+
+
+  <!-- ── SEASONALITY & PROJECTION TAB ── -->
+  <div id="seasonalityTab" class="tab-panel">
+
+    <div class="tab-hero">
+      <div class="tab-hero-eyebrow">SEASONALITY &amp; PROJECTION</div>
+      <div class="tab-hero-title">Summer 2026 Forecast — Market &amp; Magellan</div>
+      <div class="tab-hero-deck">Three sections, in order: (1) where the broader NOAM charter market is trending, (2) market summer 2026 projection scenarios, and (3) Magellan&apos;s own trajectory and summer forecast — built from Magellan&apos;s growth rate, not extrapolated from market trends.</div>
+    </div>
+
+    <!-- SECTION 1: MARKET TREND -->
+    <div style="margin: 30px 0 14px 0; padding-bottom: 10px; border-bottom: 2px solid var(--accent)">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:.20em; color:var(--accent); font-weight:700; text-transform:uppercase">SECTION 1 OF 3</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--text); letter-spacing:-.01em; margin-top:4px">Where the Market Is Trending</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:4px">NOAM domestic charter market — historical hours by month, 2022 to May 2026.</div>
+    </div>
+
+    <div class="controls" style="margin-bottom:14px">
+      <div class="control-group">
+        <label>AIRCRAFT SCOPE</label>
+        <select id="seasonScope">
+          <option value="exUlr" selected>Excl. ULR (matches Overview)</option>
+          <option value="all">All segments (incl. ULR)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>MARKET LENS</label>
+        <select id="seasonLens">
+          <option value="noamDom" selected>NOAM Domestic</option>
+          <option value="noamTouchIntl">NOAM-Touching International</option>
+          <option value="globalIntl">Global International</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="marketTrendKpis" class="kpi-row"></div>
+
+    <div class="chart-panel">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Market Hours — Year-over-Year Overlay</div>
+        <div class="chart-subtitle">Each year as its own line. 2026 in heavier blue, with May (partial through 1-19) marked.</div>
+      </div>
+      <div style="height:380px; position:relative">
+        <canvas id="seasonMarketChart"></canvas>
+      </div>
+    </div>
+
+    <!-- SECTION 2: MARKET SUMMER PROJECTION -->
+    <div style="margin: 36px 0 14px 0; padding-bottom: 10px; border-bottom: 2px solid var(--accent)">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:.20em; color:var(--accent); font-weight:700; text-transform:uppercase">SECTION 2 OF 3</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--text); letter-spacing:-.01em; margin-top:4px">Market Summer 2026 Projection</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:4px">Where the broader NOAM market is likely to land for summer 2026 under different scenarios. <strong style="color:var(--accent)">This is NOT Magellan&apos;s projection</strong> — that&apos;s Section 3.</div>
+    </div>
+
+    <div class="suggested-views">
+      <span class="suggested-views-label">Scenario</span>
+      <button class="sv-btn" data-mkt-scenario="pessimistic">Pessimistic</button>
+      <button class="sv-btn active" data-mkt-scenario="base">Base Case</button>
+      <button class="sv-btn" data-mkt-scenario="optimistic">Optimistic</button>
+    </div>
+
+    <div class="chart-panel" style="margin-bottom:18px">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Market Projection Inputs</div>
+        <div class="chart-subtitle">Three drivers control the market projection. Defaults reflect May 2026 conditions. Model calibrated against observed YTD reality.</div>
+      </div>
+
+      <div class="slider-grid">
+        <div class="slider-cell">
+          <div class="slider-header">
+            <span class="slider-label">WHOLESALE JET-A SPOT ($/GAL)</span>
+            <span class="slider-val" id="brentSliderVal">$4.16</span>
+          </div>
+          <input type="range" id="brentSlider" min="150" max="700" value="416" step="5">
+          <div class="slider-context">
+            Pre-war (May &apos;25): $1.93 · Current (May &apos;26): $4.16 · Severe: $6.00+
+            <br>
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px" id="impliedJetReadout">→ Brent: $104/bbl · Crack: $1.68/gal · FBO retail: $8.61/gal</span>
+          </div>
+        </div>
+
+        <div class="slider-cell">
+          <div class="slider-header">
+            <span class="slider-label">SUPPLY DISRUPTION DURATION</span>
+            <span class="slider-val" id="hormuzVal">Q4 &apos;26</span>
+          </div>
+          <input type="range" id="hormuzSlider" min="0" max="3" value="2" step="1">
+          <div class="slider-context">
+            Resolves now · Q3 · Q4 (consensus) · Sustained 2027+
+            <br>
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px" id="hormuzReadout">→ Crack spread evolution path</span>
+          </div>
+        </div>
+
+        <div class="slider-cell">
+          <div class="slider-header">
+            <span class="slider-label">NON-FUEL DEMAND DRAG</span>
+            <span class="slider-val" id="geoSliderVal">−2%</span>
+          </div>
+          <input type="range" id="geoSlider" min="-15" max="5" value="-2" step="1">
+          <div class="slider-context">Trip deferral, hesitation, recession risk. Tapers with disruption resolution.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="marketProjKpis" class="kpi-row"></div>
+
+    <div class="chart-panel">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Market — Summer 2026 Projection vs Recent Summers</div>
+        <div class="chart-subtitle">Jun-Aug only. Bars show market hours by year, with projected 2026 highlighted.</div>
+      </div>
+      <div style="height:340px; position:relative">
+        <canvas id="seasonMarketSummerChart"></canvas>
+      </div>
+    </div>
+
+    <!-- SECTION 3: MAGELLAN PROJECTION -->
+    <div style="margin: 36px 0 14px 0; padding-bottom: 10px; border-bottom: 2px solid #D4AF6A">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:.20em; color:#D4AF6A; font-weight:700; text-transform:uppercase">SECTION 3 OF 3 — MAGELLAN-SPECIFIC</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--text); letter-spacing:-.01em; margin-top:4px">Magellan&apos;s Trajectory &amp; Summer 2026 Forecast</div>
+      <div style="font-size:13px; color:var(--text2); margin-top:4px">Built from Magellan&apos;s actual YTD growth rate (+25.7% hours, +28.5% revenue). <strong style="color:#D4AF6A">Magellan summer pattern outperforms the market&apos;s seasonal dip</strong> — your competitive set softens into summer, but you historically grow through it.</div>
+    </div>
+
+    <div class="chart-panel" style="margin-bottom:18px">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Magellan Monthly Performance — Dec 2024 to May 2026</div>
+        <div class="chart-subtitle">All 18 months of Magellan trip data. Hours and revenue tracked. Includes international trips.</div>
+      </div>
+      <div style="height:340px; position:relative">
+        <canvas id="seasonMagTrajChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-panel" style="margin-bottom:18px">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Magellan Summer 2026 Forecast — Three Scenarios</div>
+        <div class="chart-subtitle">Built by applying Magellan&apos;s own YTD growth rate to Summer 2025 actuals. Independent of market projection.</div>
+      </div>
+      <div id="magellanSummerCards" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-bottom:18px"></div>
+      <div style="height:340px; position:relative">
+        <canvas id="seasonMagSummerChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-panel" style="margin-bottom:18px">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Side-by-Side: Magellan vs Market — Summer Growth Trajectory</div>
+        <div class="chart-subtitle">Indexed to 100 = Summer 2025. Shows how Magellan&apos;s growth diverges from the market&apos;s contraction.</div>
+      </div>
+      <div style="height:300px; position:relative">
+        <canvas id="seasonCompChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div style="margin-bottom:12px">
+        <div class="chart-title">Methodology &amp; Assumptions</div>
+        <div class="chart-subtitle">Every input documented. Defensible in any audit.</div>
+      </div>
+      <div style="font-size:13px; color:var(--text2); line-height:1.7">
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">Market projection.</strong> Baseline = avg of 2023, 2024, 2025 same-month hours. YTD trajectory applied. Fuel impact via wholesale Jet-A elasticity of −0.043 (reverse-engineered from observed 2026 reality, not commercial aviation textbook −0.30). Crack spread evolves month-by-month based on disruption duration. Sentiment drag tapers with resolution.</p>
+        <p style="margin-bottom:10px"><strong style="color:#D4AF6A">Magellan projection.</strong> Built independently from Magellan&apos;s own YTD growth rate. Applied to Summer 2025 baseline (1,392h, $14.73M, 295 trips). Three scenarios reflect different views on whether momentum continues, decelerates, or accelerates. The Magellan projection does NOT mechanically apply market trends — Magellan&apos;s pattern outperforms the market&apos;s seasonal dip, and YTD performance confirms continued share-take.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--text)">Key data points.</strong> Magellan summer 2025: 1,392h / $14.73M / 295 trips. YTD 2026 vs 2025: +25.7% hours, +28.5% revenue. NOAM market YTD: −4.8% hours. Wholesale Jet-A May 2026: $4.16/gal (+115% YoY). Brent: $104/bbl. Crack spread: $1.68/gal (vs $0.33/gal pre-war).</p>
+        <p style="margin:0; font-size:11px; color:var(--text3); padding-top:10px; border-top:1px solid var(--border)"><strong style="color:var(--text)">Sources:</strong> WingX (market hours 2022-May 2026, Branded Charter Business Jet). Magellan internal trip data. EIA Gulf Coast spot kerosene. Aviation Week Jet-A FBO retail. IEA Oil Market Report May 2026.</p>
+      </div>
+    </div>
+
   </div>
 
 </div><!-- /app -->
@@ -6601,12 +7023,13 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     const tab=btn.dataset.tab;
-    const panelId=tab==='overview'?'overviewTab':tab==='fuel'?'fuelTab':tab==='signals'?'signalsTab':tab==='airport'?'airportTab':tab==='fleet'?'fleetTab':tab==='trend'?'trendTab':'dashboardTab';
+    const panelId=tab==='overview'?'overviewTab':tab==='fuel'?'fuelTab':tab==='signals'?'signalsTab':tab==='airport'?'airportTab':tab==='fleet'?'fleetTab':tab==='trend'?'trendTab':tab==='seasonality'?'seasonalityTab':'dashboardTab';
     document.getElementById(panelId).classList.add('active');
     if(tab==='fuel') renderFuelTab();
     if(tab==='airport') renderFboTab();
     if(tab==='fleet') renderFleetTab();
     if(tab==='trend') renderTrendTab();
+    if(tab==='seasonality') renderSeasonalityTab();
     if(tab==='signals'){
       renderSignalsTab();
       setTimeout(()=>{
@@ -8236,6 +8659,462 @@ document.addEventListener('change',e=>{
   if(e.target.id==='trendBEnd'){trendState.bEnd=e.target.value;renderTrendTab();}
 });
 
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SEASONALITY & PROJECTION TAB — Three sections: Market trend, Market projection, Magellan projection
+// ═══════════════════════════════════════════════════════════════════════════
+const SEASONALITY_DATA = {"noamDom_all": [{"mo": "Jan 2022", "deps": 39245, "hours": 66601.1, "fuel": 17891453}, {"mo": "Feb 2022", "deps": 38598, "hours": 64729.9, "fuel": 17367612}, {"mo": "Mar 2022", "deps": 44903, "hours": 74884.9, "fuel": 19983791}, {"mo": "Apr 2022", "deps": 43989, "hours": 70950.1, "fuel": 18629772}, {"mo": "May 2022", "deps": 42189, "hours": 66435.1, "fuel": 17247923}, {"mo": "Jun 2022", "deps": 39045, "hours": 60471.2, "fuel": 15479612}, {"mo": "Jul 2022", "deps": 38051, "hours": 58537.6, "fuel": 15059859}, {"mo": "Aug 2022", "deps": 38214, "hours": 57883.6, "fuel": 14859937}, {"mo": "Sep 2022", "deps": 38198, "hours": 57513.1, "fuel": 14852706}, {"mo": "Oct 2022", "deps": 40106, "hours": 61440.3, "fuel": 15691151}, {"mo": "Nov 2022", "deps": 37290, "hours": 59306.6, "fuel": 15465409}, {"mo": "Dec 2022", "deps": 37589, "hours": 63102.0, "fuel": 16610018}, {"mo": "Jan 2023", "deps": 34609, "hours": 57906.4, "fuel": 15378065}, {"mo": "Feb 2023", "deps": 33447, "hours": 55515.9, "fuel": 14759514}, {"mo": "Mar 2023", "deps": 37467, "hours": 61586.2, "fuel": 16161085}, {"mo": "Apr 2023", "deps": 36559, "hours": 57799.3, "fuel": 14981569}, {"mo": "May 2023", "deps": 37561, "hours": 57515.6, "fuel": 14600834}, {"mo": "Jun 2023", "deps": 35270, "hours": 54214.8, "fuel": 13810394}, {"mo": "Jul 2023", "deps": 35853, "hours": 54879.2, "fuel": 13995412}, {"mo": "Aug 2023", "deps": 34930, "hours": 52851.2, "fuel": 13457628}, {"mo": "Sep 2023", "deps": 34662, "hours": 52059.0, "fuel": 13140350}, {"mo": "Oct 2023", "deps": 37301, "hours": 57553.2, "fuel": 14634714}, {"mo": "Nov 2023", "deps": 35620, "hours": 56570.7, "fuel": 14868363}, {"mo": "Dec 2023", "deps": 34388, "hours": 57790.9, "fuel": 15414066}, {"mo": "Jan 2024", "deps": 31869, "hours": 53865.9, "fuel": 14508593}, {"mo": "Feb 2024", "deps": 31788, "hours": 52797.6, "fuel": 14101128}, {"mo": "Mar 2024", "deps": 35805, "hours": 58891.3, "fuel": 15547309}, {"mo": "Apr 2024", "deps": 34733, "hours": 54579.4, "fuel": 14094875}, {"mo": "May 2024", "deps": 36713, "hours": 57069.7, "fuel": 14663622}, {"mo": "Jun 2024", "deps": 33938, "hours": 51604.8, "fuel": 13240187}, {"mo": "Jul 2024", "deps": 35749, "hours": 53952.6, "fuel": 13859105}, {"mo": "Aug 2024", "deps": 35341, "hours": 53309.8, "fuel": 13812270}, {"mo": "Sep 2024", "deps": 36217, "hours": 54336.1, "fuel": 14134517}, {"mo": "Oct 2024", "deps": 39974, "hours": 61403.1, "fuel": 15853706}, {"mo": "Nov 2024", "deps": 37097, "hours": 58173.6, "fuel": 15310621}, {"mo": "Dec 2024", "deps": 41052, "hours": 68396.4, "fuel": 18213769}, {"mo": "Jan 2025", "deps": 36877, "hours": 61625.7, "fuel": 16481634}, {"mo": "Feb 2025", "deps": 34189, "hours": 56697.6, "fuel": 14980410}, {"mo": "Mar 2025", "deps": 38536, "hours": 63193.7, "fuel": 16539611}, {"mo": "Apr 2025", "deps": 36852, "hours": 59153.2, "fuel": 15372918}, {"mo": "May 2025", "deps": 38691, "hours": 61557.8, "fuel": 15858588}, {"mo": "Jun 2025", "deps": 37052, "hours": 57958.6, "fuel": 14871809}, {"mo": "Jul 2025", "deps": 36549, "hours": 56342.3, "fuel": 14484541}, {"mo": "Aug 2025", "deps": 36678, "hours": 56654.0, "fuel": 14529519}, {"mo": "Sep 2025", "deps": 37014, "hours": 57119.4, "fuel": 14704494}, {"mo": "Oct 2025", "deps": 41095, "hours": 64395.8, "fuel": 16371669}, {"mo": "Nov 2025", "deps": 39298, "hours": 63464.9, "fuel": 16433599}, {"mo": "Dec 2025", "deps": 38182, "hours": 64182.1, "fuel": 16824715}, {"mo": "Jan 2026", "deps": 33504, "hours": 57205.3, "fuel": 15191449}, {"mo": "Feb 2026", "deps": 32195, "hours": 53288.0, "fuel": 14003011}, {"mo": "Mar 2026", "deps": 38366, "hours": 63260.1, "fuel": 16494392}, {"mo": "Apr 2026", "deps": 36265, "hours": 57343.0, "fuel": 14742764}, {"mo": "May 2026", "deps": 29340, "hours": 46181.6, "fuel": 11642609}], "globalIntl_all": [{"mo": "Jan 2022", "deps": 2487, "hours": 12049.2, "fuel": 5202106}, {"mo": "Feb 2022", "deps": 2282, "hours": 10601.4, "fuel": 4237465}, {"mo": "Mar 2022", "deps": 3049, "hours": 14100.1, "fuel": 5993383}, {"mo": "Apr 2022", "deps": 2855, "hours": 13105.5, "fuel": 5699297}, {"mo": "May 2022", "deps": 2724, "hours": 13388.6, "fuel": 5895958}, {"mo": "Jun 2022", "deps": 2775, "hours": 14084.8, "fuel": 6010670}, {"mo": "Jul 2022", "deps": 2443, "hours": 12775.3, "fuel": 5539299}, {"mo": "Aug 2022", "deps": 2365, "hours": 12010.7, "fuel": 5283878}, {"mo": "Sep 2022", "deps": 2373, "hours": 12636.8, "fuel": 5560618}, {"mo": "Oct 2022", "deps": 2476, "hours": 12508.7, "fuel": 5339698}, {"mo": "Nov 2022", "deps": 2626, "hours": 12431.7, "fuel": 5062811}, {"mo": "Dec 2022", "deps": 2815, "hours": 13655.9, "fuel": 5744025}, {"mo": "Jan 2023", "deps": 2564, "hours": 12594.0, "fuel": 5210328}, {"mo": "Feb 2023", "deps": 2302, "hours": 10646.3, "fuel": 4290953}, {"mo": "Mar 2023", "deps": 2727, "hours": 13053.1, "fuel": 5319527}, {"mo": "Apr 2023", "deps": 2712, "hours": 12801.9, "fuel": 5265041}, {"mo": "May 2023", "deps": 2629, "hours": 12908.0, "fuel": 5698753}, {"mo": "Jun 2023", "deps": 2702, "hours": 13858.1, "fuel": 6030867}, {"mo": "Jul 2023", "deps": 2496, "hours": 13575.7, "fuel": 6123029}, {"mo": "Aug 2023", "deps": 2490, "hours": 12466.9, "fuel": 5567840}, {"mo": "Sep 2023", "deps": 2319, "hours": 12444.9, "fuel": 5537094}, {"mo": "Oct 2023", "deps": 2470, "hours": 12746.0, "fuel": 5379331}, {"mo": "Nov 2023", "deps": 2469, "hours": 11930.7, "fuel": 5010690}, {"mo": "Dec 2023", "deps": 2640, "hours": 13426.6, "fuel": 5774557}, {"mo": "Jan 2024", "deps": 2694, "hours": 13258.3, "fuel": 5591504}, {"mo": "Feb 2024", "deps": 2482, "hours": 11919.9, "fuel": 4885724}, {"mo": "Mar 2024", "deps": 2716, "hours": 12724.1, "fuel": 5220398}, {"mo": "Apr 2024", "deps": 2600, "hours": 12798.1, "fuel": 5279133}, {"mo": "May 2024", "deps": 2612, "hours": 13031.6, "fuel": 5608496}, {"mo": "Jun 2024", "deps": 2643, "hours": 13264.0, "fuel": 5641345}, {"mo": "Jul 2024", "deps": 2487, "hours": 12971.3, "fuel": 5717065}, {"mo": "Aug 2024", "deps": 2329, "hours": 12064.3, "fuel": 5338294}, {"mo": "Sep 2024", "deps": 2360, "hours": 12743.4, "fuel": 5496839}, {"mo": "Oct 2024", "deps": 2507, "hours": 12673.5, "fuel": 5207847}, {"mo": "Nov 2024", "deps": 2524, "hours": 12064.3, "fuel": 4914469}, {"mo": "Dec 2024", "deps": 2899, "hours": 14159.3, "fuel": 5927772}, {"mo": "Jan 2025", "deps": 2916, "hours": 13883.6, "fuel": 5785274}, {"mo": "Feb 2025", "deps": 2506, "hours": 11654.8, "fuel": 4834475}, {"mo": "Mar 2025", "deps": 2783, "hours": 13079.4, "fuel": 5307687}, {"mo": "Apr 2025", "deps": 2922, "hours": 13398.1, "fuel": 5599347}, {"mo": "May 2025", "deps": 2970, "hours": 14864.8, "fuel": 6258570}, {"mo": "Jun 2025", "deps": 2775, "hours": 14769.0, "fuel": 6397353}, {"mo": "Jul 2025", "deps": 2620, "hours": 13712.2, "fuel": 6157038}, {"mo": "Aug 2025", "deps": 2557, "hours": 13060.6, "fuel": 5693156}, {"mo": "Sep 2025", "deps": 2576, "hours": 13717.9, "fuel": 5974816}, {"mo": "Oct 2025", "deps": 3196, "hours": 16107.2, "fuel": 6702914}, {"mo": "Nov 2025", "deps": 3002, "hours": 14261.3, "fuel": 5882768}, {"mo": "Dec 2025", "deps": 3096, "hours": 15036.4, "fuel": 6253871}, {"mo": "Jan 2026", "deps": 3103, "hours": 14741.1, "fuel": 6070956}, {"mo": "Feb 2026", "deps": 2605, "hours": 12405.5, "fuel": 5040844}, {"mo": "Mar 2026", "deps": 2644, "hours": 12992.2, "fuel": 5419193}, {"mo": "Apr 2026", "deps": 2551, "hours": 12370.2, "fuel": 5071020}, {"mo": "May 2026", "deps": 2108, "hours": 10445.2, "fuel": 4397156}], "noamTouchIntl_all": [{"mo": "Jan 2022", "deps": 1295, "hours": 6033.4, "fuel": 2543530}, {"mo": "Feb 2022", "deps": 1265, "hours": 5510.9, "fuel": 2141310}, {"mo": "Mar 2022", "deps": 1685, "hours": 7628.6, "fuel": 3275944}, {"mo": "Apr 2022", "deps": 1572, "hours": 7181.6, "fuel": 3239806}, {"mo": "May 2022", "deps": 1509, "hours": 7956.4, "fuel": 3590012}, {"mo": "Jun 2022", "deps": 1454, "hours": 8402.6, "fuel": 3521726}, {"mo": "Jul 2022", "deps": 1299, "hours": 7725.6, "fuel": 3280916}, {"mo": "Aug 2022", "deps": 1110, "hours": 6508.4, "fuel": 2839014}, {"mo": "Sep 2022", "deps": 1114, "hours": 6922.9, "fuel": 3028698}, {"mo": "Oct 2022", "deps": 1238, "hours": 6720.1, "fuel": 2836140}, {"mo": "Nov 2022", "deps": 1435, "hours": 6707.3, "fuel": 2718336}, {"mo": "Dec 2022", "deps": 1494, "hours": 7041.4, "fuel": 2824417}, {"mo": "Jan 2023", "deps": 1490, "hours": 6975.8, "fuel": 2853485}, {"mo": "Feb 2023", "deps": 1287, "hours": 5873.8, "fuel": 2351656}, {"mo": "Mar 2023", "deps": 1395, "hours": 6645.6, "fuel": 2699410}, {"mo": "Apr 2023", "deps": 1321, "hours": 6498.7, "fuel": 2622343}, {"mo": "May 2023", "deps": 1364, "hours": 7173.1, "fuel": 3127050}, {"mo": "Jun 2023", "deps": 1366, "hours": 7928.2, "fuel": 3343718}, {"mo": "Jul 2023", "deps": 1285, "hours": 7838.5, "fuel": 3541713}, {"mo": "Aug 2023", "deps": 1097, "hours": 6457.6, "fuel": 2845256}, {"mo": "Sep 2023", "deps": 1134, "hours": 6891.0, "fuel": 3025617}, {"mo": "Oct 2023", "deps": 1219, "hours": 6806.2, "fuel": 2854615}, {"mo": "Nov 2023", "deps": 1421, "hours": 6466.7, "fuel": 2640849}, {"mo": "Dec 2023", "deps": 1420, "hours": 6911.6, "fuel": 2831951}, {"mo": "Jan 2024", "deps": 1518, "hours": 7211.4, "fuel": 2985743}, {"mo": "Feb 2024", "deps": 1369, "hours": 6360.1, "fuel": 2571327}, {"mo": "Mar 2024", "deps": 1582, "hours": 7342.6, "fuel": 2971703}, {"mo": "Apr 2024", "deps": 1408, "hours": 6914.7, "fuel": 2770254}, {"mo": "May 2024", "deps": 1471, "hours": 7526.9, "fuel": 3110110}, {"mo": "Jun 2024", "deps": 1416, "hours": 7758.4, "fuel": 3231017}, {"mo": "Jul 2024", "deps": 1294, "hours": 7554.6, "fuel": 3216062}, {"mo": "Aug 2024", "deps": 1140, "hours": 6698.9, "fuel": 2918918}, {"mo": "Sep 2024", "deps": 1209, "hours": 7219.9, "fuel": 3072272}, {"mo": "Oct 2024", "deps": 1315, "hours": 7055.3, "fuel": 2914718}, {"mo": "Nov 2024", "deps": 1390, "hours": 6580.4, "fuel": 2625757}, {"mo": "Dec 2024", "deps": 1679, "hours": 8050.3, "fuel": 3315505}, {"mo": "Jan 2025", "deps": 1681, "hours": 7801.5, "fuel": 3184583}, {"mo": "Feb 2025", "deps": 1374, "hours": 6101.5, "fuel": 2365356}, {"mo": "Mar 2025", "deps": 1680, "hours": 8010.2, "fuel": 3217759}, {"mo": "Apr 2025", "deps": 1492, "hours": 7039.9, "fuel": 2897143}, {"mo": "May 2025", "deps": 1649, "hours": 8997.3, "fuel": 3756015}, {"mo": "Jun 2025", "deps": 1596, "hours": 9169.4, "fuel": 3940961}, {"mo": "Jul 2025", "deps": 1372, "hours": 7969.0, "fuel": 3504552}, {"mo": "Aug 2025", "deps": 1165, "hours": 7058.5, "fuel": 3040727}, {"mo": "Sep 2025", "deps": 1224, "hours": 7708.3, "fuel": 3372527}, {"mo": "Oct 2025", "deps": 1469, "hours": 8280.0, "fuel": 3450673}, {"mo": "Nov 2025", "deps": 1643, "hours": 7834.1, "fuel": 3118362}, {"mo": "Dec 2025", "deps": 1612, "hours": 7767.2, "fuel": 3110722}, {"mo": "Jan 2026", "deps": 1567, "hours": 7536.4, "fuel": 3101086}, {"mo": "Feb 2026", "deps": 1389, "hours": 6745.7, "fuel": 2687638}, {"mo": "Mar 2026", "deps": 1602, "hours": 7654.6, "fuel": 3086795}, {"mo": "Apr 2026", "deps": 1441, "hours": 7127.1, "fuel": 2884482}, {"mo": "May 2026", "deps": 1109, "hours": 6126.6, "fuel": 2627133}], "noamDom_exUlr": [{"mo": "Jan 2022", "deps": 37211, "hours": 61978.9, "fuel": 15855536}, {"mo": "Feb 2022", "deps": 36582, "hours": 60380.1, "fuel": 15450265}, {"mo": "Mar 2022", "deps": 42529, "hours": 69773.8, "fuel": 17733993}, {"mo": "Apr 2022", "deps": 41988, "hours": 66785.1, "fuel": 16791971}, {"mo": "May 2022", "deps": 40405, "hours": 62679.0, "fuel": 15589024}, {"mo": "Jun 2022", "deps": 37574, "hours": 57453.6, "fuel": 14149062}, {"mo": "Jul 2022", "deps": 36360, "hours": 55060.0, "fuel": 13514107}, {"mo": "Aug 2022", "deps": 36598, "hours": 54561.1, "fuel": 13390937}, {"mo": "Sep 2022", "deps": 36557, "hours": 54242.6, "fuel": 13399172}, {"mo": "Oct 2022", "deps": 38384, "hours": 58037.6, "fuel": 14181037}, {"mo": "Nov 2022", "deps": 35416, "hours": 55347.5, "fuel": 13715608}, {"mo": "Dec 2022", "deps": 35686, "hours": 58744.8, "fuel": 14690107}, {"mo": "Jan 2023", "deps": 32622, "hours": 53355.6, "fuel": 13372710}, {"mo": "Feb 2023", "deps": 31558, "hours": 51548.3, "fuel": 13012994}, {"mo": "Mar 2023", "deps": 35448, "hours": 57309.7, "fuel": 14283049}, {"mo": "Apr 2023", "deps": 34922, "hours": 54350.1, "fuel": 13457340}, {"mo": "May 2023", "deps": 35978, "hours": 54289.2, "fuel": 13171373}, {"mo": "Jun 2023", "deps": 33754, "hours": 51189.1, "fuel": 12471558}, {"mo": "Jul 2023", "deps": 34370, "hours": 51689.8, "fuel": 12587316}, {"mo": "Aug 2023", "deps": 33391, "hours": 49527.9, "fuel": 11979061}, {"mo": "Sep 2023", "deps": 33156, "hours": 49183.1, "fuel": 11870476}, {"mo": "Oct 2023", "deps": 35598, "hours": 54224.1, "fuel": 13164362}, {"mo": "Nov 2023", "deps": 33624, "hours": 52332.3, "fuel": 12981496}, {"mo": "Dec 2023", "deps": 32321, "hours": 53019.5, "fuel": 13294377}, {"mo": "Jan 2024", "deps": 29750, "hours": 49239.0, "fuel": 12459038}, {"mo": "Feb 2024", "deps": 29657, "hours": 48209.4, "fuel": 12064626}, {"mo": "Mar 2024", "deps": 33541, "hours": 54211.2, "fuel": 13470882}, {"mo": "Apr 2024", "deps": 32754, "hours": 50521.5, "fuel": 12289278}, {"mo": "May 2024", "deps": 34746, "hours": 53032.1, "fuel": 12869565}, {"mo": "Jun 2024", "deps": 32239, "hours": 47972.2, "fuel": 11618157}, {"mo": "Jul 2024", "deps": 33866, "hours": 50194.8, "fuel": 12185970}, {"mo": "Aug 2024", "deps": 33418, "hours": 49454.7, "fuel": 12082434}, {"mo": "Sep 2024", "deps": 34216, "hours": 50448.1, "fuel": 12394553}, {"mo": "Oct 2024", "deps": 37972, "hours": 57335.7, "fuel": 14043557}, {"mo": "Nov 2024", "deps": 34987, "hours": 53705.0, "fuel": 13322205}, {"mo": "Dec 2024", "deps": 38492, "hours": 62802.3, "fuel": 15724003}, {"mo": "Jan 2025", "deps": 34440, "hours": 56304.3, "fuel": 14115612}, {"mo": "Feb 2025", "deps": 31933, "hours": 51871.2, "fuel": 12836356}, {"mo": "Mar 2025", "deps": 36135, "hours": 58054.3, "fuel": 14253510}, {"mo": "Apr 2025", "deps": 34599, "hours": 54477.6, "fuel": 13281865}, {"mo": "May 2025", "deps": 36601, "hours": 57143.8, "fuel": 13889336}, {"mo": "Jun 2025", "deps": 35095, "hours": 53878.2, "fuel": 13048933}, {"mo": "Jul 2025", "deps": 34526, "hours": 52188.9, "fuel": 12628228}, {"mo": "Aug 2025", "deps": 34624, "hours": 52530.3, "fuel": 12688443}, {"mo": "Sep 2025", "deps": 34972, "hours": 52942.4, "fuel": 12836823}, {"mo": "Oct 2025", "deps": 38877, "hours": 59807.8, "fuel": 14320314}, {"mo": "Nov 2025", "deps": 36982, "hours": 58354.2, "fuel": 14159028}, {"mo": "Dec 2025", "deps": 35701, "hours": 58736.1, "fuel": 14400913}, {"mo": "Jan 2026", "deps": 31085, "hours": 51728.1, "fuel": 12756092}, {"mo": "Feb 2026", "deps": 29955, "hours": 48719.2, "fuel": 11958342}, {"mo": "Mar 2026", "deps": 35650, "hours": 57560.9, "fuel": 13961479}, {"mo": "Apr 2026", "deps": 33749, "hours": 52196.7, "fuel": 12436604}, {"mo": "May 2026", "deps": 27544, "hours": 42442.8, "fuel": 9971212}], "globalIntl_exUlr": [{"mo": "Jan 2022", "deps": 1764, "hours": 6539.1, "fuel": 2689243}, {"mo": "Feb 2022", "deps": 1565, "hours": 5307.7, "fuel": 1831569}, {"mo": "Mar 2022", "deps": 2138, "hours": 7655.7, "fuel": 3068621}, {"mo": "Apr 2022", "deps": 2033, "hours": 6967.7, "fuel": 2925031}, {"mo": "May 2022", "deps": 1804, "hours": 6592.6, "fuel": 2831603}, {"mo": "Jun 2022", "deps": 1732, "hours": 6059.7, "fuel": 2392270}, {"mo": "Jul 2022", "deps": 1436, "hours": 5102.7, "fuel": 2064612}, {"mo": "Aug 2022", "deps": 1485, "hours": 5228.3, "fuel": 2218567}, {"mo": "Sep 2022", "deps": 1396, "hours": 5180.3, "fuel": 2185964}, {"mo": "Oct 2022", "deps": 1559, "hours": 5584.8, "fuel": 2200511}, {"mo": "Nov 2022", "deps": 1783, "hours": 6247.9, "fuel": 2262549}, {"mo": "Dec 2022", "deps": 1875, "hours": 6566.9, "fuel": 2537527}, {"mo": "Jan 2023", "deps": 1705, "hours": 6049.8, "fuel": 2245257}, {"mo": "Feb 2023", "deps": 1598, "hours": 5501.1, "fuel": 1960986}, {"mo": "Mar 2023", "deps": 1834, "hours": 6602.4, "fuel": 2398287}, {"mo": "Apr 2023", "deps": 1790, "hours": 6173.9, "fuel": 2265615}, {"mo": "May 2023", "deps": 1660, "hours": 6060.8, "fuel": 2588785}, {"mo": "Jun 2023", "deps": 1617, "hours": 5875.7, "fuel": 2411138}, {"mo": "Jul 2023", "deps": 1397, "hours": 5137.2, "fuel": 2278922}, {"mo": "Aug 2023", "deps": 1533, "hours": 5486.9, "fuel": 2398616}, {"mo": "Sep 2023", "deps": 1360, "hours": 5149.0, "fuel": 2223919}, {"mo": "Oct 2023", "deps": 1490, "hours": 5441.5, "fuel": 2060340}, {"mo": "Nov 2023", "deps": 1603, "hours": 5545.5, "fuel": 2117316}, {"mo": "Dec 2023", "deps": 1664, "hours": 6117.4, "fuel": 2457835}, {"mo": "Jan 2024", "deps": 1739, "hours": 6032.2, "fuel": 2303051}, {"mo": "Feb 2024", "deps": 1580, "hours": 5388.3, "fuel": 1915575}, {"mo": "Mar 2024", "deps": 1739, "hours": 5703.7, "fuel": 2033533}, {"mo": "Apr 2024", "deps": 1551, "hours": 5257.0, "fuel": 1870599}, {"mo": "May 2024", "deps": 1509, "hours": 4888.2, "fuel": 1904228}, {"mo": "Jun 2024", "deps": 1510, "hours": 4986.1, "fuel": 1883726}, {"mo": "Jul 2024", "deps": 1358, "hours": 4470.2, "fuel": 1865214}, {"mo": "Aug 2024", "deps": 1283, "hours": 4433.1, "fuel": 1870705}, {"mo": "Sep 2024", "deps": 1290, "hours": 4667.7, "fuel": 1845999}, {"mo": "Oct 2024", "deps": 1467, "hours": 4901.3, "fuel": 1679228}, {"mo": "Nov 2024", "deps": 1580, "hours": 5178.0, "fuel": 1785372}, {"mo": "Dec 2024", "deps": 1809, "hours": 6001.7, "fuel": 2242006}, {"mo": "Jan 2025", "deps": 1837, "hours": 6030.1, "fuel": 2209432}, {"mo": "Feb 2025", "deps": 1652, "hours": 5439.8, "fuel": 1997699}, {"mo": "Mar 2025", "deps": 1761, "hours": 5524.1, "fuel": 1871446}, {"mo": "Apr 2025", "deps": 1838, "hours": 5816.9, "fuel": 2137061}, {"mo": "May 2025", "deps": 1722, "hours": 5484.7, "fuel": 2013521}, {"mo": "Jun 2025", "deps": 1520, "hours": 5103.2, "fuel": 2027045}, {"mo": "Jul 2025", "deps": 1409, "hours": 4781.9, "fuel": 2104042}, {"mo": "Aug 2025", "deps": 1392, "hours": 4526.3, "fuel": 1826221}, {"mo": "Sep 2025", "deps": 1362, "hours": 4728.7, "fuel": 1929325}, {"mo": "Oct 2025", "deps": 1884, "hours": 6232.4, "fuel": 2236832}, {"mo": "Nov 2025", "deps": 1929, "hours": 6174.5, "fuel": 2235826}, {"mo": "Dec 2025", "deps": 1891, "hours": 6298.3, "fuel": 2297177}, {"mo": "Jan 2026", "deps": 1968, "hours": 6534.5, "fuel": 2329139}, {"mo": "Feb 2026", "deps": 1640, "hours": 5425.4, "fuel": 1877426}, {"mo": "Mar 2026", "deps": 1648, "hours": 5344.7, "fuel": 1947814}, {"mo": "Apr 2026", "deps": 1564, "hours": 4837.5, "fuel": 1666449}, {"mo": "May 2026", "deps": 1184, "hours": 3617.7, "fuel": 1312461}], "noamTouchIntl_exUlr": [{"mo": "Jan 2022", "deps": 895, "hours": 2845.3, "fuel": 1085244}, {"mo": "Feb 2022", "deps": 864, "hours": 2439.9, "fuel": 746037}, {"mo": "Mar 2022", "deps": 1151, "hours": 3644.8, "fuel": 1467554}, {"mo": "Apr 2022", "deps": 1056, "hours": 3283.2, "fuel": 1472868}, {"mo": "May 2022", "deps": 924, "hours": 3262.6, "fuel": 1479546}, {"mo": "Jun 2022", "deps": 769, "hours": 2705.9, "fuel": 955403}, {"mo": "Jul 2022", "deps": 631, "hours": 2261.4, "fuel": 806387}, {"mo": "Aug 2022", "deps": 567, "hours": 2009.3, "fuel": 806271}, {"mo": "Sep 2022", "deps": 502, "hours": 1928.7, "fuel": 766229}, {"mo": "Oct 2022", "deps": 669, "hours": 2132.2, "fuel": 765171}, {"mo": "Nov 2022", "deps": 963, "hours": 2911.9, "fuel": 995882}, {"mo": "Dec 2022", "deps": 990, "hours": 2941.9, "fuel": 963041}, {"mo": "Jan 2023", "deps": 987, "hours": 3033.9, "fuel": 1070325}, {"mo": "Feb 2023", "deps": 870, "hours": 2711.6, "fuel": 923164}, {"mo": "Mar 2023", "deps": 885, "hours": 2767.5, "fuel": 953146}, {"mo": "Apr 2023", "deps": 798, "hours": 2546.6, "fuel": 834250}, {"mo": "May 2023", "deps": 794, "hours": 2738.9, "fuel": 1105996}, {"mo": "Jun 2023", "deps": 716, "hours": 2577.3, "fuel": 901648}, {"mo": "Jul 2023", "deps": 612, "hours": 2207.2, "fuel": 958717}, {"mo": "Aug 2023", "deps": 549, "hours": 2046.1, "fuel": 840914}, {"mo": "Sep 2023", "deps": 529, "hours": 1932.7, "fuel": 769970}, {"mo": "Oct 2023", "deps": 644, "hours": 2126.4, "fuel": 722595}, {"mo": "Nov 2023", "deps": 913, "hours": 2637.8, "fuel": 902877}, {"mo": "Dec 2023", "deps": 868, "hours": 2590.3, "fuel": 869369}, {"mo": "Jan 2024", "deps": 970, "hours": 2854.4, "fuel": 1003412}, {"mo": "Feb 2024", "deps": 871, "hours": 2508.8, "fuel": 819491}, {"mo": "Mar 2024", "deps": 983, "hours": 2806.7, "fuel": 910493}, {"mo": "Apr 2024", "deps": 828, "hours": 2436.2, "fuel": 748383}, {"mo": "May 2024", "deps": 802, "hours": 2274.7, "fuel": 719608}, {"mo": "Jun 2024", "deps": 710, "hours": 2183.3, "fuel": 697163}, {"mo": "Jul 2024", "deps": 591, "hours": 1806.7, "fuel": 605890}, {"mo": "Aug 2024", "deps": 495, "hours": 1598.1, "fuel": 597358}, {"mo": "Sep 2024", "deps": 541, "hours": 1857.4, "fuel": 653071}, {"mo": "Oct 2024", "deps": 689, "hours": 2081.2, "fuel": 652274}, {"mo": "Nov 2024", "deps": 851, "hours": 2404.8, "fuel": 718899}, {"mo": "Dec 2024", "deps": 1005, "hours": 2776.7, "fuel": 926093}, {"mo": "Jan 2025", "deps": 1032, "hours": 2896.6, "fuel": 952367}, {"mo": "Feb 2025", "deps": 911, "hours": 2509.9, "fuel": 728288}, {"mo": "Mar 2025", "deps": 1045, "hours": 3013.0, "fuel": 946502}, {"mo": "Apr 2025", "deps": 888, "hours": 2546.2, "fuel": 845956}, {"mo": "May 2025", "deps": 868, "hours": 2586.5, "fuel": 851934}, {"mo": "Jun 2025", "deps": 751, "hours": 2368.1, "fuel": 865935}, {"mo": "Jul 2025", "deps": 639, "hours": 2137.6, "fuel": 853827}, {"mo": "Aug 2025", "deps": 491, "hours": 1548.0, "fuel": 539355}, {"mo": "Sep 2025", "deps": 487, "hours": 1692.5, "fuel": 665395}, {"mo": "Oct 2025", "deps": 727, "hours": 2236.9, "fuel": 720177}, {"mo": "Nov 2025", "deps": 1009, "hours": 2859.4, "fuel": 879905}, {"mo": "Dec 2025", "deps": 938, "hours": 2676.5, "fuel": 814615}, {"mo": "Jan 2026", "deps": 928, "hours": 2727.7, "fuel": 917074}, {"mo": "Feb 2026", "deps": 830, "hours": 2427.0, "fuel": 733661}, {"mo": "Mar 2026", "deps": 956, "hours": 2690.5, "fuel": 831859}, {"mo": "Apr 2026", "deps": 851, "hours": 2478.0, "fuel": 778407}, {"mo": "May 2026", "deps": 513, "hours": 1463.3, "fuel": 515686}]};
+const MAGELLAN_META = {"ytdHoursYoY": 25.74, "ytdRevYoY": 28.5, "summer25Hours": 1392, "summer25Rev": 14.73, "summer25Trips": 295, "monthly": [{"mo": "Dec 2024", "year": 2024, "monthNum": 12, "trips": 83, "hours": 401.0, "rev": 4.0}, {"mo": "Jan 2025", "year": 2025, "monthNum": 1, "trips": 82, "hours": 364.0, "rev": 3.89}, {"mo": "Feb 2025", "year": 2025, "monthNum": 2, "trips": 80, "hours": 341.0, "rev": 3.66}, {"mo": "Mar 2025", "year": 2025, "monthNum": 3, "trips": 108, "hours": 528.0, "rev": 5.62}, {"mo": "Apr 2025", "year": 2025, "monthNum": 4, "trips": 63, "hours": 282.0, "rev": 2.76}, {"mo": "May 2025", "year": 2025, "monthNum": 5, "trips": 113, "hours": 507.0, "rev": 5.09}, {"mo": "Jun 2025", "year": 2025, "monthNum": 6, "trips": 86, "hours": 439.0, "rev": 4.68}, {"mo": "Jul 2025", "year": 2025, "monthNum": 7, "trips": 117, "hours": 513.0, "rev": 5.21}, {"mo": "Aug 2025", "year": 2025, "monthNum": 8, "trips": 92, "hours": 440.0, "rev": 4.84}, {"mo": "Sep 2025", "year": 2025, "monthNum": 9, "trips": 98, "hours": 331.0, "rev": 3.09}, {"mo": "Oct 2025", "year": 2025, "monthNum": 10, "trips": 110, "hours": 541.0, "rev": 5.91}, {"mo": "Nov 2025", "year": 2025, "monthNum": 11, "trips": 98, "hours": 428.0, "rev": 4.37}, {"mo": "Dec 2025", "year": 2025, "monthNum": 12, "trips": 123, "hours": 536.0, "rev": 5.86}, {"mo": "Jan 2026", "year": 2026, "monthNum": 1, "trips": 87, "hours": 431.0, "rev": 4.74}, {"mo": "Feb 2026", "year": 2026, "monthNum": 2, "trips": 102, "hours": 381.0, "rev": 3.76}, {"mo": "Mar 2026", "year": 2026, "monthNum": 3, "trips": 136, "hours": 620.0, "rev": 6.94}, {"mo": "Apr 2026", "year": 2026, "monthNum": 4, "trips": 109, "hours": 473.0, "rev": 5.03}, {"mo": "May 2026", "year": 2026, "monthNum": 5, "trips": 100, "hours": 395.0, "rev": 4.6}]};
+
+// Calibration constants
+const BASELINE_JET = 1.93;
+const CRACK_NORMAL = 0.335;
+const CRACK_WAR = 1.685;
+const FBO_PREMIUM = 4.45;
+const CHARTER_ELASTICITY = -0.043;
+
+const HORMUZ_CRACK_PATH = {
+  0: [CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL],
+  1: [CRACK_WAR*0.5, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL, CRACK_NORMAL],
+  2: [CRACK_WAR, CRACK_WAR, CRACK_WAR, CRACK_WAR*0.7, CRACK_WAR*0.5, CRACK_WAR*0.3, CRACK_NORMAL*1.5],
+  3: [CRACK_WAR, CRACK_WAR, CRACK_WAR, CRACK_WAR, CRACK_WAR, CRACK_WAR, CRACK_WAR]
+};
+const HORMUZ_GEO_PATH = {
+  0: [0.2, 0.05, 0, 0, 0, 0, 0],
+  1: [0.7, 0.4, 0.1, 0, 0, 0, 0],
+  2: [1.0, 1.0, 0.9, 0.7, 0.5, 0.3, 0.1],
+  3: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+};
+const PROJ_MONTHS = ['Jun 2026','Jul 2026','Aug 2026','Sep 2026','Oct 2026','Nov 2026','Dec 2026'];
+
+const MKT_SCENARIO_DEFAULTS = {
+  pessimistic: { brent: 550, geo: -7,  hormuz: 3 },
+  base:        { brent: 416, geo: -2,  hormuz: 2 },
+  optimistic:  { brent: 250, geo: 0,   hormuz: 0 }
+};
+
+let mktChart = null, mktSummerChart = null, magTrajChart = null, magSummerChart = null, compChart = null;
+let currentMktScenario = 'base';
+
+function getYear(s) { return parseInt(s.split(' ')[1]); }
+function getMonthIdx(s) {
+  const map = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  return map[s.split(' ')[0]];
+}
+
+function getCurrentLensData() {
+  const lensKey = document.getElementById('seasonLens').value;
+  const scope = document.getElementById('seasonScope').value;
+  return SEASONALITY_DATA[lensKey + '_' + scope];
+}
+
+function getSliderValues() {
+  return {
+    jetSpot: parseInt(document.getElementById('brentSlider').value) / 100,
+    geo: parseInt(document.getElementById('geoSlider').value),
+    hormuz: parseInt(document.getElementById('hormuzSlider').value)
+  };
+}
+
+function computeBaseline(lensData, mo) {
+  const idx = getMonthIdx(mo);
+  const samples = lensData.filter(d => [2023,2024,2025].includes(getYear(d.mo)) && getMonthIdx(d.mo) === idx);
+  return samples.length ? samples.reduce((s,d)=>s+d.hours,0)/samples.length : 0;
+}
+
+function computeYtdYoy(lensData) {
+  let h25=0, h26=0;
+  for (const d of lensData) {
+    const yr = getYear(d.mo); const mi = getMonthIdx(d.mo);
+    if (mi >= 0 && mi <= 3) {
+      if (yr === 2025) h25 += d.hours;
+      else if (yr === 2026) h26 += d.hours;
+    }
+  }
+  return h25 ? (h26-h25)/h25 : 0;
+}
+
+function computeMarketProjection(lensData, jetSpot, geo, hormuz) {
+  const ytdYoy = computeYtdYoy(lensData);
+  const currentBrentPerGal = jetSpot - CRACK_WAR;
+  const crackPath = HORMUZ_CRACK_PATH[hormuz];
+  const geoPath = HORMUZ_GEO_PATH[hormuz];
+  
+  const months = [];
+  PROJ_MONTHS.forEach((mo, i) => {
+    const baseline = computeBaseline(lensData, mo);
+    const monthJet = currentBrentPerGal + crackPath[i];
+    const fuelYoY = (monthJet - BASELINE_JET) / BASELINE_JET;
+    const fuelImpact = fuelYoY * CHARTER_ELASTICITY;
+    const effGeo = (geo/100) * geoPath[i];
+    const projHours = baseline * (1+ytdYoy) * (1+fuelImpact) * (1+effGeo);
+    months.push({mo, hours: projHours, baseline, fuelYoY, fuelImpact, effGeo, jet: monthJet});
+  });
+  return { months, ytdYoy, currentBrent: currentBrentPerGal * 42 };
+}
+
+function updateSliderLabels() {
+  const v = getSliderValues();
+  document.getElementById('brentSliderVal').textContent = '$' + v.jetSpot.toFixed(2);
+  document.getElementById('geoSliderVal').textContent = (v.geo >= 0 ? '+' : '') + v.geo + '%';
+  const lbls = ['Resolves now', "Q3 '26", "Q4 '26", 'Sustained 2027+'];
+  document.getElementById('hormuzVal').textContent = lbls[v.hormuz];
+  
+  const brent = (v.jetSpot - CRACK_WAR) * 42;
+  const retail = v.jetSpot + FBO_PREMIUM;
+  document.getElementById('impliedJetReadout').textContent = 
+    `→ Brent: $${brent.toFixed(0)}/bbl · Crack: $${CRACK_WAR.toFixed(2)}/gal · FBO retail: $${retail.toFixed(2)}/gal`;
+  
+  const path = HORMUZ_CRACK_PATH[v.hormuz];
+  let desc;
+  if (v.hormuz === 0) desc = `Crack at $${CRACK_NORMAL.toFixed(2)}/gal (normalized) all H2`;
+  else if (v.hormuz === 3) desc = `Crack stays at $${CRACK_WAR.toFixed(2)}/gal (war level) through H2`;
+  else desc = `Crack tapers from $${path[0].toFixed(2)} to $${path[6].toFixed(2)}/gal by Dec`;
+  document.getElementById('hormuzReadout').textContent = `→ ${desc}`;
+}
+
+function applyMktScenario(scen) {
+  currentMktScenario = scen;
+  const s = MKT_SCENARIO_DEFAULTS[scen];
+  document.getElementById('brentSlider').value = s.brent;
+  document.getElementById('geoSlider').value = s.geo;
+  document.getElementById('hormuzSlider').value = s.hormuz;
+  document.querySelectorAll('[data-mkt-scenario]').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`[data-mkt-scenario="${scen}"]`);
+  if (btn) btn.classList.add('active');
+  updateSliderLabels();
+  renderAllSections();
+}
+
+// ── SECTION 1: MARKET TREND ─────────────────────────────────────────────────
+function renderMarketTrend() {
+  const lensData = getCurrentLensData();
+  if (!lensData) return;
+  
+  // KPIs
+  const ytdYoy = computeYtdYoy(lensData);
+  const apr25 = lensData.find(d => d.mo === 'Apr 2025');
+  const apr26 = lensData.find(d => d.mo === 'Apr 2026');
+  const aprYoy = apr25 && apr26 ? (apr26.hours-apr25.hours)/apr25.hours : 0;
+  let ytdHours = 0;
+  for (const d of lensData) if (getYear(d.mo)===2026 && getMonthIdx(d.mo)<=4) ytdHours += d.hours;
+  
+  const scope = document.getElementById('seasonScope').value;
+  const scopeLabel = scope === 'exUlr' ? 'excl. ULR' : 'all segments';
+  
+  const ytdCls = ytdYoy >= 0 ? 'positive' : 'negative';
+  const aprCls = aprYoy >= 0 ? 'positive' : 'negative';
+  
+  document.getElementById('marketTrendKpis').innerHTML = `
+    <div class="kpi ${ytdCls}">
+      <span>Market YTD</span>
+      <b>${(ytdYoy*100 >= 0 ? '+' : '') + (ytdYoy*100).toFixed(1)}%</b>
+      <small>Jan–Apr '26 vs '25 · ${scopeLabel}</small>
+    </div>
+    <div class="kpi ${aprCls}">
+      <span>April Latest</span>
+      <b>${(aprYoy*100 >= 0 ? '+' : '') + (aprYoy*100).toFixed(1)}%</b>
+      <small>Apr '26 vs '25</small>
+    </div>
+    <div class="kpi">
+      <span>Market Hours YTD</span>
+      <b>${(ytdHours/1000).toFixed(0)}K</b>
+      <small>Through Apr '26</small>
+    </div>
+    <div class="kpi negative">
+      <span>Search Volume YoY</span>
+      <b>−55%</b>
+      <small>Charter intent · Google Trends</small>
+    </div>
+  `;
+  
+  // Chart
+  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const yearColors = {2022:'#94A3B8',2023:'#7FB2E6',2024:'#2C5FA8',2025:'#D4AF6A',2026:'#3E87D3'};
+  const datasets = [];
+  [2022,2023,2024,2025,2026].forEach(yr => {
+    const data = new Array(12).fill(null);
+    lensData.filter(d=>getYear(d.mo)===yr).forEach(d => { data[getMonthIdx(d.mo)] = Math.round(d.hours); });
+    datasets.push({
+      label: String(yr),
+      data, borderColor: yearColors[yr], backgroundColor: 'transparent',
+      borderWidth: yr === 2026 ? 3.5 : 2, tension: 0.3,
+      pointRadius: yr === 2026 ? 4 : 3, pointHoverRadius: 6,
+      pointBackgroundColor: yearColors[yr],
+      borderDash: yr === 2022 ? [4,4] : []
+    });
+  });
+  
+  if (mktChart) mktChart.destroy();
+  mktChart = new Chart(document.getElementById('seasonMarketChart').getContext('2d'), {
+    type: 'line', data: { labels, datasets },
+    options: {
+      responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins: {
+        legend:{position:'bottom',labels:{color:'#C7D1E8',font:{family:'DM Sans',size:11},padding:14}},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,.1)',borderWidth:1,padding:10,titleColor:'#111827',bodyColor:'#374151',titleFont:{family:'Space Grotesk',size:12,weight:'600'},bodyFont:{family:'DM Sans',size:12},callbacks:{label:c=>'  '+c.dataset.label+': '+c.parsed.y.toLocaleString()+'h'}}
+      },
+      scales: {
+        x:{grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#8896B8',font:{family:'DM Sans',size:11}}},
+        y:{grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#8896B8',font:{family:'JetBrains Mono',size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}}
+      }
+    }
+  });
+}
+
+// ── SECTION 2: MARKET SUMMER PROJECTION ─────────────────────────────────────
+function renderMarketProjection() {
+  const lensData = getCurrentLensData();
+  if (!lensData) return;
+  const v = getSliderValues();
+  const proj = computeMarketProjection(lensData, v.jetSpot, v.geo, v.hormuz);
+  
+  // Summer 2025-26 specifically
+  const summer25 = ['Jun 2025','Jul 2025','Aug 2025'].reduce((s,m)=>{
+    const d = lensData.find(x=>x.mo===m); return s + (d?d.hours:0);
+  }, 0);
+  const summer26Proj = proj.months.filter(m=>['Jun 2026','Jul 2026','Aug 2026'].includes(m.mo))
+    .reduce((s,m)=>s+m.hours, 0);
+  const summerYoy = (summer26Proj-summer25)/summer25;
+  
+  const cls = summerYoy >= 0 ? 'positive' : 'negative';
+  const sLabel = currentMktScenario.charAt(0).toUpperCase()+currentMktScenario.slice(1);
+  
+  document.getElementById('marketProjKpis').innerHTML = `
+    <div class="kpi">
+      <span>Summer 2025 (actual)</span>
+      <b>${(summer25/1000).toFixed(0)}K</b>
+      <small>Jun-Aug market hours</small>
+    </div>
+    <div class="kpi">
+      <span>Summer 2026 Projection</span>
+      <b>${(summer26Proj/1000).toFixed(0)}K</b>
+      <small>Jun-Aug · ${sLabel}</small>
+    </div>
+    <div class="kpi ${cls}">
+      <span>Market Summer YoY</span>
+      <b>${(summerYoy*100>=0?'+':'')+(summerYoy*100).toFixed(1)}%</b>
+      <small>Market only · NOT Magellan</small>
+    </div>
+    <div class="kpi">
+      <span>Implied Brent</span>
+      <b>$${proj.currentBrent.toFixed(0)}</b>
+      <small>per barrel · current state</small>
+    </div>
+  `;
+  
+  // Chart: Summer Jun-Aug across years, plus projection
+  const summerByYear = {};
+  [2022,2023,2024,2025].forEach(yr => {
+    summerByYear[yr] = ['Jun','Jul','Aug'].reduce((s,m)=>{
+      const d = lensData.find(x=>x.mo===`${m} ${yr}`);
+      return s + (d?d.hours:0);
+    }, 0);
+  });
+  summerByYear[2026] = summer26Proj;
+  
+  const yearColors = {2022:'#94A3B8',2023:'#7FB2E6',2024:'#2C5FA8',2025:'#D4AF6A',2026:'#3E87D3'};
+  
+  if (mktSummerChart) mktSummerChart.destroy();
+  mktSummerChart = new Chart(document.getElementById('seasonMarketSummerChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['2022','2023','2024','2025','2026 Projected'],
+      datasets: [{
+        label: 'Summer Hours (Jun-Aug)',
+        data: [summerByYear[2022], summerByYear[2023], summerByYear[2024], summerByYear[2025], summerByYear[2026]],
+        backgroundColor: ['#94A3B8','#7FB2E6','#2C5FA8','#D4AF6A','#3E87D3'],
+        borderColor: ['#94A3B8','#7FB2E6','#2C5FA8','#D4AF6A','#3E87D3'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: {
+        legend:{display:false},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,.1)',borderWidth:1,padding:10,titleColor:'#111827',bodyColor:'#374151',titleFont:{family:'Space Grotesk',size:12,weight:'600'},bodyFont:{family:'DM Sans',size:12},callbacks:{label:c=>'  '+c.parsed.y.toLocaleString()+' hours'}}
+      },
+      scales: {
+        x:{grid:{display:false},ticks:{color:'#8896B8',font:{family:'DM Sans',size:11}}},
+        y:{grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#8896B8',font:{family:'JetBrains Mono',size:10},callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}}
+      }
+    }
+  });
+}
+
+// ── SECTION 3: MAGELLAN PROJECTION ──────────────────────────────────────────
+function renderMagellan() {
+  const monthly = MAGELLAN_META.monthly;
+  const ytdHoursYoY = MAGELLAN_META.ytdHoursYoY;
+  const ytdRevYoY = MAGELLAN_META.ytdRevYoY;
+  const s25h = MAGELLAN_META.summer25Hours;
+  const s25r = MAGELLAN_META.summer25Rev;
+  const s25t = MAGELLAN_META.summer25Trips;
+  
+  // Magellan trajectory chart — bar chart of monthly hours + revenue line
+  const sorted = monthly.slice().sort((a,b)=>a.year*100+a.monthNum - (b.year*100+b.monthNum));
+  const labels = sorted.map(d => d.mo);
+  const hoursData = sorted.map(d => d.hours);
+  const revData = sorted.map(d => d.rev);
+  
+  if (magTrajChart) magTrajChart.destroy();
+  magTrajChart = new Chart(document.getElementById('seasonMagTrajChart').getContext('2d'), {
+    type:'bar',
+    data: {
+      labels,
+      datasets: [
+        {label:'Hours', data:hoursData, backgroundColor:'#D4AF6A', borderColor:'#D4AF6A', borderWidth:0, yAxisID:'y'},
+        {label:'Revenue ($M)', data:revData, type:'line', borderColor:'#3E87D3', backgroundColor:'transparent', borderWidth:2.5, tension:0.3, pointRadius:3, pointBackgroundColor:'#3E87D3', yAxisID:'y1'}
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins: {
+        legend:{position:'bottom',labels:{color:'#C7D1E8',font:{family:'DM Sans',size:11},padding:14}},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,.1)',borderWidth:1,padding:10,titleColor:'#111827',bodyColor:'#374151',titleFont:{family:'Space Grotesk',size:12,weight:'600'},bodyFont:{family:'DM Sans',size:12},
+          callbacks: {label: c => '  ' + c.dataset.label + ': ' + (c.dataset.label==='Hours' ? c.parsed.y.toLocaleString()+'h' : '$'+c.parsed.y.toFixed(2)+'M')}}
+      },
+      scales: {
+        x:{grid:{display:false},ticks:{color:'#8896B8',font:{family:'DM Sans',size:10},maxRotation:60,minRotation:60}},
+        y:{position:'left',grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#D4AF6A',font:{family:'JetBrains Mono',size:10},callback:v=>v+'h'}},
+        y1:{position:'right',grid:{display:false},ticks:{color:'#3E87D3',font:{family:'JetBrains Mono',size:10},callback:v=>'$'+v+'M'}}
+      }
+    }
+  });
+  
+  // Magellan summer scenarios
+  const scenarios = {
+    base:        { hRate: ytdHoursYoY/100,         rRate: ytdRevYoY/100,         label: 'Maintain YTD Pace' },
+    conservative:{ hRate: (ytdHoursYoY*0.6)/100,   rRate: (ytdRevYoY*0.6)/100,   label: 'Conservative (decelerate)' },
+    aggressive:  { hRate: (ytdHoursYoY+5)/100,     rRate: (ytdRevYoY+5)/100,     label: 'Aggressive (continued share gains)' }
+  };
+  
+  // Cards
+  const cardsHtml = ['conservative','base','aggressive'].map(key => {
+    const s = scenarios[key];
+    const h = Math.round(s25h * (1+s.hRate));
+    const r = (s25r * (1+s.rRate)).toFixed(2);
+    const isBase = key === 'base';
+    const accentColor = isBase ? '#D4AF6A' : 'var(--text2)';
+    const borderStyle = isBase ? '2px solid #D4AF6A' : '1px solid var(--border)';
+    const bgStyle = isBase ? 'rgba(212,175,106,0.06)' : 'rgba(10,18,51,0.5)';
+    return `
+      <div style="padding:16px; background:${bgStyle}; border:${borderStyle}; border-radius:10px">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:10px; letter-spacing:.12em; color:${accentColor}; font-weight:700; text-transform:uppercase; margin-bottom:10px">${s.label}${isBase?' · CENTRAL':''}</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; color:var(--text3); margin-bottom:4px">Hours</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; color:var(--text); margin-bottom:8px">${h.toLocaleString()}h</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:11px; color:var(--text3); margin-bottom:4px">Revenue</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; color:var(--text); margin-bottom:8px">$${r}M</div>
+        <div style="font-size:12px; color:var(--text2); padding-top:8px; border-top:1px solid var(--border)">
+          +${(s.hRate*100).toFixed(0)}% hrs / +${(s.rRate*100).toFixed(0)}% rev vs Summer 25
+        </div>
+      </div>`;
+  }).join('');
+  document.getElementById('magellanSummerCards').innerHTML = cardsHtml;
+  
+  // Summer chart — Magellan summers across years
+  const magSummers = {};
+  ['2025'].forEach(yr => {
+    const yi = parseInt(yr);
+    magSummers[yr] = ['6','7','8'].reduce((s,m)=>{
+      const d = monthly.find(x=>x.year===yi && x.monthNum===parseInt(m));
+      return s + (d?d.hours:0);
+    }, 0);
+  });
+  const s26Base = Math.round(s25h * (1+ytdHoursYoY/100));
+  const s26Cons = Math.round(s25h * (1+(ytdHoursYoY*0.6)/100));
+  const s26Agg = Math.round(s25h * (1+(ytdHoursYoY+5)/100));
+  
+  if (magSummerChart) magSummerChart.destroy();
+  magSummerChart = new Chart(document.getElementById('seasonMagSummerChart').getContext('2d'), {
+    type:'bar',
+    data: {
+      labels: ['2025 Actual','2026 Conservative','2026 Base','2026 Aggressive'],
+      datasets: [{
+        label: 'Magellan Summer Hours',
+        data: [magSummers['2025'], s26Cons, s26Base, s26Agg],
+        backgroundColor: ['#D4AF6A', '#94A3B8', '#D4AF6A', '#D4AF6A'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: {
+        legend:{display:false},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,.1)',borderWidth:1,padding:10,titleColor:'#111827',bodyColor:'#374151',titleFont:{family:'Space Grotesk',size:12,weight:'600'},bodyFont:{family:'DM Sans',size:12},callbacks:{label:c=>'  '+c.parsed.y.toLocaleString()+' hours'}}
+      },
+      scales: {
+        x:{grid:{display:false},ticks:{color:'#8896B8',font:{family:'DM Sans',size:11}}},
+        y:{grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#8896B8',font:{family:'JetBrains Mono',size:10},callback:v=>v+'h'}}
+      }
+    }
+  });
+  
+  // Comparison chart — indexed to 100 = Summer 2025
+  const lensData = getCurrentLensData();
+  const v = getSliderValues();
+  const proj = computeMarketProjection(lensData, v.jetSpot, v.geo, v.hormuz);
+  const summer25Mkt = ['Jun 2025','Jul 2025','Aug 2025'].reduce((s,m)=>{
+    const d = lensData.find(x=>x.mo===m); return s + (d?d.hours:0);
+  }, 0);
+  const summer26Mkt = proj.months.filter(m=>['Jun 2026','Jul 2026','Aug 2026'].includes(m.mo)).reduce((s,m)=>s+m.hours, 0);
+  
+  const mktIndex25 = 100;
+  const mktIndex26 = (summer26Mkt / summer25Mkt) * 100;
+  const magIndex25 = 100;
+  const magIndex26 = (s26Base / s25h) * 100;
+  
+  if (compChart) compChart.destroy();
+  compChart = new Chart(document.getElementById('seasonCompChart').getContext('2d'), {
+    type:'bar',
+    data: {
+      labels: ['Summer 2025', 'Summer 2026 Projection'],
+      datasets: [
+        {label:'NOAM Market', data:[mktIndex25, mktIndex26], backgroundColor:'#3E87D3', borderWidth:0},
+        {label:'Magellan (Base Case)', data:[magIndex25, magIndex26], backgroundColor:'#D4AF6A', borderWidth:0}
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: {
+        legend:{position:'bottom',labels:{color:'#C7D1E8',font:{family:'DM Sans',size:11},padding:14}},
+        tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,.1)',borderWidth:1,padding:10,titleColor:'#111827',bodyColor:'#374151',titleFont:{family:'Space Grotesk',size:12,weight:'600'},bodyFont:{family:'DM Sans',size:12},callbacks:{label:c=>'  '+c.dataset.label+': '+c.parsed.y.toFixed(0)+' (index)'}}
+      },
+      scales: {
+        x:{grid:{display:false},ticks:{color:'#8896B8',font:{family:'DM Sans',size:12}}},
+        y:{grid:{color:'rgba(62,135,211,.06)'},ticks:{color:'#8896B8',font:{family:'JetBrains Mono',size:10}},title:{display:true,text:'Indexed: 100 = Summer 2025',color:'#8896B8',font:{family:'DM Sans',size:11}}}
+      }
+    }
+  });
+}
+
+function renderAllSections() {
+  renderMarketTrend();
+  renderMarketProjection();
+  renderMagellan();
+}
+
+function renderSeasonalityTab() {
+  if (!document.getElementById('seasonLens')._wired) {
+    ['seasonLens','seasonScope'].forEach(id => {
+      document.getElementById(id).addEventListener('change', renderAllSections);
+    });
+    ['brentSlider','geoSlider','hormuzSlider'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        document.querySelectorAll('[data-mkt-scenario]').forEach(b => b.classList.remove('active'));
+        currentMktScenario = 'custom';
+        updateSliderLabels();
+        renderAllSections();
+      });
+    });
+    document.querySelectorAll('[data-mkt-scenario]').forEach(btn => {
+      btn.addEventListener('click', () => applyMktScenario(btn.dataset.mktScenario));
+    });
+    document.getElementById('seasonLens')._wired = true;
+  }
+  updateSliderLabels();
+  renderAllSections();
+}
 </script>
 </body>
 </html>
